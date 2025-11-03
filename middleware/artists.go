@@ -39,6 +39,7 @@ func getArtists(search string, user string, w http.ResponseWriter) {
 		q.Set("limit", "10000") // Max limit = 10K
 		q.Set("offset", "0")
 		q.Set("countryCode", "US")
+
 		tidalURL.RawQuery = q.Encode()
 
 		req, _ := http.NewRequest(config.MethodGet, tidalURL.String(), nil)
