@@ -36,6 +36,9 @@ var (
 
 	// Subsonic Server
 	TargetHost = os.Getenv("TARGET_HOST")
+
+	// CORS
+	CORSAllowOrigin = "*"
 )
 
 const (
@@ -69,9 +72,6 @@ const (
 	HeaderAllowMethods = "Access-Control-Allow-Methods"
 	HeaderAllowHeaders = "Access-Control-Allow-Headers"
 	Authorization      = "Authorization"
-
-	// CORS
-	CORSAllowOrigin = "*"
 
 	// HTTP State codes
 	StatusOK                  = 200
