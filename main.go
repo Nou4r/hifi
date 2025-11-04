@@ -41,7 +41,6 @@ func main() {
 	// Server setup
 	port := middleware.PortRotate()
 
-	// Server setup
 	server := &http.Server{
 		Addr:    fmt.Sprintf("%s:%s", config.Host, port),
 		Handler: handler,
