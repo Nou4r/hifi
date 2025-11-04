@@ -22,6 +22,19 @@ func Session(userName, passWord, targetHost string, exclude []string) func(http.
 	target, _ := url.Parse(targetHost)
 	proxy := httputil.NewSingleHostReverseProxy(target)
 
+	validPaths := []string{
+		rest.Search3View(),
+		rest.GetArtistsView(),
+		rest.GetCoverArtView(),
+		rest.Stream(),
+		rest.GetSong(),
+		rest.Scrobble(),
+		rest.GetAlbumView(),
+		rest.GetAlbumList2View(),
+		rest.Ping(),
+		rest.GetArtistInfoView(),
+	}
+
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
@@ -31,19 +44,12 @@ func Session(userName, passWord, targetHost string, exclude []string) func(http.
 				return
 			}
 
-			// Rewrite tidal requests
-			switch r.URL.Path {
-
-			case rest.Search3View(), rest.GetArtistsView(),
-				rest.GetCoverArtView(), rest.Stream(),
-				rest.GetSong(), rest.Scrobble(),
-				rest.GetAlbumView(), rest.GetAlbumList2View(),
-				rest.Ping(), rest.GetArtistInfoView():
-
-				RewriteRequest(w, r)
+			if !slices.Contains(validPaths, r.URL.Path) {
+				w.WriteHeader(config.StatusNotFound)
 				return
-
 			}
+
+			RewriteRequest(w, r)
 
 			/* Add authentication parameters
 			to the URL query like -> (https://) */
