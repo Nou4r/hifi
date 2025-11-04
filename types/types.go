@@ -145,7 +145,6 @@ type SubsonicSearchResult struct {
 }
 
 type SubsonicArtists struct {
-	IgnoredArticles string                    `json:"ignoredArticles,omitempty"`
 	Index           []SubsonicArtistIndexItem `json:"index,omitempty"`
 }
 
