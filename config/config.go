@@ -15,6 +15,7 @@ var (
 
 	// Whitelist
 	ValidPaths = []string{
+		rest.Ping(),
 		rest.Search3View(),
 		rest.GetArtistsView(),
 		rest.GetCoverArtView(),
@@ -23,7 +24,6 @@ var (
 		rest.Scrobble(),
 		rest.GetAlbumView(),
 		rest.GetAlbumList2View(),
-		rest.Ping(),
 		rest.GetArtistInfoView(),
 	}
 

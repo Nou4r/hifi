@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"hifi/config"
+	"hifi/routes/rest"
 	"log/slog"
 	"net/http"
 	"net/http/httputil"
@@ -29,9 +30,13 @@ func Session(userName, passWord, targetHost string, ValidPaths []string) func(ht
 				return
 			}
 
-			RewriteRequest(w, r)
+			if slices.Contains(ValidPaths, r.URL.Path) && r.URL.Path != rest.Ping() {
+				RewriteRequest(w, r)
+				return
+			}
 
 			/* Add authentication parameters
+
 			to the URL query like -> (https://) */
 
 			q := r.URL.Query()
