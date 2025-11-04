@@ -85,8 +85,6 @@ func search3(search string, user string, w http.ResponseWriter) {
 		coverMap[songID] = coverUUID
 		coverMu.Unlock()
 
-		albumDurations[item.Album.ID] += item.Duration
-
 		// Artist
 		if !artistMap[item.Artist.ID] {
 			sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, types.SubsonicArtist{
