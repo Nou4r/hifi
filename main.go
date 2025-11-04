@@ -22,7 +22,7 @@ func main() {
 	}
 
 	// Hifi proxy
-	excluded := config.ExcludedPaths
+	validPaths := config.ValidPaths
 	targetHost := config.TargetHost
 
 	go middleware.RecentAlbum()
@@ -32,7 +32,7 @@ func main() {
 	mux := http.NewServeMux()
 
 	// Middleware setup
-	session := middleware.Session(person.UserName, person.PassWord, targetHost, excluded)(mux)
+	session := middleware.Session(person.UserName, person.PassWord, targetHost, validPaths)(mux)
 
 	cors := middleware.CORS(session)
 

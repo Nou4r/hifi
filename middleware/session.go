@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"hifi/config"
-	"hifi/routes/rest"
 	"log/slog"
 	"net/http"
 	"net/http/httputil"
@@ -18,33 +17,14 @@ func setQueryParams(q url.Values, params map[string]string) {
 	}
 }
 
-func Session(userName, passWord, targetHost string, exclude []string) func(http.Handler) http.Handler {
+func Session(userName, passWord, targetHost string, ValidPaths []string) func(http.Handler) http.Handler {
 	target, _ := url.Parse(targetHost)
 	proxy := httputil.NewSingleHostReverseProxy(target)
-
-	validPaths := []string{
-		rest.Search3View(),
-		rest.GetArtistsView(),
-		rest.GetCoverArtView(),
-		rest.Stream(),
-		rest.GetSong(),
-		rest.Scrobble(),
-		rest.GetAlbumView(),
-		rest.GetAlbumList2View(),
-		rest.Ping(),
-		rest.GetArtistInfoView(),
-	}
 
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-			// Blacklist URL paths
-			if slices.Contains(exclude, r.URL.Path) {
-				w.WriteHeader(config.StatusNotFound)
-				return
-			}
-
-			if !slices.Contains(validPaths, r.URL.Path) {
+			if !slices.Contains(ValidPaths, r.URL.Path) {
 				w.WriteHeader(config.StatusNotFound)
 				return
 			}

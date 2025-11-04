@@ -1,6 +1,7 @@
 package config
 
 import (
+	"hifi/routes/rest"
 	"os"
 )
 
@@ -12,10 +13,18 @@ type Person struct {
 
 var (
 
-	// Blacklist
-	ExcludedPaths = []string{
-		"/admin/login",
-		"/rest/download.view",
+	// Whitelist
+	ValidPaths = []string{
+		rest.Search3View(),
+		rest.GetArtistsView(),
+		rest.GetCoverArtView(),
+		rest.Stream(),
+		rest.GetSong(),
+		rest.Scrobble(),
+		rest.GetAlbumView(),
+		rest.GetAlbumList2View(),
+		rest.Ping(),
+		rest.GetArtistInfoView(),
 	}
 
 	// ENV
