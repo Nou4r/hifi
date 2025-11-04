@@ -22,6 +22,11 @@ func Session(userName, passWord, targetHost string, ValidPaths []string) func(ht
 	target, _ := url.Parse(targetHost)
 	proxy := httputil.NewSingleHostReverseProxy(target)
 
+	proxy.ModifyResponse = func(resp *http.Response) error {
+		resp.Header.Del("Access-Control-Allow-Origin")
+		return nil
+	}
+
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 

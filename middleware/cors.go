@@ -13,6 +13,7 @@ func CORS(next http.Handler) http.Handler {
 		if slices.Contains(config.ValidPaths, r.URL.Path) {
 			w.Header().Set(config.HeaderAllowOrigin, config.CORSAllowOrigin)
 		}
+
 		next.ServeHTTP(w, r)
 	})
 }
