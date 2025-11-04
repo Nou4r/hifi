@@ -126,7 +126,6 @@ type SubsonicAlbum struct {
 	IsDir       bool   `json:"isDir"`
 	CoverArt    string `json:"coverArt"`
 	SongCount   int    `json:"songCount"`
-	Created     string `json:"created,omitempty"`
 	Duration    int    `json:"duration"`
 	PlayCount   int    `json:"playCount,omitempty"`
 	ArtistID    int    `json:"artistId"`
@@ -145,7 +144,7 @@ type SubsonicSearchResult struct {
 }
 
 type SubsonicArtists struct {
-	Index           []SubsonicArtistIndexItem `json:"index,omitempty"`
+	Index []SubsonicArtistIndexItem `json:"index,omitempty"`
 }
 
 type SubsonicArtistIndexItem struct {

@@ -9,7 +9,6 @@ import (
 	"log/slog"
 	"net/http"
 	"net/url"
-	"time"
 )
 
 func fetchAndCacheAlbum(user, id string) types.SubsonicAlbum {
@@ -58,7 +57,6 @@ func fetchAndCacheAlbum(user, id string) types.SubsonicAlbum {
 	var albumResp types.SubsonicAlbum
 	albumResp.ID = id
 	albumResp.IsDir = true
-	albumResp.Created = time.Now().Format(time.RFC3339)
 
 	for _, item := range tidalAlbum.Items {
 		song := types.SubsonicSong{

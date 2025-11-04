@@ -8,7 +8,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"time"
 )
 
 func getAlbum(id string, user string, w http.ResponseWriter) {
@@ -60,7 +59,6 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 	// Build Subsonic album
 	albumResp.ID = id
 	albumResp.IsDir = true
-	albumResp.Created = time.Now().Format(time.RFC3339)
 
 	for _, item := range tidalAlbum.Items {
 		song := types.SubsonicSong{
