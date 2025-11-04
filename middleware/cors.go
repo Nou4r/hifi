@@ -14,8 +14,8 @@ func CORS(next http.Handler) http.Handler {
 		case rest.Search3View(), rest.GetArtistsView(),
 			rest.GetSong(), rest.GetAlbumList2View(),
 			rest.Scrobble(), rest.Stream(),
-			rest.GetCoverArtView(), rest.GetAlbumView():
-			rest.GetArtistInfoView()
+			rest.GetCoverArtView(), rest.GetAlbumView(),
+			rest.Ping(), rest.GetArtistInfoView():
 			w.Header().Set(config.HeaderAllowOrigin, config.CORSAllowOrigin)
 		}
 		next.ServeHTTP(w, r)

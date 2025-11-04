@@ -1,7 +1,11 @@
 package middleware
 
-import "net/http"
+import (
+	"fmt"
+	"net/http"
+)
 
 func getArtistInfo(user string, id string, w http.ResponseWriter) {
-	w.Write([]byte("getArtistInfo: " + id + " for user: " + user))
+	fmt.Println("getArtistInfo called with id:", id, "for user:", user)
+	fmt.Println()
 }
