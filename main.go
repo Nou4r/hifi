@@ -39,15 +39,18 @@ func main() {
 	handler := middleware.Recovery(cors)
 
 	// Server setup
+	port := middleware.PortRotate()
+
+	// Server setup
 	server := &http.Server{
-		Addr:    fmt.Sprintf("%s:%s", config.Host, config.Port),
+		Addr:    fmt.Sprintf("%s:%s", config.Host, port),
 		Handler: handler,
 	}
 
 	slog.Info("Hifi API server running",
 		"host", config.Host,
-		"port", config.Port,
-		"url", config.Scheme+"://"+config.Host+":"+config.Port,
+		"port", port,
+		"url", fmt.Sprintf("%s://%s:%s", config.Scheme, config.Host, port),
 	)
 
 	// Run server in background

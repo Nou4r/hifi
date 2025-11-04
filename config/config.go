@@ -39,6 +39,9 @@ var (
 
 	// CORS
 	CORSAllowOrigin = "*"
+
+	// Server port and fallback port
+	Port = []string{"5011", "5000"}
 )
 
 const (
@@ -50,7 +53,6 @@ const (
 
 	// Hifi Server
 	Host = "127.0.0.1"
-	Port = "5000"
 
 	// HTTP methods
 	MethodGet     = "GET"
