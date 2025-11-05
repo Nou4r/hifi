@@ -88,9 +88,6 @@ func fetchAndCacheAlbum(user, id string) types.SubsonicAlbum {
 		albumResp.Duration += item.Item.Duration
 		albumResp.Song = append(albumResp.Song, song)
 
-		songMu.Lock()
-		songMap[song.ID] = song
-		songMu.Unlock()
 	}
 
 	useralbumMu.Lock()

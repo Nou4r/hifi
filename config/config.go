@@ -41,7 +41,7 @@ var (
 	CORSAllowOrigin = "*"
 
 	// Server port and fallback port
-	Port = []string{"5011", "5000"}
+	Port = []string{"5000", "5011"}
 )
 
 const (

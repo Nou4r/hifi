@@ -46,6 +46,9 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
+
+	fmt.Println(string(body))
+
 	if err != nil {
 		http.Error(w, "failed to read Tidal response", http.StatusInternalServerError)
 		return
@@ -86,13 +89,10 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 		albumResp.Artist = item.Item.Artist.Name
 		albumResp.CoverArt = item.Item.Album.Cover
 		albumResp.Year = item.Item.StreamStartDate[0:4]
-		albumResp.SongCount = len(tidalAlbum.Items)
+		albumResp.SongCount = item.TotalNumberOfItems
 		albumResp.Duration += item.Item.Duration
 		albumResp.Song = append(albumResp.Song, song)
 
-		songMu.Lock()
-		songMap[song.ID] = song
-		songMu.Unlock()
 	}
 
 	useralbumMu.Lock()

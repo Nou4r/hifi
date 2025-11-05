@@ -21,24 +21,38 @@ type ManifestData struct {
 }
 
 type TidalSearchResponse struct {
-	Items []struct {
-		ID              int    `json:"id"`
-		Title           string `json:"title"`
-		Duration        int    `json:"duration"`
-		Explicit        bool   `json:"explicit"`
-		StreamStartDate string `json:"streamStartDate,omitempty"`
-		Artist          struct {
-			ID      int    `json:"id,omitempty"`
-			Name    string `json:"name,omitempty"`
-			Picture string `json:"picture,omitempty"`
-		} `json:"artist"`
-		Album struct {
+	Tracks struct {
+		Items []struct {
 			ID       int    `json:"id,omitempty"`
 			Title    string `json:"title,omitempty"`
-			Cover    string `json:"cover,omitempty"`
 			Duration int    `json:"duration,omitempty"`
-		} `json:"album"`
-	} `json:"items"`
+			Album    struct {
+				ID          int    `json:"id"`
+				Title       string `json:"title"`
+				Cover       string `json:"cover"`
+				ReleaseDate string `json:"releaseDate"`
+			} `json:"album"`
+			Artist []struct {
+				ID      int    `json:"id,omitempty"`
+				Name    string `json:"name,omitempty"`
+				Picture string `json:"picture,omitempty"`
+			} `json:"artists"`
+		} `json:"items"`
+	} `json:"tracks"`
+	Albums struct {
+		Items []struct {
+			ID          int    `json:"id,omitempty"`
+			Title       string `json:"title,omitempty"`
+			Cover       string `json:"cover,omitempty"`
+			ReleaseDate string `json:"releaseDate,omitempty"`
+			Duration    int    `json:"duration,omitempty"`
+			Artist      []struct {
+				ID      int    `json:"id,omitempty"`
+				Name    string `json:"name,omitempty"`
+				Picture string `json:"picture,omitempty"`
+			} `json:"artists"`
+		} `json:"items"`
+	} `json:"albums"`
 }
 
 type TidalAlbumBannerResponse struct {
@@ -52,12 +66,14 @@ type TidalAlbumBannerResponse struct {
 
 type TidalAlbumResponse struct {
 	Items []struct {
-		Item struct {
+		TotalNumberOfItems int `json:"totalNumberOfItems"`
+		Item               struct {
 			ID              int    `json:"id"`
 			Title           string `json:"title"`
 			Duration        int    `json:"duration"`
 			Explicit        bool   `json:"explicit"`
 			StreamStartDate string `json:"streamStartDate,omitempty"`
+			ReleaseDate     string `json:"releaseDate,omitempty"`
 			TrackNumber     int    `json:"trackNumber,omitempty"`
 			Cover           string `json:"cover,omitempty"`
 			Artist          struct {

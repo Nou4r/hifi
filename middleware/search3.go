@@ -8,7 +8,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"strconv"
 )
 
 func search3(search string, user string, w http.ResponseWriter) {
@@ -29,14 +28,18 @@ func search3(search string, user string, w http.ResponseWriter) {
 	tidalURL := &url.URL{
 		Scheme: config.Scheme,
 		Host:   config.TidalHost,
-		Path:   "/v1/search/tracks",
+		Path:   "/v2/search",
 	}
 	q := tidalURL.Query()
 	q.Set("query", qu)
-	q.Set("limit", "10000") // Max limit = 10K
+	q.Set("limit", "100") // Max limit = 10K
 	q.Set("offset", "0")
+	q.Set("types", "ARTISTS,ALBUMS,TRACKS,VIDEOS,PLAYLISTS,UPLOADS")
 	q.Set("countryCode", "US")
+	q.Set("deviceType", "BROWSER")
 	tidalURL.RawQuery = q.Encode()
+
+	fmt.Println(tidalURL.String())
 
 	req, _ := http.NewRequest(config.MethodGet, tidalURL.String(), nil)
 	req.Header.Set("Authorization", "Bearer "+TidalAuth())
@@ -56,6 +59,7 @@ func search3(search string, user string, w http.ResponseWriter) {
 	}
 
 	body, err := io.ReadAll(resp.Body)
+
 	if err != nil {
 		http.Error(w, "failed to read Tidal response", http.StatusInternalServerError)
 		return
@@ -71,72 +75,73 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 	artistMap := make(map[int]bool)
 	albumMap := make(map[int]bool)
-	albumDurations := make(map[int]int)
 
-	for _, item := range tidalSearch.Items {
+	// ARTISTS
+	for _, item := range tidalSearch.Tracks.Items {
+		a := item.Artist[0]
+		if !artistMap[a.ID] {
+			sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, types.SubsonicArtist{
+				ID:       fmt.Sprint(a.ID),
+				Name:     a.Name,
+				CoverArt: a.Picture,
+			})
+			artistMap[a.ID] = true
+		}
+	}
 
-		albumID := fmt.Sprint(item.Album.ID)
+	// ALBUMS
+	for _, alb := range tidalSearch.Albums.Items {
+		if !albumMap[alb.ID] {
+			sub.Subsonic.SearchResult3.Album = append(sub.Subsonic.SearchResult3.Album, types.SubsonicAlbum{
+				ID:       fmt.Sprint(alb.ID),
+				Name:     alb.Title,
+				Artist:   alb.Artist[0].Name,
+				CoverArt: alb.Cover,
+				Year:     alb.ReleaseDate[0:4],
+				IsDir:    true,
+				Duration: alb.Duration,
+			})
+			albumMap[alb.ID] = true
+		}
+	}
+
+	// SONGS
+	for _, item := range tidalSearch.Tracks.Items {
+
 		songID := fmt.Sprint(item.ID)
 
-		coverUUID := item.Album.Cover
+		songMu.RLock()
+		cached, found := songMap[songID]
+		fmt.Println(cached, found)
+		songMu.RUnlock()
 
-		coverMu.Lock()
-		coverMap[albumID] = coverUUID
-		coverMap[songID] = coverUUID
-		coverMu.Unlock()
-
-		// Artist
-		if !artistMap[item.Artist.ID] {
-			sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, types.SubsonicArtist{
-				ID:       fmt.Sprint(item.Artist.ID),
-				Name:     item.Artist.Name,
-				CoverArt: item.Artist.Picture,
-			})
-			artistMap[item.Artist.ID] = true
+		if found {
+			fmt.Println("cache true")
+			sub.Subsonic.SearchResult3.Song = append(sub.Subsonic.SearchResult3.Song, cached)
+			continue
 		}
 
-		// Album
-		if !albumMap[item.Album.ID] {
-			sub.Subsonic.SearchResult3.Album = append(sub.Subsonic.SearchResult3.Album, types.SubsonicAlbum{
-				ID:       fmt.Sprint(item.Album.ID),
-				Name:     item.Album.Title,
-				Artist:   item.Artist.Name,
-				CoverArt: item.Album.Cover,
-				Year:     item.StreamStartDate[0:4],
-				IsDir:    true,
-			})
-			albumMap[item.Album.ID] = true
-
-		}
-
-		// Song
 		song := types.SubsonicSong{
-			ID:          fmt.Sprint(item.ID),
+			ID:          songID,
 			Title:       item.Title,
+			Artist:      item.Artist[0].Name,
 			Album:       item.Album.Title,
-			Artist:      item.Artist.Name,
 			Duration:    item.Duration,
 			CoverArt:    item.Album.Cover,
 			Type:        "music",
 			IsVideo:     false,
 			ContentType: "audio/flac",
 			Suffix:      "flac",
-			ArtistID:    fmt.Sprint(item.Artist.ID),
+			ArtistID:    fmt.Sprint(item.Artist[0].ID),
 			AlbumID:     fmt.Sprint(item.Album.ID),
 		}
 
+		fmt.Println("cache false")
 		sub.Subsonic.SearchResult3.Song = append(sub.Subsonic.SearchResult3.Song, song)
 
 		songMu.Lock()
 		songMap[songID] = song
 		songMu.Unlock()
-
-	}
-
-	for i, alb := range sub.Subsonic.SearchResult3.Album {
-		id64, _ := strconv.ParseInt(alb.ID, 10, 64)
-		alb.Duration = albumDurations[int(id64)]
-		sub.Subsonic.SearchResult3.Album[i] = alb
 	}
 
 	// Write response

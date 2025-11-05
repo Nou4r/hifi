@@ -9,16 +9,12 @@ import (
 
 // -------------------- REWRITE --------------------
 var (
-	coverMap       = make(map[string]string)
 	query          = make(map[string]string)
-	songMap        = make(map[string]types.SubsonicSong)
 	userAlbumCache = make(map[string]map[string]types.SubsonicAlbum)
 
 	Public = "global"
 
 	queryMu     sync.RWMutex
-	songMu      sync.RWMutex
-	coverMu     sync.RWMutex
 	albumMu     sync.RWMutex
 	useralbumMu sync.RWMutex
 )

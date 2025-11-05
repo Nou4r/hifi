@@ -7,11 +7,15 @@ import (
 )
 
 func song(id string, w http.ResponseWriter) {
-	var songMap = make(map[string]types.SubsonicSong)
 
 	songMu.RLock()
-	song := songMap[id]
+	song, exists := songMap[id]
 	songMu.RUnlock()
+
+	if !exists {
+		http.Error(w, "song not found", http.StatusNotFound)
+		return
+	}
 
 	sub := types.MetaBanner()
 	sub.Subsonic.Song = &song
