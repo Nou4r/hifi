@@ -25,6 +25,9 @@ func main() {
 	validPaths := config.ValidPaths
 	targetHost := config.TargetHost
 
+	go middleware.StartTidalRefresher()
+	go middleware.RecentAlbum()
+
 	// HTTP server setup
 	mux := http.NewServeMux()
 
@@ -34,9 +37,6 @@ func main() {
 	cors := middleware.CORS(session)
 
 	handler := middleware.Recovery(cors)
-
-	go middleware.StartTidalRefresher()
-	go middleware.RecentAlbum()
 
 	// Server setup
 	port := middleware.PortRotate()
