@@ -59,10 +59,6 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 		return
 	}
 
-	// Build Subsonic album
-	albumResp.ID = id
-	albumResp.IsDir = true
-
 	for _, item := range tidalAlbum.Items {
 		song := types.SubsonicSong{
 			ID:          fmt.Sprint(item.Item.ID),
@@ -82,6 +78,9 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 			AlbumID:     fmt.Sprint(item.Item.Album.ID),
 		}
 
+		// Build Subsonic album
+		albumResp.ID = id
+		albumResp.IsDir = true
 		albumResp.Parent = item.Item.Artist.ID
 		albumResp.ArtistID = item.Item.Artist.ID
 		albumResp.Name = item.Item.Album.Title
@@ -89,7 +88,7 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 		albumResp.Artist = item.Item.Artist.Name
 		albumResp.CoverArt = item.Item.Album.Cover
 		albumResp.Year = item.Item.StreamStartDate[0:4]
-		albumResp.SongCount = item.TotalNumberOfItems
+		albumResp.SongCount = tidalAlbum.TotalNumberOfItems
 		albumResp.Duration += item.Item.Duration
 		albumResp.Song = append(albumResp.Song, song)
 

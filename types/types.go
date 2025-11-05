@@ -65,9 +65,9 @@ type TidalAlbumBannerResponse struct {
 }
 
 type TidalAlbumResponse struct {
-	Items []struct {
-		TotalNumberOfItems int `json:"totalNumberOfItems"`
-		Item               struct {
+	TotalNumberOfItems int `json:"totalNumberOfItems"`
+	Items              []struct {
+		Item struct {
 			ID              int    `json:"id"`
 			Title           string `json:"title"`
 			Duration        int    `json:"duration"`
