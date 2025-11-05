@@ -11,4 +11,7 @@ var (
 
 	albumYearMap = make(map[string]string)
 	albumYearMu  sync.RWMutex
+
+	artistMapCache = make(map[int]types.SubsonicArtist)
+	artistMu       sync.RWMutex
 )

@@ -53,6 +53,14 @@ type TidalSearchResponse struct {
 			} `json:"artists"`
 		} `json:"items"`
 	} `json:"albums"`
+
+	Artists struct {
+		Items []struct {
+			ID      int    `json:"id"`
+			Name    string `json:"name"`
+			Picture string `json:"picture"`
+		} `json:"items"`
+	} `json:"artists"`
 }
 
 type TidalAlbumBannerResponse struct {

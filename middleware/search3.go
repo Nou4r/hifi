@@ -73,20 +73,14 @@ func search3(search string, user string, w http.ResponseWriter) {
 	sub := types.MetaBanner()
 	sub.Subsonic.SearchResult3 = &types.SubsonicSearchResult{}
 
-	artistMap := make(map[int]bool)
-	albumMap := make(map[int]bool)
-
 	// ARTISTS
 	for _, item := range tidalSearch.Tracks.Items {
 		a := item.Artist[0]
-		if !artistMap[a.ID] {
-			sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, types.SubsonicArtist{
-				ID:       fmt.Sprint(a.ID),
-				Name:     a.Name,
-				CoverArt: a.Picture,
-			})
-			artistMap[a.ID] = true
-		}
+		sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, types.SubsonicArtist{
+			ID:       fmt.Sprint(a.ID),
+			Name:     a.Name,
+			CoverArt: a.Picture,
+		})
 	}
 
 	// ALBUMS
@@ -103,18 +97,15 @@ func search3(search string, user string, w http.ResponseWriter) {
 		albumYearMap[albumID] = year
 		albumYearMu.Unlock()
 
-		if !albumMap[alb.ID] {
-			sub.Subsonic.SearchResult3.Album = append(sub.Subsonic.SearchResult3.Album, types.SubsonicAlbum{
-				ID:       albumID,
-				Name:     alb.Title,
-				Artist:   alb.Artist[0].Name,
-				CoverArt: alb.Cover,
-				Year:     year,
-				IsDir:    true,
-				Duration: alb.Duration,
-			})
-			albumMap[alb.ID] = true
-		}
+		sub.Subsonic.SearchResult3.Album = append(sub.Subsonic.SearchResult3.Album, types.SubsonicAlbum{
+			ID:       albumID,
+			Name:     alb.Title,
+			Artist:   alb.Artist[0].Name,
+			CoverArt: alb.Cover,
+			Year:     year,
+			IsDir:    true,
+			Duration: alb.Duration,
+		})
 	}
 
 	// SONGS
