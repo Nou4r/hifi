@@ -9,27 +9,11 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"sync"
 	"syscall"
 	"time"
 )
 
 func main() {
-
-	var wg sync.WaitGroup
-
-	wg.Add(2)
-
-	go func() {
-		defer wg.Done()
-		middleware.StartTidalRefresher()
-	}()
-	go func() {
-		defer wg.Done()
-		middleware.RecentAlbum()
-	}()
-
-	wg.Wait()
 
 	// Define subsonic user credentials
 	person := config.Person{
@@ -50,6 +34,9 @@ func main() {
 	cors := middleware.CORS(session)
 
 	handler := middleware.Recovery(cors)
+
+	go middleware.StartTidalRefresher()
+	go middleware.RecentAlbum()
 
 	// Server setup
 	port := middleware.PortRotate()
