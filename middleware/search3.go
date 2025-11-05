@@ -91,13 +91,25 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 	// ALBUMS
 	for _, alb := range tidalSearch.Albums.Items {
+
+		albumID := fmt.Sprint(alb.ID)
+		year := ""
+
+		if len(alb.ReleaseDate) >= 4 {
+			year = alb.ReleaseDate[:4]
+		}
+
+		albumYearMu.Lock()
+		albumYearMap[albumID] = year
+		albumYearMu.Unlock()
+
 		if !albumMap[alb.ID] {
 			sub.Subsonic.SearchResult3.Album = append(sub.Subsonic.SearchResult3.Album, types.SubsonicAlbum{
-				ID:       fmt.Sprint(alb.ID),
+				ID:       albumID,
 				Name:     alb.Title,
 				Artist:   alb.Artist[0].Name,
 				CoverArt: alb.Cover,
-				Year:     alb.ReleaseDate[0:4],
+				Year:     year,
 				IsDir:    true,
 				Duration: alb.Duration,
 			})

@@ -79,7 +79,19 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 		}
 
 		// Build Subsonic album
-		albumResp.ID = id
+		albumID := fmt.Sprint(item.Item.Album.ID)
+
+		albumYearMu.RLock()
+		year, ok := albumYearMap[albumID]
+		albumYearMu.RUnlock()
+
+		if ok && year != "" {
+			albumResp.Year = year
+		} else {
+			albumResp.Year = item.Item.StreamStartDate[:4]
+		}
+
+		albumResp.ID = albumID
 		albumResp.IsDir = true
 		albumResp.Parent = item.Item.Artist.ID
 		albumResp.ArtistID = item.Item.Artist.ID
@@ -87,7 +99,6 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 		albumResp.Title = item.Item.Album.Title
 		albumResp.Artist = item.Item.Artist.Name
 		albumResp.CoverArt = item.Item.Album.Cover
-		albumResp.Year = item.Item.StreamStartDate[0:4]
 		albumResp.SongCount = tidalAlbum.TotalNumberOfItems
 		albumResp.Duration += item.Item.Duration
 		albumResp.Song = append(albumResp.Song, song)

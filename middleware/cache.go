@@ -8,4 +8,7 @@ import (
 var (
 	songMap = make(map[string]types.SubsonicSong)
 	songMu  sync.RWMutex
+
+	albumYearMap = make(map[string]string)
+	albumYearMu  sync.RWMutex
 )
