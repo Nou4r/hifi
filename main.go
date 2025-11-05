@@ -9,11 +9,27 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 	"time"
 )
 
 func main() {
+
+	var wg sync.WaitGroup
+
+	wg.Add(2)
+
+	go func() {
+		defer wg.Done()
+		middleware.StartTidalRefresher()
+	}()
+	go func() {
+		defer wg.Done()
+		middleware.RecentAlbum()
+	}()
+
+	wg.Wait()
 
 	// Define subsonic user credentials
 	person := config.Person{
@@ -24,9 +40,6 @@ func main() {
 	// Hifi proxy
 	validPaths := config.ValidPaths
 	targetHost := config.TargetHost
-
-	go middleware.RecentAlbum()
-	go middleware.StartTidalRefresher()
 
 	// HTTP server setup
 	mux := http.NewServeMux()

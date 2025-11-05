@@ -42,7 +42,7 @@ func StartTidalRefresher() {
 	mu.Unlock()
 
 	s.Start()
-	slog.Info("🚀 Tidal refresher started")
+	slog.Info("Token refresher started")
 
 	// Initial token fetch
 	refreshAndReschedule("startup")
