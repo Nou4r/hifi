@@ -14,7 +14,7 @@ func getArtists(user string, w http.ResponseWriter) {
 	userArtists := artistCache[user]
 	artistMu.RUnlock()
 
-	artists := make([]types.SubsonicArtist, 0, len(userArtists))
+	var artists []types.SubsonicArtist
 	for _, a := range userArtists {
 		artists = append(artists, a)
 	}
@@ -23,5 +23,5 @@ func getArtists(user string, w http.ResponseWriter) {
 		{Artist: artists},
 	}
 
-	json.NewEncoder(w).Encode(sub)
+	_ = json.NewEncoder(w).Encode(sub)
 }
