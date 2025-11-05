@@ -74,13 +74,35 @@ func search3(search string, user string, w http.ResponseWriter) {
 	sub.Subsonic.SearchResult3 = &types.SubsonicSearchResult{}
 
 	// ARTISTS
-	for _, item := range tidalSearch.Tracks.Items {
-		a := item.Artist[0]
-		sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, types.SubsonicArtist{
+	for _, a := range tidalSearch.Artists.Items {
+
+		artistID := a.ID
+
+		artistMu.RLock()
+		userArtists := artistCache[user]
+		artistMu.RUnlock()
+
+		if userArtists != nil {
+			if _, found := userArtists[artistID]; found {
+				sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, userArtists[artistID])
+				continue
+			}
+		}
+
+		artist := types.SubsonicArtist{
 			ID:       fmt.Sprint(a.ID),
 			Name:     a.Name,
 			CoverArt: a.Picture,
-		})
+		}
+
+		artistMu.Lock()
+		if artistCache[user] == nil {
+			artistCache[user] = make(map[int]types.SubsonicArtist)
+		}
+		artistCache[user][artistID] = artist
+		artistMu.Unlock()
+
+		sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, artist)
 	}
 
 	// ALBUMS
