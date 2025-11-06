@@ -17,6 +17,7 @@ func getArtists(user string, w http.ResponseWriter) {
 	var artists []types.SubsonicArtist
 	for _, a := range userArtists {
 		artists = append(artists, a)
+
 	}
 
 	sub.Subsonic.Artists.Index = []types.SubsonicArtistIndexItem{
