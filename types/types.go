@@ -132,21 +132,18 @@ type TidalArtistAlbumsResponse struct {
 		} `json:"data"`
 	} `json:"item"`
 	Items []struct {
-		Items []struct {
+		ModuleId string `json:"moduleId,omitempty"`
+		Items    []struct {
 			Data struct {
-				ID       int    `json:"id"`
-				Editable bool   `json:"editable"`
-				Title    string `json:"title"`
-				Album    struct {
-					ID           int    `json:"id"`
-					Title        string `json:"title"`
-					Cover        string `json:"cover"`
-					VibrantColor string `json:"vibrantColor"`
-					VideoCover   string `json:"videoCover"`
-					ReleaseDate  string `json:"releaseDate"`
-					Type         string `json:"type"`
-				} `json:"album"`
-				Artists []struct {
+				ID           int    `json:"id"`
+				Editable     bool   `json:"editable"`
+				Title        string `json:"title"`
+				Cover        string `json:"cover"`
+				VibrantColor string `json:"vibrantColor"`
+				VideoCover   string `json:"videoCover"`
+				ReleaseDate  string `json:"releaseDate"`
+				Type         string `json:"type"`
+				Artists      []struct {
 					ID      int    `json:"id"`
 					Name    string `json:"name"`
 					Picture string `json:"picture"`

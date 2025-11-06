@@ -47,7 +47,17 @@ func getArtist(id string, w http.ResponseWriter) {
 		return
 	}
 
-	fmt.Printf("Number of albumItem.Items: %d\n", len(tidalArtistAlbums.Items))
+	for _, item := range tidalArtistAlbums.Items {
+		if item.ModuleId == "ARTIST_ALBUMS" {
+			for _, albumItem := range item.Items {
+				data := albumItem.Data
+				id := fmt.Sprint(data.ID)
+				title := data.Title
+				fmt.Println("Album:", id, title)
+
+			}
+		}
+	}
 
 	artistData := tidalArtistAlbums.Item.Data
 
@@ -55,7 +65,7 @@ func getArtist(id string, w http.ResponseWriter) {
 		ID:         fmt.Sprint(artistData.ID),
 		Name:       artistData.Name,
 		CoverArt:   firstNonEmpty(artistData.Picture, artistData.SelectedAlbumCoverFallback),
-		AlbumCount: len(tidalArtistAlbums.Items),
+		AlbumCount: len(tidalArtistAlbums.Items[1].Items),
 	}
 
 	sub := types.MetaBanner()
