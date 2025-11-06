@@ -180,6 +180,13 @@ type SubsonicAlbumList struct {
 	Album []SubsonicAlbum `json:"album"`
 }
 
+type SubsonicArtistInfo struct {
+	Biography      string `json:"biography,omitempty"`
+	SmallImageURL  string `json:"smallImageUrl,omitempty"`
+	MediumImageURL string `json:"mediumImageUrl,omitempty"`
+	LargeImageURL  string `json:"largeImageUrl,omitempty"`
+}
+
 type SubsonicWrapper struct {
 	Subsonic struct {
 		Status        string                `json:"status"`
@@ -192,5 +199,6 @@ type SubsonicWrapper struct {
 		Song          *SubsonicSong         `json:"song,omitempty"`
 		Album         *SubsonicAlbum        `json:"album,omitempty"`
 		AlbumList2    *SubsonicAlbumList    `json:"albumList2,omitempty"`
+		ArtistInfo    *SubsonicArtistInfo   `json:"artistInfo,omitempty"`
 	} `json:"subsonic-response"`
 }
