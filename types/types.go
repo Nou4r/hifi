@@ -136,8 +136,8 @@ type TidalArtistAlbumsResponse struct {
 		Items    []struct {
 			Data struct {
 				ID           int    `json:"id"`
-				Editable     bool   `json:"editable"`
 				Title        string `json:"title"`
+				Duration     int    `json:"duration"`
 				Cover        string `json:"cover"`
 				VibrantColor string `json:"vibrantColor"`
 				VideoCover   string `json:"videoCover"`
