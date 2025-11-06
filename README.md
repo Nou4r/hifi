@@ -101,19 +101,19 @@ Soon...
 
 ### Web
 
-Soon...
+- [Feishin](https://github.com/jeffvli/feishin)
 
 ### Desktop (Linux)
 
-Soon...
+- [Feishin](https://github.com/jeffvli/feishin)
 
 ### Desktop (macOS)
 
-Soon...
+- [Feishin](https://github.com/jeffvli/feishin)
 
 ### Desktop (Windows)
 
-Soon...
+- [Feishin](https://github.com/jeffvli/feishin)
 
 <br>
 
