@@ -10,7 +10,7 @@ import (
 	"net/url"
 )
 
-func getArtist(id string,  w http.ResponseWriter) {
+func getArtist(id string, w http.ResponseWriter) {
 	var tidalArtistAlbums types.TidalArtistAlbumsResponse
 
 	tidalURL := &url.URL{

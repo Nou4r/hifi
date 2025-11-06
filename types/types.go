@@ -228,15 +228,11 @@ type SubsonicArtistInfo struct {
 }
 
 type SubsonicArtistWithAlbums struct {
-	ID             string          `json:"id"`
-	Name           string          `json:"name"`
-	CoverArt       string          `json:"coverArt,omitempty"`
-	AlbumCount     int             `json:"albumCount,omitempty"`
-	UserRating     int             `json:"userRating,omitempty"`
-	ArtistImageURL string          `json:"artistImageUrl,omitempty"`
-	SortName       string          `json:"sortName,omitempty"`
-	Roles          []string        `json:"roles,omitempty"`
-	Album          []SubsonicAlbum `json:"album,omitempty"`
+	ID         string          `json:"id"`
+	Name       string          `json:"name"`
+	CoverArt   string          `json:"coverArt,omitempty"`
+	AlbumCount int             `json:"albumCount,omitempty"`
+	Album      []SubsonicAlbum `json:"album,omitempty"`
 }
 
 type SubsonicWrapper struct {
