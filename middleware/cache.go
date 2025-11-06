@@ -18,6 +18,6 @@ var (
 	artistInfoCache = make(map[string]types.SubsonicArtistInfo)
 	artistInfoMu    sync.RWMutex
 
-	artistsWithAlbumsCache = make(map[string]map[int]types.SubsonicArtistWithAlbums)
+	artistsWithAlbumsCache = make(map[string]map[string]types.SubsonicArtistWithAlbums)
 	artistMu               sync.RWMutex
 )

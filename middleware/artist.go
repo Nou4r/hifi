@@ -10,8 +10,24 @@ import (
 	"net/url"
 )
 
-func getArtist(id string, w http.ResponseWriter) {
+func getArtist(id string, user string, w http.ResponseWriter) {
 	var tidalArtistAlbums types.TidalArtistAlbumsResponse
+
+	artistID := id
+
+	sub := types.MetaBanner()
+	sub.Subsonic.Artist = &types.SubsonicArtistWithAlbums{}
+
+	artistMu.RLock()
+	if perUser := artistsWithAlbumsCache[user]; perUser != nil {
+		if cached, ok := perUser[artistID]; ok {
+			sub.Subsonic.Artist = &cached
+			artistMu.RUnlock()
+			_ = json.NewEncoder(w).Encode(sub)
+			return
+		}
+	}
+	artistMu.RUnlock()
 
 	tidalURL := &url.URL{
 		Scheme: config.Scheme,
@@ -80,7 +96,13 @@ func getArtist(id string, w http.ResponseWriter) {
 		Album:      albums,
 	}
 
-	sub := types.MetaBanner()
+	artistMu.Lock()
+	if artistsWithAlbumsCache[user] == nil {
+		artistsWithAlbumsCache[user] = make(map[string]types.SubsonicArtistWithAlbums)
+	}
+	artistsWithAlbumsCache[user][artistID] = artist
+	artistMu.Unlock()
+
 	sub.Subsonic.Artist = &artist
 
 	_ = json.NewEncoder(w).Encode(sub)

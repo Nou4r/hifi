@@ -2,17 +2,26 @@ package middleware
 
 import (
 	"encoding/json"
+	"fmt"
 	"hifi/types"
 	"net/http"
 )
 
-func getArtistInfo(id string, user string, w http.ResponseWriter) {
+func getArtistInfo(id string, w http.ResponseWriter) {
 
-	info := types.SubsonicArtistInfo{
-		Biography:      "No biography available.",
-		SmallImageURL:  "/coverArt?id=" + id + "&size=200",
-		MediumImageURL: "/coverArt?id=" + id + "&size=450",
-		LargeImageURL:  "/coverArt?id=" + id + "&size=500",
+	artistInfoMu.RLock()
+	info, found := artistInfoCache[id]
+	artistInfoMu.RUnlock()
+
+	if !found {
+
+		fmt.Println("cache not hit")
+		info = types.SubsonicArtistInfo{
+			ID: id,
+		}
+		artistInfoMu.Lock()
+		artistInfoCache[id] = info
+		artistInfoMu.Unlock()
 	}
 
 	sub := types.MetaBanner()

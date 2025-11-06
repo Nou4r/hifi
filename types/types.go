@@ -218,10 +218,8 @@ type SubsonicAlbumList struct {
 }
 
 type SubsonicArtistInfo struct {
-	Biography      string `json:"biography,omitempty"`
-	SmallImageURL  string `json:"smallImageUrl,omitempty"`
-	MediumImageURL string `json:"mediumImageUrl,omitempty"`
-	LargeImageURL  string `json:"largeImageUrl,omitempty"`
+	ID        string `json:"id"`
+	Biography string `json:"biography,omitempty"`
 }
 
 type SubsonicArtistWithAlbums struct {
