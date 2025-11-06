@@ -103,6 +103,10 @@ func search3(search string, user string, w http.ResponseWriter) {
 		artistMu.Unlock()
 
 		sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, artist)
+
+		if len(sub.Subsonic.SearchResult3.Artist) >= 5 {
+			break
+		}
 	}
 
 	// ALBUMS
