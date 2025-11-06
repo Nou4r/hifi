@@ -124,13 +124,11 @@ type TidalArtistAlbumsResponse struct {
 	} `json:"header"`
 	Item struct {
 		Data struct {
-			ID          int    `json:"id"`
-			Name        string `json:"name"`
-			Picture     string `json:"picture"`
-			Popularity  int    `json:"popularity"`
-			ArtistRoles []struct {
-				Category string `json:"category"`
-			} `json:"artistRoles"`
+			ID                         int    `json:"id"`
+			Name                       string `json:"name"`
+			Picture                    string `json:"picture"`
+			Popularity                 int    `json:"popularity"`
+			SelectedAlbumCoverFallback string `json:"selectedAlbumCoverFallback"`
 		} `json:"data"`
 	} `json:"item"`
 	Items []struct {
