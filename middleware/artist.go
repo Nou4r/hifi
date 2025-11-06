@@ -55,8 +55,8 @@ func getArtist(id string, w http.ResponseWriter) {
 				title := data.Title
 				duration := data.Duration
 				year := data.ReleaseDate[:4]
-				fmt.Println("Album:", id, title, duration, year)
-
+				cover := data.Cover
+				fmt.Println("Album:", id, title, duration, year, cover)
 			}
 		}
 	}
