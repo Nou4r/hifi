@@ -47,6 +47,8 @@ func getArtist(id string, w http.ResponseWriter) {
 		return
 	}
 
+	var albums []types.SubsonicAlbum
+
 	for _, item := range tidalArtistAlbums.Items {
 		if item.ModuleId == "ARTIST_ALBUMS" {
 			for _, albumItem := range item.Items {
@@ -56,7 +58,14 @@ func getArtist(id string, w http.ResponseWriter) {
 				duration := data.Duration
 				year := data.ReleaseDate[:4]
 				cover := data.Cover
-				fmt.Println("Album:", id, title, duration, year, cover)
+
+				albums = append(albums, types.SubsonicAlbum{
+					ID:       id,
+					Name:     title,
+					Year:     year,
+					Duration: duration,
+					CoverArt: cover,
+				})
 			}
 		}
 	}
@@ -68,6 +77,7 @@ func getArtist(id string, w http.ResponseWriter) {
 		Name:       artistData.Name,
 		CoverArt:   firstNonEmpty(artistData.Picture, artistData.SelectedAlbumCoverFallback),
 		AlbumCount: len(tidalArtistAlbums.Items[1].Items),
+		Album:      albums,
 	}
 
 	sub := types.MetaBanner()
