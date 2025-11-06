@@ -116,6 +116,46 @@ type TidalTokenResponse struct {
 	Scope        string `json:"scope"`
 }
 
+type TidalArtistAlbumsResponse struct {
+	Biography struct {
+		Text string `json:"text,omitempty"`
+	} `json:"biography"`
+	Item struct {
+		Data struct {
+			ID          int    `json:"id"`
+			Name        string `json:"name"`
+			Picture     string `json:"picture"`
+			Popularity  int    `json:"popularity"`
+			ArtistRoles []struct {
+				Category string `json:"category"`
+			} `json:"artistRoles"`
+		} `json:"data"`
+	} `json:"item"`
+	Items []struct {
+		Items []struct {
+			Data struct {
+				ID       int    `json:"id"`
+				Editable bool   `json:"editable"`
+				Title    string `json:"title"`
+				Album    struct {
+					ID           int    `json:"id"`
+					Title        string `json:"title"`
+					Cover        string `json:"cover"`
+					VibrantColor string `json:"vibrantColor"`
+					VideoCover   string `json:"videoCover"`
+					ReleaseDate  string `json:"releaseDate"`
+				} `json:"album"`
+				Artists []struct {
+					ID      int    `json:"id"`
+					Name    string `json:"name"`
+					Picture string `json:"picture"`
+					Main    bool   `json:"main"`
+				} `json:"artists"`
+			} `json:"data"`
+		} `json:"items"`
+	} `json:"items"`
+}
+
 // Subsonic Response Format
 type SubsonicSong struct {
 	ID          string `json:"id"`
