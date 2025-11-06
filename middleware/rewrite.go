@@ -51,6 +51,10 @@ func RewriteRequest(w http.ResponseWriter, r *http.Request) {
 	case rest.GetAlbumView():
 		getAlbum(id, user, w)
 
+	// -------------------- getArtist --------------------
+	case rest.GetArtistView():
+		getArtist(id, user, w)
+
 	// -------------------- getArtists --------------------
 	case rest.GetArtistsView():
 		getArtists(user, w)

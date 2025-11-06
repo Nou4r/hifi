@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func getArtistInfo(user string, id string, w http.ResponseWriter) {
+func getArtistInfo(id string, user string, w http.ResponseWriter) {
 
 	info := types.SubsonicArtistInfo{
 		Biography:      "No biography available.",
