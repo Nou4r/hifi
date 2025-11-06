@@ -25,6 +25,7 @@ var (
 		rest.GetAlbumView(),
 		rest.GetAlbumList2View(),
 		rest.GetArtistInfoView(),
+		rest.GetArtistView(),
 	}
 
 	// ENV

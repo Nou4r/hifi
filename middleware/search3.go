@@ -78,9 +78,9 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 		artistID := a.ID
 
-		artistMu.RLock()
-		userArtists := artistCache[user]
-		artistMu.RUnlock()
+		artistsMu.RLock()
+		userArtists := artistsCache[user]
+		artistsMu.RUnlock()
 
 		if userArtists != nil {
 			if _, found := userArtists[artistID]; found {
@@ -95,12 +95,12 @@ func search3(search string, user string, w http.ResponseWriter) {
 			CoverArt: a.Picture,
 		}
 
-		artistMu.Lock()
-		if artistCache[user] == nil {
-			artistCache[user] = make(map[int]types.SubsonicArtist)
+		artistsMu.Lock()
+		if artistsCache[user] == nil {
+			artistsCache[user] = make(map[int]types.SubsonicArtist)
 		}
-		artistCache[user][artistID] = artist
-		artistMu.Unlock()
+		artistsCache[user][artistID] = artist
+		artistsMu.Unlock()
 
 		sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, artist)
 

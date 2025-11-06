@@ -10,9 +10,9 @@ func getArtists(user string, w http.ResponseWriter) {
 	sub := types.MetaBanner()
 	sub.Subsonic.Artists = &types.SubsonicArtists{}
 
-	artistMu.RLock()
-	userArtists := artistCache[user]
-	artistMu.RUnlock()
+	artistsMu.RLock()
+	userArtists := artistsCache[user]
+	artistsMu.RUnlock()
 
 	var artists []types.SubsonicArtist
 	for _, a := range userArtists {

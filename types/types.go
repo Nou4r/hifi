@@ -117,9 +117,11 @@ type TidalTokenResponse struct {
 }
 
 type TidalArtistAlbumsResponse struct {
-	Biography struct {
-		Text string `json:"text,omitempty"`
-	} `json:"biography"`
+	Header struct {
+		Biography struct {
+			Text string `json:"text,omitempty"`
+		} `json:"biography"`
+	} `json:"header"`
 	Item struct {
 		Data struct {
 			ID          int    `json:"id"`
@@ -144,6 +146,7 @@ type TidalArtistAlbumsResponse struct {
 					VibrantColor string `json:"vibrantColor"`
 					VideoCover   string `json:"videoCover"`
 					ReleaseDate  string `json:"releaseDate"`
+					Type         string `json:"type"`
 				} `json:"album"`
 				Artists []struct {
 					ID      int    `json:"id"`
