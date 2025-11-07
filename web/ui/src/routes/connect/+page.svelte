@@ -23,7 +23,7 @@
 				<TabsTrigger
 					value="tab-0"
 					onclick={() => goto('/')}
-					class="flex w-full cursor-pointer  items-center justify-start gap-3 rounded-md px-6 py-4 text-3xl font-bold text-white transition data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=inactive]:text-zinc-400 data-[state=inactive]:hover:bg-zinc-800 data-[state=inactive]:hover:text-white"
+					class="hidden w-full cursor-pointer items-center  justify-start gap-3 rounded-md px-6 py-4 text-3xl font-bold text-white transition data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=inactive]:text-zinc-400 data-[state=inactive]:hover:bg-zinc-800 data-[state=inactive]:hover:text-white md:flex"
 				>
 					<House class="h-8 w-8" /> Home
 				</TabsTrigger>
@@ -31,7 +31,7 @@
 				<TabsTrigger
 					value="tab-5"
 					onclick={() => window.history.pushState({}, '', '/connect')}
-					class="flex w-full cursor-pointer  items-center justify-start gap-3 rounded-md px-6 py-4 text-3xl font-bold text-white transition data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=inactive]:text-zinc-400 data-[state=inactive]:hover:bg-zinc-800 data-[state=inactive]:hover:text-white"
+					class="hidden w-full cursor-pointer items-center  justify-start gap-3 rounded-md px-6 py-4 text-3xl font-bold text-white transition data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=inactive]:text-zinc-400 data-[state=inactive]:hover:bg-zinc-800 data-[state=inactive]:hover:text-white md:flex"
 				>
 					<Unplug class="h-8 w-8" /> Connect
 				</TabsTrigger>
@@ -39,7 +39,7 @@
 				<TabsTrigger
 					value="tab-6"
 					onclick={() => window.history.pushState({}, '', '/deactivate')}
-					class="flex w-full cursor-pointer  items-center justify-start gap-3 rounded-md px-6 py-4 text-3xl font-bold text-white transition data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=inactive]:text-zinc-400 data-[state=inactive]:hover:bg-zinc-800 data-[state=inactive]:hover:text-white"
+					class="hidden w-full cursor-pointer items-center  justify-start gap-3 rounded-md px-6 py-4 text-3xl font-bold text-white transition data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=inactive]:text-zinc-400 data-[state=inactive]:hover:bg-zinc-800 data-[state=inactive]:hover:text-white md:flex"
 				>
 					<ShieldMinus class="h-8 w-8" /> Deactivate
 				</TabsTrigger>
