@@ -86,6 +86,7 @@
 	import IconUserCircle from '@tabler/icons-svelte/icons/user-circle';
 	import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
+	import UserCircle from '@lucide/svelte/icons/user-circle';
 
 	let open = $state(false);
 
@@ -114,8 +115,13 @@
 </script>
 
 <div class={cn('flex flex-col gap-6', className)} {...restProps}>
-	<Card.Root class="bg-transparent">
+	<Card.Root class="mx-auto max-w-md border border-zinc-700 bg-transparent">
 		<Card.Header class="text-center">
+			<Empty.Header>
+				<Empty.Media variant="icon">
+					<UserCircle />
+				</Empty.Media>
+			</Empty.Header>
 			<Card.Title class="text-xl text-gray-200">Login to your account</Card.Title>
 		</Card.Header>
 		<Card.Content>
@@ -174,7 +180,7 @@
 			<a href="/" class="underline underline-offset-4">Sign up</a>
 		</FieldDescription>
 		<FieldDescription class="px-6 text-center">
-			By clicking continue, you agree to our <a href="##" class="hover:text-red-500">Terms</a>.
+			By clicking continue, you agree to our <a href="##">Terms</a>.
 		</FieldDescription>
 	</Card.Root>
 </div>
