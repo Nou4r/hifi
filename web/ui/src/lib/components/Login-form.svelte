@@ -35,26 +35,6 @@
 					ctx.addIssue({ code: 'custom', message: 'Title must not exceed 50 characters' });
 					return;
 				}
-			}),
-		description: z
-			.string()
-			.trim()
-			.superRefine((val, ctx) => {
-				if (!val) {
-					ctx.addIssue({ code: 'custom', message: 'Description is required' });
-					return;
-				}
-				if (val.length < 2) {
-					ctx.addIssue({
-						code: 'custom',
-						message: 'Description must be at least 2 characters long'
-					});
-					return;
-				}
-				if (val.length > 100) {
-					ctx.addIssue({ code: 'custom', message: 'Description must not exceed 100 characters' });
-					return;
-				}
 			})
 	});
 </script>
