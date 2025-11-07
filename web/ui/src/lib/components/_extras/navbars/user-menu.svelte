@@ -1,8 +1,9 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button.svelte';
+	import { goto } from '$app/navigation';
 
 	import LogOutIcon from '@lucide/svelte/icons/log-out';
-	import { BookOpenText, LogInIcon } from 'lucide-svelte';
+	import { Unplug, LogInIcon } from 'lucide-svelte';
 	import { Avatar, AvatarFallback, AvatarImage } from '$lib/components/ui/avatar';
 	import {
 		DropdownMenu,
@@ -16,7 +17,6 @@
 	import ProfileIcon from '$lib/components/ProfileIcon.svelte';
 
 	let loggedIn = $state(false);
-
 	let guest = $state('Guest');
 </script>
 
@@ -51,6 +51,17 @@
 			<DropdownMenuItem class="cursor-pointer text-zinc-100 focus:bg-zinc-600 focus:text-white">
 				<LogOutIcon size={16} class="opacity-80" aria-hidden="true" />
 				<span>Sign out</span>
+			</DropdownMenuItem>
+		{/if}
+
+		{#if loggedIn}
+			<DropdownMenuSeparator class="bg-zinc-600" />
+			<DropdownMenuItem
+				onclick={() => goto('/connect')}
+				class="cursor-pointer text-zinc-100 focus:bg-zinc-600 focus:text-white"
+			>
+				<Unplug size={16} class="opacity-80" aria-hidden="true" />
+				<span>Connect</span>
 			</DropdownMenuItem>
 		{/if}
 
