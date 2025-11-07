@@ -16,8 +16,17 @@
 	} from '$lib/components/ui/dropdowns';
 	import ProfileIcon from '$lib/components/ProfileIcon.svelte';
 
-	let loggedIn = $state(false);
+	import { getContext } from 'svelte';
+
 	let guest = $state('Guest');
+
+	interface AuthContext {
+		loggedIn: boolean;
+		login: () => void;
+		logout: () => void;
+	}
+
+	const auth = getContext<AuthContext>('auth');
 </script>
 
 <DropdownMenu>
@@ -39,14 +48,14 @@
 	</DropdownMenuTrigger>
 	<DropdownMenuContent class="max-w-64 bg-zinc-700" align="end">
 		<DropdownMenuLabel class="flex min-w-0  flex-col">
-			{#if loggedIn}
+			{#if auth.loggedIn}
 				<span class="truncate text-sm font-medium text-zinc-100">Keith Kennedy</span>
 			{:else}
 				<span class="truncate text-sm font-medium text-zinc-100">{guest}</span>
 			{/if}
 		</DropdownMenuLabel>
 
-		{#if loggedIn}
+		{#if auth.loggedIn}
 			<DropdownMenuSeparator class="bg-zinc-600" />
 			<DropdownMenuItem class="cursor-pointer text-zinc-100 focus:bg-zinc-600 focus:text-white">
 				<LogOutIcon size={16} class="opacity-80" aria-hidden="true" />
@@ -54,7 +63,7 @@
 			</DropdownMenuItem>
 		{/if}
 
-		{#if loggedIn}
+		{#if auth.loggedIn}
 			<DropdownMenuSeparator class="bg-zinc-600" />
 			<DropdownMenuItem
 				onclick={() => goto('/connect')}
