@@ -25,7 +25,6 @@
 <script lang="ts">
 	import Button, { buttonVariants } from '$lib/components/ui/button.svelte';
 	import Input from '$lib/components/ui/input.svelte';
-	import Label from '$lib/components/ui/label.svelte';
 
 	import CircleAlert from '@lucide/svelte/icons/circle-alert';
 	import * as Dialog from '$lib/components/ui/dialog';
@@ -43,9 +42,7 @@
 	import UserPen from '@lucide/svelte/icons/user-pen';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
 
-	let username = $state('MyProject');
-
-	let inputValue = $state('');
+	let username = $state('JohnDoe');
 
 	let open = $state(false);
 
@@ -83,7 +80,7 @@
 		<Empty.Description class="text-gray-400">Permanently delete your account</Empty.Description>
 	</Empty.Header>
 	<Empty.Content>
-		<Dialog.Root>
+		<Dialog.Root bind:open>
 			<Dialog.Trigger class={cn('cursor-pointer', buttonVariants({ variant: 'destructive' }))}>
 				Delete Account</Dialog.Trigger
 			>
@@ -98,7 +95,7 @@
 					<Dialog.Header>
 						<Dialog.Title class="text-gray-300 sm:text-center">Final confirmation</Dialog.Title>
 						<Dialog.Description class="text-gray-400 sm:text-center">
-							This action cannot be undone. To confirm, please enter the project name
+							This action cannot be undone. To confirm, please enter the username
 							<span class="text-red-400">{username}</span>.
 						</Dialog.Description>
 					</Dialog.Header>
@@ -123,23 +120,24 @@
 						</Form.Field>
 					</div>
 					<Dialog.Footer>
-						<Button
+						<Form.Button
 							variant="destructive"
-							type="button"
-							class="flex-1"
-							disabled={$formData.username !== username}>Delete</Button
+							type="submit"
+							class="flex-1 cursor-pointer"
+							disabled={$formData.username !== username || $submitting}
 						>
-						<Dialog.Close class="{buttonVariants({ variant: 'outline' })} flex-1"
-							>Cancel</Dialog.Close
-						>
-
-						<Form.Button disabled={$submitting}
-							>{#if $submitting}
+							{#if $submitting}
 								<Loader2 class="size-4 animate-spin" />
 							{:else}
-								Delete Account
+								Delete
 							{/if}
 						</Form.Button>
+
+						{#if !$submitting}
+							<Dialog.Close class="{buttonVariants({ variant: 'outline' })} flex-1 cursor-pointer">
+								Cancel
+							</Dialog.Close>
+						{/if}
 					</Dialog.Footer>
 				</form>
 			</Dialog.Content>
