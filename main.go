@@ -49,7 +49,7 @@ func main() {
 	slog.Info("Hifi API server running",
 		"host", config.Host,
 		"port", port,
-		"url", fmt.Sprintf("%s://%s:%s", config.Scheme, config.Host, port),
+		"url", fmt.Sprintf("%s://%s:%s", config.HifiScheme, config.Host, port),
 	)
 
 	// Run server in background

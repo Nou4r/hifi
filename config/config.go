@@ -29,6 +29,8 @@ var (
 	}
 
 	// ENV
+
+	// TIDAL API
 	ClientID     = os.Getenv("CLIENT_ID")
 	ClientSecret = os.Getenv("CLIENT_SECRET")
 
@@ -42,7 +44,13 @@ var (
 	CORSAllowOrigin = "*"
 
 	// Server port and fallback port
-	Port = []string{"5000", "5011"}
+	Port = []string{"5000", "5005"}
+
+	// Hifi Server
+	Host = "127.0.0.1"
+
+	// Hifi Scheme
+	HifiScheme = "http"
 )
 
 const (
@@ -51,9 +59,6 @@ const (
 	Scheme          = "https"
 	TidalStaticHost = "resources.tidal.com"
 	TidalAuthHost   = "auth.tidal.com"
-
-	// Hifi Server
-	Host = "127.0.0.1"
 
 	// HTTP methods
 	MethodGet     = "GET"
