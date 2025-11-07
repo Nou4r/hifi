@@ -13,7 +13,6 @@
 		DropdownMenuSeparator,
 		DropdownMenuTrigger
 	} from '$lib/components/ui/dropdowns';
-	import { goto } from '$app/navigation';
 	import ProfileIcon from '$lib/components/ProfileIcon.svelte';
 </script>
 
