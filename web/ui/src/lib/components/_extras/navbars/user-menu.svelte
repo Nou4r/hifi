@@ -40,13 +40,6 @@
 		</DropdownMenuLabel>
 		<DropdownMenuSeparator class="bg-zinc-600" />
 		<DropdownMenuGroup>
-			<DropdownMenuItem
-				onclick={() => goto('/connect')}
-				class="cursor-pointer text-zinc-100 focus:bg-zinc-600 focus:text-white"
-			>
-				<Unplug size={16} class="opacity-80" aria-hidden="true" />
-				<span>Settings</span>
-			</DropdownMenuItem>
 			<DropdownMenuSeparator class="bg-zinc-600" />
 			<a href="https://github.com/sachinsenal0x64/hifi?tab=readme-ov-file#quickstart">
 				<DropdownMenuItem class="cursor-pointer text-zinc-100 focus:bg-zinc-600 focus:text-white">

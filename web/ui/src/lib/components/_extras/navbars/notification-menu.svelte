@@ -11,7 +11,7 @@
 	<Button
 		size="icon"
 		variant="ghost"
-		class="relative cursor-pointer rounded-full text-zinc-100 shadow-none hover:bg-zinc-600 hover:text-zinc-100"
+		class="relative cursor-pointer rounded-full p-4 text-zinc-100 shadow-none hover:bg-zinc-600 hover:text-zinc-100"
 		aria-label="Open notifications"
 	>
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
@@ -22,3 +22,10 @@
 		</svg>
 	</Button>
 </a>
+
+<style>
+	svg {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+</style>
