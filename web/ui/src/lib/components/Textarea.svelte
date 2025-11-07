@@ -6,9 +6,9 @@
 	import Label from './ui/label.svelte';
 
 	const fields = [
+		{ label: 'Hostname', value: 'example.com' },
 		{ label: 'Username', value: 'John' },
-		{ label: 'Password', value: 'password123' },
-		{ label: 'Hostname', value: 'example.com' }
+		{ label: 'Password', value: 'password123' }
 	];
 
 	const clipboards = fields.map(() => new UseClipboard());
