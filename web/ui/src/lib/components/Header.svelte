@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button.svelte';
-	import { Logo, NotificationMenu, UserMenu } from '$lib/components/_extras/navbars';
+	import { NotificationMenu, UserMenu } from '$lib/components/_extras/navbars';
 	import { Popover, PopoverTrigger } from '$lib/components/ui/popover';
 
 	const title = 'Hifi';
@@ -48,12 +48,6 @@
 					{/snippet}
 				</PopoverTrigger>
 			</Popover>
-			<!-- Main nav  -->
-			<div class="flex items-center gap-6">
-				<a href="/" class="text-primary hover:text-primary/90 hover:opacity-80">
-					<Logo />
-				</a>
-			</div>
 		</div>
 		<!-- Right side -->
 		<div class="flex items-center gap-4">
