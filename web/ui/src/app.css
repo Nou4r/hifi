@@ -422,3 +422,7 @@ input[type='text'] {
 	appearance: textfield;
 	-moz-appearance: textfield;
 }
+
+a:hover {
+	color: white;
+}
