@@ -145,7 +145,6 @@
 											/>
 										{/snippet}
 									</Form.Control>
-									<!-- <Form.Description>This is your public display name.</Form.Description> -->
 									<Form.FieldErrors />
 								</Form.Field>
 							</div>
@@ -157,7 +156,7 @@
 											<Input
 												class="border-zinc-700 text-white"
 												placeholder="Secure Password"
-												type="text"
+												type="password"
 												{...props}
 												bind:value={$formData.title}
 											/>
