@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as Empty from '$lib/components/ui/empty/index.js';
+	import Textarea from './Textarea.svelte';
 
 	const uid = $props.id();
 
@@ -16,7 +17,9 @@
 <Empty.Root>
 	<Empty.Header>
 		<Empty.Description class="text-white">
-			<div class="*:not-first:mt-4">Test</div>
+			<div class="*:not-first:mt-4">
+				<Textarea />
+			</div>
 		</Empty.Description>
 	</Empty.Header>
 </Empty.Root>
