@@ -7,7 +7,7 @@
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import { Unplug, ShieldMinus, House } from 'lucide-svelte';
 
-	let currentTab = 'tab-5';
+	let currentTab = 'tab-6';
 </script>
 
 <div class="flex min-h-screen items-start justify-center overflow-hidden bg-black">

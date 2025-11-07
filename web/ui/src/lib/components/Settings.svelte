@@ -65,14 +65,11 @@
 	import { Toaster, toast } from 'svelte-sonner';
 
 	import Button from '$lib/components/ui/button.svelte';
-	import * as Dialog from '$lib/components/ui/dialog';
-	import { cn } from '$lib/utils';
 
 	import * as Empty from '$lib/components/ui/empty/index.js';
 	import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
 
 	import IconSettingsFilled from '@lucide/svelte/icons/settings';
-	import Loader2 from '@lucide/svelte/icons/loader-2';
 
 	let open = $state(false);
 
@@ -96,8 +93,6 @@
 			}
 		}
 	});
-
-	const { form: formData, submitting, enhance } = form;
 </script>
 
 <Toaster closeButton position="top-center" />
