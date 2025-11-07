@@ -160,7 +160,9 @@
 			<a href="/" class="underline underline-offset-4">Sign up</a>
 		</FieldDescription>
 		<FieldDescription class="px-6 text-center">
-			By clicking continue, you agree to our <a href="##">Terms</a>.
+			By clicking continue, you agree to our <a
+				href="https://github.com/sachinsenal0x64/hifi?tab=readme-ov-file#project-terms">Terms</a
+			>.
 		</FieldDescription>
 	</Card.Root>
 </div>
