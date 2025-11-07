@@ -14,6 +14,7 @@
 		DropdownMenuTrigger
 	} from '$lib/components/ui/dropdowns';
 	import { goto } from '$app/navigation';
+	import ProfileIcon from '$lib/components/ProfileIcon.svelte';
 </script>
 
 <DropdownMenu>
@@ -26,7 +27,9 @@
 			>
 				<Avatar>
 					<AvatarImage src="" alt="Profile image" />
-					<AvatarFallback>KK</AvatarFallback>
+					<AvatarFallback>
+						<ProfileIcon username="k.kennedy" />
+					</AvatarFallback>
 				</Avatar>
 			</Button>
 		{/snippet}
