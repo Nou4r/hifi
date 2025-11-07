@@ -45,15 +45,6 @@
 				<span class="truncate text-sm font-medium text-zinc-100">{guest}</span>
 			{/if}
 		</DropdownMenuLabel>
-		<DropdownMenuGroup>
-			<DropdownMenuSeparator class="bg-zinc-600" />
-			<a href="https://github.com/sachinsenal0x64/hifi?tab=readme-ov-file#quickstart">
-				<DropdownMenuItem class="cursor-pointer text-zinc-100 focus:bg-zinc-600 focus:text-white">
-					<BookOpenText size={16} class="opacity-80" aria-hidden="true" />
-					<span>Docs</span>
-				</DropdownMenuItem>
-			</a>
-		</DropdownMenuGroup>
 
 		{#if loggedIn}
 			<DropdownMenuSeparator class="bg-zinc-600" />
