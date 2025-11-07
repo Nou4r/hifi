@@ -39,8 +39,6 @@ func search3(search string, user string, w http.ResponseWriter) {
 	q.Set("deviceType", "BROWSER")
 	tidalURL.RawQuery = q.Encode()
 
-	fmt.Println(tidalURL.String())
-
 	req, _ := http.NewRequest(config.MethodGet, tidalURL.String(), nil)
 	req.Header.Set("Authorization", "Bearer "+TidalAuth())
 
@@ -78,6 +76,8 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 		artistID := a.ID
 
+		fmt.Println("Artist ID:", artistID)
+
 		artistsMu.RLock()
 		userArtists := artistsCache[user]
 		artistsMu.RUnlock()
@@ -104,9 +104,6 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 		sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, artist)
 
-		if len(sub.Subsonic.SearchResult3.Artist) >= 5 {
-			break
-		}
 	}
 
 	// ALBUMS
@@ -141,11 +138,9 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 		songMu.RLock()
 		cached, found := songMap[songID]
-		fmt.Println(cached, found)
 		songMu.RUnlock()
 
 		if found {
-			fmt.Println("cache true")
 			sub.Subsonic.SearchResult3.Song = append(sub.Subsonic.SearchResult3.Song, cached)
 			continue
 		}
@@ -165,7 +160,6 @@ func search3(search string, user string, w http.ResponseWriter) {
 			AlbumID:     fmt.Sprint(item.Album.ID),
 		}
 
-		fmt.Println("cache false")
 		sub.Subsonic.SearchResult3.Song = append(sub.Subsonic.SearchResult3.Song, song)
 
 		songMu.Lock()
