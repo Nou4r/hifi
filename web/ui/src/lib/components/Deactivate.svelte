@@ -110,15 +110,15 @@
 		<Empty.Media variant="icon">
 			<UserPen />
 		</Empty.Media>
-		<Empty.Title class=" text-gray-200">Edit Your Profile</Empty.Title>
-		<Empty.Description class="text-gray-400">Update your profile information</Empty.Description>
+		<Empty.Title class=" text-gray-200">Delete Your Account</Empty.Title>
+		<Empty.Description class="text-gray-400">Permanently delete your account</Empty.Description>
 	</Empty.Header>
 	<Empty.Content>
 		<div class="flex gap-2">
 			<Dialog.Root bind:open>
-				<Dialog.Trigger class={cn('cursor-pointer', buttonVariants({ variant: 'outline' }))}
-					>Edit Profile</Dialog.Trigger
-				>
+				<Dialog.Trigger class={cn('cursor-pointer', buttonVariants({ variant: 'destructive' }))}>
+					Delete Account
+				</Dialog.Trigger>
 				<Dialog.Content class="bg-zinc-900">
 					<div class="flex flex-col items-center gap-2">
 						<Dialog.Header>
