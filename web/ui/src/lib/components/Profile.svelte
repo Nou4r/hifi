@@ -7,15 +7,15 @@
 			.trim()
 			.superRefine((val, ctx) => {
 				if (!val) {
-					ctx.addIssue({ code: 'custom', message: 'Logo is required' });
+					ctx.addIssue({ code: 'custom', message: 'Username is required' });
 					return;
 				}
 				if (val.length < 2) {
-					ctx.addIssue({ code: 'custom', message: 'Logo must be at least 2 characters long' });
+					ctx.addIssue({ code: 'custom', message: 'Username must be at least 2 characters long' });
 					return;
 				}
 				if (val.length > 50) {
-					ctx.addIssue({ code: 'custom', message: 'Logo must not exceed 50 characters' });
+					ctx.addIssue({ code: 'custom', message: 'Username must not exceed 50 characters' });
 					return;
 				}
 			}),
@@ -24,15 +24,15 @@
 			.trim()
 			.superRefine((val, ctx) => {
 				if (!val) {
-					ctx.addIssue({ code: 'custom', message: 'Title is required' });
+					ctx.addIssue({ code: 'custom', message: 'Password is required' });
 					return;
 				}
 				if (val.length < 2) {
-					ctx.addIssue({ code: 'custom', message: 'Title must be at least 2 characters long' });
+					ctx.addIssue({ code: 'custom', message: 'Password must be at least 2 characters long' });
 					return;
 				}
 				if (val.length > 50) {
-					ctx.addIssue({ code: 'custom', message: 'Title must not exceed 50 characters' });
+					ctx.addIssue({ code: 'custom', message: 'Password must not exceed 50 characters' });
 					return;
 				}
 			}),
