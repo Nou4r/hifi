@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"encoding/json"
-	"fmt"
 	"hifi/types"
 	"net/http"
 )
@@ -15,7 +14,6 @@ func getArtistInfo(id string, w http.ResponseWriter) {
 
 	if !found {
 
-		fmt.Println("cache not hit")
 		info = types.SubsonicArtistInfo{
 			ID: id,
 		}

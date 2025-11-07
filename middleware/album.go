@@ -21,8 +21,6 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 	album[user] = id
 	albumMu.Unlock()
 
-	fmt.Printf("[Get Album Request] User: %s | Album ID: %s\n", user, id)
-
 	// Build Tidal request
 	tidalURL := &url.URL{
 		Scheme: config.Scheme,
@@ -46,8 +44,6 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
-
-	fmt.Println(string(body))
 
 	if err != nil {
 		http.Error(w, "failed to read Tidal response", http.StatusInternalServerError)
