@@ -3,14 +3,6 @@
 	import { Logo, NotificationMenu, UserMenu } from '$lib/components/_extras/navbars';
 	import { Popover, PopoverTrigger } from '$lib/components/ui/popover';
 
-	// Navigation links array to be used in both desktop and mobile menus
-	// const navigationLinks = [
-	// 	{ href: '#', label: 'Home' },
-	// 	{ href: '#', label: 'Features' },
-	// 	{ href: '#', label: 'Pricing' },
-	// 	{ href: '#', label: 'About' }
-	// ];
-
 	const title = 'Hifi';
 </script>
 
@@ -55,19 +47,6 @@
 						</Button>
 					{/snippet}
 				</PopoverTrigger>
-				<!-- <PopoverContent align="start" class="w-36 p-1 md:hidden">
-					<NavigationMenuRoot class="max-w-none *:w-full">
-						<NavigationMenuList class="flex-col  items-start gap-0 md:gap-2">
-							{#each navigationLinks as link (link.label)}
-								<NavigationMenuItem class="w-full">
-									<NavigationMenuLink href={link.href} class=" py-1.5">
-										{link.label}
-									</NavigationMenuLink>
-								</NavigationMenuItem>
-							{/each}
-						</NavigationMenuList>
-					</NavigationMenuRoot>
-				</PopoverContent> -->
 			</Popover>
 			<!-- Main nav  -->
 			<div class="flex items-center gap-6">
