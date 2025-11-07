@@ -3,10 +3,10 @@
 </script>
 
 <a
-	href="https://github.com/sachinsenal0x64/hifi"
+	href="https://discord.gg/KQKhtMVD63"
 	target="_blank"
 	rel="noopener noreferrer"
-	aria-label="hifi"
+	aria-label="Discord"
 >
 	<Button
 		size="icon"
@@ -27,7 +27,7 @@
 	href="https://github.com/sachinsenal0x64/hifi"
 	target="_blank"
 	rel="noopener noreferrer"
-	aria-label="hifi"
+	aria-label="Github"
 >
 	<Button
 		size="icon"
