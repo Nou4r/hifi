@@ -27,8 +27,8 @@
 					ctx.addIssue({ code: 'custom', message: 'Password is required' });
 					return;
 				}
-				if (val.length < 2) {
-					ctx.addIssue({ code: 'custom', message: 'Password must be at least 2 characters long' });
+				if (val.length < 8) {
+					ctx.addIssue({ code: 'custom', message: 'Password must be at least 8 characters long' });
 					return;
 				}
 				if (val.length > 50) {
@@ -41,18 +41,18 @@
 			.trim()
 			.superRefine((val, ctx) => {
 				if (!val) {
-					ctx.addIssue({ code: 'custom', message: 'Description is required' });
+					ctx.addIssue({ code: 'custom', message: 'New Password is required' });
 					return;
 				}
-				if (val.length < 2) {
+				if (val.length < 8) {
 					ctx.addIssue({
 						code: 'custom',
-						message: 'Description must be at least 2 characters long'
+						message: 'New Password must be at least 8 characters long'
 					});
 					return;
 				}
-				if (val.length > 100) {
-					ctx.addIssue({ code: 'custom', message: 'Description must not exceed 100 characters' });
+				if (val.length > 50) {
+					ctx.addIssue({ code: 'custom', message: 'New Password must not exceed 50 characters' });
 					return;
 				}
 			})
@@ -155,7 +155,7 @@
 											<Input
 												class="border-zinc-700 text-white"
 												placeholder="SuperSecret123!"
-												type="text"
+												type="password"
 												{...props}
 												bind:value={$formData.title}
 											/>
@@ -165,16 +165,16 @@
 								</Form.Field>
 							</div>
 							<div class="space-y-2">
-								<Form.Field {form} name="title">
+								<Form.Field {form} name="description">
 									<Form.Control>
 										{#snippet children({ props })}
 											<Form.Label class="font-bold text-gray-300">New Password</Form.Label>
 											<Input
 												class="border-zinc-700 text-white"
 												placeholder="SuperSecret123!"
-												type="text"
+												type="password"
 												{...props}
-												bind:value={$formData.title}
+												bind:value={$formData.description}
 											/>
 										{/snippet}
 									</Form.Control>
