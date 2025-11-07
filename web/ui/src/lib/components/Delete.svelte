@@ -1,3 +1,27 @@
+<script lang="ts" module>
+	import { z } from 'zod/v4';
+
+	const formSchema = z.object({
+		username: z
+			.string()
+			.trim()
+			.superRefine((val, ctx) => {
+				if (!val) {
+					ctx.addIssue({ code: 'custom', message: 'Username is required' });
+					return;
+				}
+				if (val.length < 2) {
+					ctx.addIssue({ code: 'custom', message: 'Username must be at least 2 characters long' });
+					return;
+				}
+				if (val.length > 50) {
+					ctx.addIssue({ code: 'custom', message: 'Username must not exceed 50 characters' });
+					return;
+				}
+			})
+	});
+</script>
+
 <script lang="ts">
 	import Button, { buttonVariants } from '$lib/components/ui/button.svelte';
 	import Input from '$lib/components/ui/input.svelte';
@@ -6,44 +30,124 @@
 	import CircleAlert from '@lucide/svelte/icons/circle-alert';
 	import * as Dialog from '$lib/components/ui/dialog';
 
-	let PROJECT_NAME = 'MyProject';
+	import { defaults, superForm } from 'sveltekit-superforms';
+	import { zod4 } from 'sveltekit-superforms/adapters';
+	import { Toaster, toast } from 'svelte-sonner';
+	import * as Form from '$lib/components/ui/form/index.js';
+
+	import { cn } from '$lib/utils';
+
+	import * as Empty from '$lib/components/ui/empty/index.js';
+	import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
+
+	import UserPen from '@lucide/svelte/icons/user-pen';
+	import Loader2 from '@lucide/svelte/icons/loader-2';
+
+	let username = $state('MyProject');
 
 	let inputValue = $state('');
+
+	let open = $state(false);
+
+	const form = superForm(defaults(zod4(formSchema)), {
+		validators: zod4(formSchema),
+		SPA: true,
+		onUpdate: async ({ form: f }) => {
+			const usernameValue = f.data.username?.trim() ?? '';
+
+			if (!usernameValue) {
+				return;
+			}
+			if (f.valid) {
+				await new Promise((r) => setTimeout(r, 500));
+				console.log('Form data:', f.data);
+				open = false;
+				toast.success(`You submitted ${JSON.stringify(f.data, null, 2)}`);
+			} else {
+				open = false;
+				toast.error('Something went wrong. Please try again.');
+			}
+		}
+	});
+
+	const { form: formData, submitting, enhance } = form;
 </script>
 
-<Dialog.Root>
-	<Dialog.Trigger class={buttonVariants({ variant: 'destructive' })}>Delete project</Dialog.Trigger>
-	<Dialog.Content>
-		<div class="flex flex-col items-center gap-2">
-			<div
-				class="border-border flex size-9 shrink-0 items-center justify-center rounded-full border"
-				aria-hidden="true"
+<Toaster closeButton position="top-center" />
+<Empty.Root>
+	<Empty.Header>
+		<Empty.Media variant="icon">
+			<UserPen />
+		</Empty.Media>
+		<Empty.Title class=" text-gray-200">Delete Your Account</Empty.Title>
+		<Empty.Description class="text-gray-400">Permanently delete your account</Empty.Description>
+	</Empty.Header>
+	<Empty.Content>
+		<Dialog.Root>
+			<Dialog.Trigger class={cn('cursor-pointer', buttonVariants({ variant: 'destructive' }))}>
+				Delete Account</Dialog.Trigger
 			>
-				<CircleAlert class="opacity-80" size={16} />
-			</div>
-			<Dialog.Header>
-				<Dialog.Title class="sm:text-center">Final confirmation</Dialog.Title>
-				<Dialog.Description class="sm:text-center">
-					This action cannot be undone. To confirm, please enter the project name
-					<span class="text-foreground">{PROJECT_NAME}</span>.
-				</Dialog.Description>
-			</Dialog.Header>
-		</div>
+			<Dialog.Content class="bg-zinc-900">
+				<div class="flex flex-col items-center gap-2">
+					<div
+						class="border-border flex size-9 shrink-0 items-center justify-center rounded-full border"
+						aria-hidden="true"
+					>
+						<CircleAlert class="text-red-400 opacity-80" size={32} />
+					</div>
+					<Dialog.Header>
+						<Dialog.Title class="text-gray-300 sm:text-center">Final confirmation</Dialog.Title>
+						<Dialog.Description class="text-gray-400 sm:text-center">
+							This action cannot be undone. To confirm, please enter the project name
+							<span class="text-red-400">{username}</span>.
+						</Dialog.Description>
+					</Dialog.Header>
+				</div>
 
-		<form class="space-y-5">
-			<div class="space-y-2">
-				<Label for="project-name">Project name</Label>
-				<Input
-					id="project-name"
-					type="text"
-					placeholder="Type {PROJECT_NAME} to confirm"
-					bind:value={inputValue}
-				/>
-			</div>
-			<Dialog.Footer>
-				<Dialog.Close class="{buttonVariants({ variant: 'outline' })} flex-1">Cancel</Dialog.Close>
-				<Button type="button" class="flex-1" disabled={inputValue !== PROJECT_NAME}>Delete</Button>
-			</Dialog.Footer>
-		</form>
-	</Dialog.Content>
-</Dialog.Root>
+				<form method="POST" class="space-y-5" use:enhance>
+					<div class="space-y-2">
+						<Form.Field {form} name="username">
+							<Form.Control>
+								{#snippet children({ props })}
+									<Form.Label class="font-bold text-gray-300">Username</Form.Label>
+									<Input
+										class="border-zinc-700 text-white"
+										placeholder="Type {username} to confirm"
+										type="text"
+										{...props}
+										bind:value={$formData.username}
+									/>
+								{/snippet}
+							</Form.Control>
+							<Form.FieldErrors />
+						</Form.Field>
+					</div>
+					<Dialog.Footer>
+						<Button
+							variant="destructive"
+							type="button"
+							class="flex-1"
+							disabled={$formData.username !== username}>Delete</Button
+						>
+						<Dialog.Close class="{buttonVariants({ variant: 'outline' })} flex-1"
+							>Cancel</Dialog.Close
+						>
+
+						<Form.Button disabled={$submitting}
+							>{#if $submitting}
+								<Loader2 class="size-4 animate-spin" />
+							{:else}
+								Delete Account
+							{/if}
+						</Form.Button>
+					</Dialog.Footer>
+				</form>
+			</Dialog.Content>
+		</Dialog.Root>
+	</Empty.Content>
+	<Button variant="link" class="text-gray-400" size="sm">
+		<a href="https://github.com/sachinsenal0x64/hifi">
+			Learn More <ArrowUpRightIcon class="inline" />
+		</a>
+	</Button>
+</Empty.Root>
