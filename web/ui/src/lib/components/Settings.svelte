@@ -63,10 +63,8 @@
 	import { defaults, superForm } from 'sveltekit-superforms';
 	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { Toaster, toast } from 'svelte-sonner';
-	import * as Form from '$lib/components/ui/form/index.js';
 
-	import Button, { buttonVariants } from '$lib/components/ui/button.svelte';
-	import Input from '$lib/components/ui/input.svelte';
+	import Button from '$lib/components/ui/button.svelte';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { cn } from '$lib/utils';
 
@@ -116,88 +114,16 @@
 	</Empty.Header>
 	<Empty.Content>
 		<div class="flex gap-2">
-			<Dialog.Root bind:open>
-				<Dialog.Trigger class={cn('cursor-pointer', buttonVariants({ variant: 'outline' }))}
-					>Edit Profile</Dialog.Trigger
-				>
-				<Dialog.Content class="bg-zinc-900">
-					<div class="flex flex-col items-center gap-2">
-						<Dialog.Header>
-							<Dialog.Title class="mt-10 text-gray-300 sm:text-center">HiFi</Dialog.Title>
-							<Dialog.Description class="text-gray-400 sm:text-center">
-								Update your HiFi account
-							</Dialog.Description>
-						</Dialog.Header>
-					</div>
+			<Button class="flex cursor-pointer items-center gap-2" variant="outline">
+				<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 171">
+					<path
+						fill="#0a0b09"
+						d="m128.004 85.339l42.664 42.67l-42.664 42.667l-42.669-42.667zM42.667.002L85.335 42.67L42.667 85.34L0 42.67zm170.666 0L256 42.67l-42.667 42.67l-42.666-42.67l-42.663 42.669l-42.669-42.67L128.004 0l42.663 42.665z"
+					/>
+				</svg>
 
-					<form method="POST" class="space-y-5" use:enhance>
-						<div class="space-y-4">
-							<div class="space-y-2">
-								<Form.Field {form} name="logo">
-									<Form.Control>
-										{#snippet children({ props })}
-											<Form.Label class="font-bold text-gray-300">Username</Form.Label>
-											<Input
-												class="border-zinc-700 text-white"
-												placeholder="John Doe"
-												type="text"
-												{...props}
-												bind:value={$formData.logo}
-											/>
-										{/snippet}
-									</Form.Control>
-									<Form.FieldErrors />
-								</Form.Field>
-							</div>
-							<div class="space-y-2">
-								<Form.Field {form} name="title">
-									<Form.Control>
-										{#snippet children({ props })}
-											<Form.Label class="font-bold text-gray-300">Old Password</Form.Label>
-											<Input
-												class="border-zinc-700 text-white"
-												placeholder="SuperSecret123!"
-												type="password"
-												{...props}
-												bind:value={$formData.title}
-											/>
-										{/snippet}
-									</Form.Control>
-									<Form.FieldErrors />
-								</Form.Field>
-							</div>
-							<div class="space-y-2">
-								<Form.Field {form} name="description">
-									<Form.Control>
-										{#snippet children({ props })}
-											<Form.Label class="font-bold text-gray-300">New Password</Form.Label>
-											<Input
-												class="border-zinc-700 text-white"
-												placeholder="SuperSecret123!"
-												type="password"
-												{...props}
-												bind:value={$formData.description}
-											/>
-										{/snippet}
-									</Form.Control>
-									<Form.FieldErrors />
-								</Form.Field>
-							</div>
-						</div>
-						<Form.Button
-							class="mt-2 w-full cursor-pointer "
-							type="submit"
-							variant="outline"
-							disabled={$submitting}
-							>{#if $submitting}
-								<Loader2 class="size-4 animate-spin" />
-							{:else}
-								Update Profile
-							{/if}
-						</Form.Button>
-					</form>
-				</Dialog.Content>
-			</Dialog.Root>
+				<span>Connect Tidal Account</span>
+			</Button>
 		</div>
 	</Empty.Content>
 	<Button variant="link" class="text-gray-400" size="sm">
