@@ -2,6 +2,7 @@
 	import Header from '$lib/components/Header.svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import Page from '$lib/components/Page.svelte';
+	import Settings from '$lib/components/Settings.svelte';
 	let currentTab = 'tab-0';
 </script>
 
@@ -30,9 +31,18 @@
 								>
 									Home
 								</TabsTrigger>
+								<TabsTrigger
+									value="tab-2"
+									class="relative cursor-pointer after:absolute  after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5  hover:text-white hover:after:bg-white data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:after:bg-white data-[state=active]:hover:text-white"
+								>
+									Settings
+								</TabsTrigger>
 							</TabsList>
 							<TabsContent value="tab-1">
 								<Page />
+							</TabsContent>
+							<TabsContent value="tab-2">
+								<Settings />
 							</TabsContent>
 						</Tabs>
 					</TabsContent>
