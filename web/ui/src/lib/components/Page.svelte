@@ -71,7 +71,7 @@
 	import { cn } from '$lib/utils';
 
 	import * as Empty from '$lib/components/ui/empty/index.js';
-	import IconFileOrientation from '@tabler/icons-svelte/icons/file-orientation';
+	import IconUserCircle from '@tabler/icons-svelte/icons/user-circle';
 	import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
 
@@ -106,7 +106,7 @@
 <Empty.Root>
 	<Empty.Header>
 		<Empty.Media variant="icon">
-			<IconFileOrientation />
+			<IconUserCircle />
 		</Empty.Media>
 		<Empty.Title class=" text-gray-200">Let’s Get Started</Empty.Title>
 		<Empty.Description class="text-gray-400">

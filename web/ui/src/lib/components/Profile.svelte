@@ -71,10 +71,9 @@
 	import { cn } from '$lib/utils';
 
 	import * as Empty from '$lib/components/ui/empty/index.js';
-	import IconFileOrientation from '@tabler/icons-svelte/icons/file-orientation';
 	import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
 
-	import ImagePlus from '@lucide/svelte/icons/image-plus';
+	import UserPen from '@lucide/svelte/icons/user-pen';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
 
 	let open = $state(false);
@@ -108,7 +107,7 @@
 <Empty.Root>
 	<Empty.Header>
 		<Empty.Media variant="icon">
-			<ImagePlus />
+			<UserPen />
 		</Empty.Media>
 		<Empty.Title class=" text-gray-200">Edit Your Profile</Empty.Title>
 		<Empty.Description class="text-gray-400">Update your profile information</Empty.Description>
