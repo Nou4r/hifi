@@ -135,10 +135,10 @@
 								<Form.Field {form} name="logo">
 									<Form.Control>
 										{#snippet children({ props })}
-											<Form.Label class="font-bold text-gray-300">Logo</Form.Label>
+											<Form.Label class="font-bold text-gray-300">Username</Form.Label>
 											<Input
 												class="border-zinc-700 text-white"
-												placeholder="Beep"
+												placeholder="Joe Doe"
 												type="text"
 												{...props}
 												bind:value={$formData.logo}
@@ -153,32 +153,13 @@
 								<Form.Field {form} name="title">
 									<Form.Control>
 										{#snippet children({ props })}
-											<Form.Label class="font-bold text-gray-300">Title</Form.Label>
+											<Form.Label class="font-bold text-gray-300">Password</Form.Label>
 											<Input
 												class="border-zinc-700 text-white"
-												placeholder=""
+												placeholder="Secure Password"
 												type="text"
 												{...props}
 												bind:value={$formData.title}
-											/>
-										{/snippet}
-									</Form.Control>
-									<!-- <Form.Description>This is your public display name.</Form.Description> -->
-									<Form.FieldErrors />
-								</Form.Field>
-							</div>
-
-							<div class="space-y-2">
-								<Form.Field {form} name="description">
-									<Form.Control>
-										{#snippet children({ props })}
-											<Form.Label class="font-bold text-gray-300">Description</Form.Label>
-											<Input
-												class="border-zinc-700 text-white"
-												placeholder="Monitor the status of Beep services"
-												type="text"
-												{...props}
-												bind:value={$formData.description}
 											/>
 										{/snippet}
 									</Form.Control>

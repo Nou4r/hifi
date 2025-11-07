@@ -37,7 +37,6 @@
 		<DropdownMenuLabel class="flex min-w-0  flex-col">
 			<span class="truncate text-sm font-medium text-zinc-100">Keith Kennedy</span>
 		</DropdownMenuLabel>
-		<DropdownMenuSeparator class="bg-zinc-600" />
 		<DropdownMenuGroup>
 			<DropdownMenuSeparator class="bg-zinc-600" />
 			<a href="https://github.com/sachinsenal0x64/hifi?tab=readme-ov-file#quickstart">
