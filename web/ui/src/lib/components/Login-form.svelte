@@ -60,6 +60,18 @@
 </script>
 
 <script lang="ts">
+	import * as Card from '$lib/components/ui/card/index.js';
+	import {
+		FieldGroup,
+		Field,
+		FieldLabel,
+		FieldDescription,
+		FieldSeparator
+	} from '$lib/components/ui/field/index.js';
+	import type { HTMLAttributes } from 'svelte/elements';
+	let { class: className, ...restProps }: HTMLAttributes<HTMLDivElement> = $props();
+	const id = $props.id();
+
 	import { defaults, superForm } from 'sveltekit-superforms';
 	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { Toaster, toast } from 'svelte-sonner';
@@ -74,8 +86,6 @@
 	import IconUserCircle from '@tabler/icons-svelte/icons/user-circle';
 	import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
-
-	import LoginForm from '$lib/components/Login-form.svelte';
 
 	let open = $state(false);
 
@@ -103,8 +113,68 @@
 	const { form: formData, submitting, enhance } = form;
 </script>
 
-<Toaster closeButton position="top-center" />
-
-<div class="mt-10 flex w-full max-w-sm flex-col gap-6">
-	<LoginForm />
+<div class={cn('flex flex-col gap-6', className)} {...restProps}>
+	<Card.Root class="bg-transparent">
+		<Card.Header class="text-center">
+			<Card.Title class="text-xl text-gray-200">Login to your account</Card.Title>
+		</Card.Header>
+		<Card.Content>
+			<form method="POST" class="space-y-5" use:enhance>
+				<div class="space-y-4">
+					<div class="space-y-2">
+						<Form.Field {form} name="logo">
+							<Form.Control>
+								{#snippet children({ props })}
+									<Form.Label class="font-bold text-gray-300">Username</Form.Label>
+									<Input
+										class="border-zinc-700 text-white"
+										placeholder="Joe Doe"
+										type="text"
+										{...props}
+										bind:value={$formData.logo}
+									/>
+								{/snippet}
+							</Form.Control>
+							<Form.FieldErrors />
+						</Form.Field>
+					</div>
+					<div class="space-y-2">
+						<Form.Field {form} name="title">
+							<Form.Control>
+								{#snippet children({ props })}
+									<Form.Label class="font-bold text-gray-300">Password</Form.Label>
+									<Input
+										class="border-zinc-700 text-white"
+										placeholder="Secure Password"
+										type="password"
+										{...props}
+										bind:value={$formData.title}
+									/>
+								{/snippet}
+							</Form.Control>
+							<Form.FieldErrors />
+						</Form.Field>
+					</div>
+				</div>
+				<Form.Button
+					class="mt-2 w-full cursor-pointer "
+					type="submit"
+					variant="outline"
+					disabled={$submitting}
+					>{#if $submitting}
+						<Loader2 class="size-4 animate-spin" />
+					{:else}
+						Log In
+					{/if}
+				</Form.Button>
+			</form>
+		</Card.Content>
+		<FieldDescription class="text-center ">
+			Don't have an account?
+			<a href="/" class="underline underline-offset-4">Sign up</a>
+		</FieldDescription>
+		<FieldDescription class="px-6 text-center">
+			By clicking continue, you agree to our <a href="##" class="hover:text-red-500">Terms</a>.
+		</FieldDescription>
+	</Card.Root>
 </div>
