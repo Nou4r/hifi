@@ -98,6 +98,8 @@
 		aria-label="Open Feishin on GitHub"
 		href="https://github.com/jeffvli/feishin"
 		class="text-sm text-zinc-400"
+		target="_blank"
+		rel="noopener noreferrer"
 	>
 		<svg
 			version="1.1"
