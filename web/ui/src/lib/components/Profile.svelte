@@ -1,0 +1,190 @@
+<script lang="ts" module>
+	import { z } from 'zod/v4';
+
+	const formSchema = z.object({
+		logo: z
+			.string()
+			.trim()
+			.superRefine((val, ctx) => {
+				if (!val) {
+					ctx.addIssue({ code: 'custom', message: 'Logo is required' });
+					return;
+				}
+				if (val.length < 2) {
+					ctx.addIssue({ code: 'custom', message: 'Logo must be at least 2 characters long' });
+					return;
+				}
+				if (val.length > 50) {
+					ctx.addIssue({ code: 'custom', message: 'Logo must not exceed 50 characters' });
+					return;
+				}
+			}),
+		title: z
+			.string()
+			.trim()
+			.superRefine((val, ctx) => {
+				if (!val) {
+					ctx.addIssue({ code: 'custom', message: 'Title is required' });
+					return;
+				}
+				if (val.length < 2) {
+					ctx.addIssue({ code: 'custom', message: 'Title must be at least 2 characters long' });
+					return;
+				}
+				if (val.length > 50) {
+					ctx.addIssue({ code: 'custom', message: 'Title must not exceed 50 characters' });
+					return;
+				}
+			}),
+		description: z
+			.string()
+			.trim()
+			.superRefine((val, ctx) => {
+				if (!val) {
+					ctx.addIssue({ code: 'custom', message: 'Description is required' });
+					return;
+				}
+				if (val.length < 2) {
+					ctx.addIssue({
+						code: 'custom',
+						message: 'Description must be at least 2 characters long'
+					});
+					return;
+				}
+				if (val.length > 100) {
+					ctx.addIssue({ code: 'custom', message: 'Description must not exceed 100 characters' });
+					return;
+				}
+			})
+	});
+</script>
+
+<script lang="ts">
+	import { defaults, superForm } from 'sveltekit-superforms';
+	import { zod4 } from 'sveltekit-superforms/adapters';
+	import { Toaster, toast } from 'svelte-sonner';
+	import * as Form from '$lib/components/ui/form/index.js';
+
+	import Button, { buttonVariants } from '$lib/components/ui/button.svelte';
+	import Input from '$lib/components/ui/input.svelte';
+	import * as Dialog from '$lib/components/ui/dialog';
+	import { cn } from '$lib/utils';
+
+	import * as Empty from '$lib/components/ui/empty/index.js';
+	import IconFileOrientation from '@tabler/icons-svelte/icons/file-orientation';
+	import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
+
+	import ImagePlus from '@lucide/svelte/icons/image-plus';
+	import Loader2 from '@lucide/svelte/icons/loader-2';
+
+	let open = $state(false);
+
+	const form = superForm(defaults(zod4(formSchema)), {
+		validators: zod4(formSchema),
+		SPA: true,
+		onUpdate: async ({ form: f }) => {
+			const logoValue = f.data.logo?.trim() ?? '';
+
+			if (!logoValue) {
+				return;
+			}
+			if (f.valid) {
+				await new Promise((r) => setTimeout(r, 500));
+				console.log('Form data:', f.data);
+				open = false;
+				toast.success(`You submitted ${JSON.stringify(f.data, null, 2)}`);
+			} else {
+				open = false;
+				toast.error('Something went wrong. Please try again.');
+			}
+		}
+	});
+
+	const { form: formData, submitting, enhance } = form;
+</script>
+
+<Toaster closeButton position="top-center" />
+
+<Empty.Root>
+	<Empty.Header>
+		<Empty.Media variant="icon">
+			<ImagePlus />
+		</Empty.Media>
+		<Empty.Title class=" text-gray-200">Edit Your Profile</Empty.Title>
+		<Empty.Description class="text-gray-400">Update your profile information</Empty.Description>
+	</Empty.Header>
+	<Empty.Content>
+		<div class="flex gap-2">
+			<Dialog.Root bind:open>
+				<Dialog.Trigger class={cn('cursor-pointer', buttonVariants({ variant: 'outline' }))}
+					>Edit Profile</Dialog.Trigger
+				>
+				<Dialog.Content class="bg-zinc-900">
+					<div class="flex flex-col items-center gap-2">
+						<Dialog.Header>
+							<Dialog.Title class="mt-10 text-gray-300 sm:text-center">HiFi</Dialog.Title>
+							<Dialog.Description class="text-gray-400 sm:text-center">
+								Update your HiFi account
+							</Dialog.Description>
+						</Dialog.Header>
+					</div>
+
+					<form method="POST" class="space-y-5" use:enhance>
+						<div class="space-y-4">
+							<div class="space-y-2">
+								<Form.Field {form} name="logo">
+									<Form.Control>
+										{#snippet children({ props })}
+											<Form.Label class="font-bold text-gray-300">Logo</Form.Label>
+											<Input
+												class="border-zinc-700 text-white"
+												placeholder="Beep"
+												type="text"
+												{...props}
+												bind:value={$formData.logo}
+											/>
+										{/snippet}
+									</Form.Control>
+									<Form.FieldErrors />
+								</Form.Field>
+							</div>
+							<div class="space-y-2">
+								<Form.Field {form} name="title">
+									<Form.Control>
+										{#snippet children({ props })}
+											<Form.Label class="font-bold text-gray-300">Password</Form.Label>
+											<Input
+												class="border-zinc-700 text-white"
+												placeholder=""
+												type="text"
+												{...props}
+												bind:value={$formData.title}
+											/>
+										{/snippet}
+									</Form.Control>
+									<Form.FieldErrors />
+								</Form.Field>
+							</div>
+						</div>
+						<Form.Button
+							class="mt-2 w-full cursor-pointer "
+							type="submit"
+							variant="outline"
+							disabled={$submitting}
+							>{#if $submitting}
+								<Loader2 class="size-4 animate-spin" />
+							{:else}
+								Create Account
+							{/if}
+						</Form.Button>
+					</form>
+				</Dialog.Content>
+			</Dialog.Root>
+		</div>
+	</Empty.Content>
+	<Button variant="link" class="text-gray-400" size="sm">
+		<a href="https://github.com/sachinsenal0x64/hifi">
+			Learn More <ArrowUpRightIcon class="inline" />
+		</a>
+	</Button>
+</Empty.Root>
