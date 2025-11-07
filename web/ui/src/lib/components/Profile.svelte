@@ -134,10 +134,10 @@
 								<Form.Field {form} name="logo">
 									<Form.Control>
 										{#snippet children({ props })}
-											<Form.Label class="font-bold text-gray-300">Logo</Form.Label>
+											<Form.Label class="font-bold text-gray-300">Username</Form.Label>
 											<Input
 												class="border-zinc-700 text-white"
-												placeholder="Beep"
+												placeholder="John Doe"
 												type="text"
 												{...props}
 												bind:value={$formData.logo}
@@ -151,10 +151,27 @@
 								<Form.Field {form} name="title">
 									<Form.Control>
 										{#snippet children({ props })}
-											<Form.Label class="font-bold text-gray-300">Password</Form.Label>
+											<Form.Label class="font-bold text-gray-300">Old Password</Form.Label>
 											<Input
 												class="border-zinc-700 text-white"
-												placeholder=""
+												placeholder="SuperSecret123!"
+												type="text"
+												{...props}
+												bind:value={$formData.title}
+											/>
+										{/snippet}
+									</Form.Control>
+									<Form.FieldErrors />
+								</Form.Field>
+							</div>
+							<div class="space-y-2">
+								<Form.Field {form} name="title">
+									<Form.Control>
+										{#snippet children({ props })}
+											<Form.Label class="font-bold text-gray-300">New Password</Form.Label>
+											<Input
+												class="border-zinc-700 text-white"
+												placeholder="SuperSecret123!"
 												type="text"
 												{...props}
 												bind:value={$formData.title}
@@ -173,7 +190,7 @@
 							>{#if $submitting}
 								<Loader2 class="size-4 animate-spin" />
 							{:else}
-								Create Account
+								Update Profile
 							{/if}
 						</Form.Button>
 					</form>
