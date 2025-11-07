@@ -49,7 +49,7 @@
 				<div
 					class="border-border relative col-span-1 min-w-[300px] rounded-lg border bg-zinc-900 p-8 md:col-span-2 md:min-h-[480px] md:overflow-y-hidden"
 				>
-					<TabsContent value="tab-6" class="h-auto min-h-[300px]">
+					<TabsContent value="tab-6" class="h-auto min-h-[400px]">
 						<Tabs value="tab-6" class=" items-center">
 							<TabsList
 								class="border-border h-auto gap-2 rounded-full border-b bg-zinc-800 px-10 py-2 text-zinc-400"
@@ -96,7 +96,7 @@
 						</Tabs>
 					</TabsContent>
 
-					<TabsContent value="tab-4" class="h-auto min-h-[300px]">
+					<TabsContent value="tab-4" class="h-auto min-h-[320px]">
 						<Tabs value="tab-4" class=" items-center">
 							<TabsList
 								class="border-border h-auto gap-2 rounded-full border-b bg-zinc-800 px-10 py-2 text-zinc-400"
