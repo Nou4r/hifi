@@ -1,38 +1,41 @@
 <script lang="ts">
 	import * as InputGroup from '$lib/components/ui/input-group/index.js';
-	import * as Popover from '$lib/components/ui/popover/index.js';
 	import CheckIcon from '@lucide/svelte/icons/check';
 	import CopyIcon from '@lucide/svelte/icons/copy';
-	import InfoIcon from '@lucide/svelte/icons/info';
-	import StarIcon from '@lucide/svelte/icons/star';
 	import { UseClipboard } from '$lib/hooks/use-clipboard.svelte.js';
+	import Label from './ui/label.svelte';
 
-	let isFavorite = $state(false);
+	const fields = [
+		{ label: 'Username', value: 'John' },
+		{ label: 'Password', value: 'password123' },
+		{ label: 'Hostname', value: 'example.com' }
+	];
 
-	const clipboard = new UseClipboard();
+	const clipboards = fields.map(() => new UseClipboard());
 </script>
 
 <div class="grid w-full max-w-sm gap-6">
-	<InputGroup.Root class="border border-zinc-700 bg-zinc-900">
-		<InputGroup.Input
-			class="placeholder:text-green-300"
-			placeholder="https://x.com/shadcn"
-			readonly
-		/>
-		<InputGroup.Addon align="inline-end">
-			<InputGroup.Button
-				aria-label="Copy"
-				title="Copy"
-				size="icon-xs"
-				class="cursor-pointer hover:bg-zinc-300"
-				onclick={() => clipboard.copy('https://x.com/shadcn')}
-			>
-				{#if clipboard.copied}
-					<CheckIcon />
-				{:else}
-					<CopyIcon />
-				{/if}
-			</InputGroup.Button>
-		</InputGroup.Addon>
-	</InputGroup.Root>
+	{#each fields as field, i}
+		<div class="flex flex-col gap-2">
+			<Label class="text-left text-sm text-zinc-400 ">{field.label}</Label>
+			<InputGroup.Root class="border border-zinc-700 bg-zinc-900">
+				<InputGroup.Input value={field.value} readonly class="text-zinc-300" />
+				<InputGroup.Addon align="inline-end">
+					<InputGroup.Button
+						aria-label={`Copy ${field.label}`}
+						title={`Copy ${field.label}`}
+						size="icon-xs"
+						class="cursor-pointer hover:bg-zinc-700 hover:text-white"
+						onclick={() => clipboards[i].copy(field.value)}
+					>
+						{#if clipboards[i].copied}
+							<CheckIcon />
+						{:else}
+							<CopyIcon />
+						{/if}
+					</InputGroup.Button>
+				</InputGroup.Addon>
+			</InputGroup.Root>
+		</div>
+	{/each}
 </div>
