@@ -1,8 +1,5 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button.svelte';
-
-	import { Github } from 'lucide-svelte';
-
 	import { Logo, NotificationMenu, UserMenu } from '$lib/components/_extras/navbars';
 	import { Popover, PopoverTrigger } from '$lib/components/ui/popover';
 
