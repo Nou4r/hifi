@@ -25,7 +25,7 @@ func search3(search string, user string, w http.ResponseWriter) {
 	queryMu.RUnlock()
 
 	if qu == "" {
-		qu = "top 40 hits"
+		qu = "sza essentials"
 	}
 
 	// Tidal search URL
