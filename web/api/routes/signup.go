@@ -2,12 +2,13 @@ package routes
 
 import (
 	"api/middleware"
-	"api/types"
 	"net/http"
 )
 
 func Handle() *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.Handle("/signup", &types.Routes{User: middleware.SignupUser()})
+
+	mux.HandleFunc("/signup", middleware.SignupUser)
+
 	return mux
 }

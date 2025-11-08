@@ -2,57 +2,37 @@
 	import { z } from 'zod/v4';
 
 	const formSchema = z.object({
-		logo: z
+		username: z
 			.string()
 			.trim()
 			.superRefine((val, ctx) => {
 				if (!val) {
-					ctx.addIssue({ code: 'custom', message: 'Logo is required' });
+					ctx.addIssue({ code: 'custom', message: 'Username is required' });
 					return;
 				}
 				if (val.length < 2) {
-					ctx.addIssue({ code: 'custom', message: 'Logo must be at least 2 characters long' });
+					ctx.addIssue({ code: 'custom', message: 'Username must be at least 2 characters long' });
 					return;
 				}
 				if (val.length > 50) {
-					ctx.addIssue({ code: 'custom', message: 'Logo must not exceed 50 characters' });
+					ctx.addIssue({ code: 'custom', message: 'Username must not exceed 50 characters' });
 					return;
 				}
 			}),
-		title: z
+		password: z
 			.string()
 			.trim()
 			.superRefine((val, ctx) => {
 				if (!val) {
-					ctx.addIssue({ code: 'custom', message: 'Title is required' });
+					ctx.addIssue({ code: 'custom', message: 'Password is required' });
 					return;
 				}
 				if (val.length < 2) {
-					ctx.addIssue({ code: 'custom', message: 'Title must be at least 2 characters long' });
+					ctx.addIssue({ code: 'custom', message: 'Password must be at least 2 characters long' });
 					return;
 				}
 				if (val.length > 50) {
-					ctx.addIssue({ code: 'custom', message: 'Title must not exceed 50 characters' });
-					return;
-				}
-			}),
-		description: z
-			.string()
-			.trim()
-			.superRefine((val, ctx) => {
-				if (!val) {
-					ctx.addIssue({ code: 'custom', message: 'Description is required' });
-					return;
-				}
-				if (val.length < 2) {
-					ctx.addIssue({
-						code: 'custom',
-						message: 'Description must be at least 2 characters long'
-					});
-					return;
-				}
-				if (val.length > 100) {
-					ctx.addIssue({ code: 'custom', message: 'Description must not exceed 100 characters' });
+					ctx.addIssue({ code: 'custom', message: 'Password must not exceed 50 characters' });
 					return;
 				}
 			})
@@ -81,7 +61,7 @@
 		validators: zod4(formSchema),
 		SPA: true,
 		onUpdate: async ({ form: f }) => {
-			const logoValue = f.data.logo?.trim() ?? '';
+			const logoValue = f.data.username?.trim() ?? '';
 
 			if (!logoValue) {
 				return;
@@ -132,7 +112,7 @@
 					<form method="POST" class="space-y-5" use:enhance>
 						<div class="space-y-4">
 							<div class="space-y-2">
-								<Form.Field {form} name="logo">
+								<Form.Field {form} name="username">
 									<Form.Control>
 										{#snippet children({ props })}
 											<Form.Label class="font-bold text-gray-300">Username</Form.Label>
@@ -141,7 +121,7 @@
 												placeholder="Joe Doe"
 												type="text"
 												{...props}
-												bind:value={$formData.logo}
+												bind:value={$formData.username}
 											/>
 										{/snippet}
 									</Form.Control>
@@ -149,7 +129,7 @@
 								</Form.Field>
 							</div>
 							<div class="space-y-2">
-								<Form.Field {form} name="title">
+								<Form.Field {form} name="password">
 									<Form.Control>
 										{#snippet children({ props })}
 											<Form.Label class="font-bold text-gray-300">Password</Form.Label>
@@ -158,7 +138,7 @@
 												placeholder="Secure Password"
 												type="password"
 												{...props}
-												bind:value={$formData.title}
+												bind:value={$formData.password}
 											/>
 										{/snippet}
 									</Form.Control>
