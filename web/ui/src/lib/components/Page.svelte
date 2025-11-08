@@ -28,14 +28,14 @@
 				open = false;
 				toast.promise(
 					new Promise((resolve) => {
-						setTimeout(resolve, 800);
+						setTimeout(resolve, 500);
 					}),
 					{
 						loading: 'Account created successfully!',
 						success: () => {
 							setTimeout(() => {
 								goto('/signin');
-							}, 800);
+							}, 300);
 							return 'Redirecting to Sign In...';
 						},
 
