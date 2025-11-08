@@ -14,7 +14,11 @@
 			.replace(/[^a-z0-9_-]/g, '');
 
 	const baseFields = [
-		{ label: 'Hostname', value: 'example.com' },
+		{
+			label: 'Hostname',
+			value:
+				'Bearer eyJraWQiOiJ2OU1GbFhqWSIsImFsZyI6IkVTMjU2In0.eyJ0eXBlIjoibzJfYWNjZXNzIiwidWlkIjoxOTEwMDgxNjcsInNjb3BlIjoicl91c3Igd191c3IiLCJnVmVyIjowLCJzVmVyIjowLCJjaWQiOjgwNDksImN1ayI6IjVkNWY4ZGU1LTlmMmUtNGI2MS04OGQ1LTM5YzQwOGNhNzYzYSIsImNjIjoiVVMiLCJhdCI6IklOVEVSTkFMIiwiZXhwIjoxNzYyNjExNTU4LCJzaWQiOiJlMzY3YzQ5OC02MWE5LTRhOGQtYTMzNi0yMDk0MmI1YzdhNTciLCJpc3MiOiJodHRwczovL2F1dGgudGlkYWwuY29tL3YxIn0.B8bglN9nLdEHrEZwZq3bPwnN6-1D9whoz8fFvhUh__Ve0fKf3b5pbmNs_MKD46S1-0QvZgp9Kptnhv1XUN5osw'
+		},
 		{ label: 'Username', value: 'John' },
 		{ label: 'Password', value: 'password123' }
 	];
@@ -94,7 +98,7 @@
 		Supported Apps
 	</div>
 
-	<div class="flex items-center justify-center">
+	<div class="flex items-center justify-center hover:opacity-80">
 		<a
 			aria-label="Open Feishin on GitHub"
 			href="https://github.com/jeffvli/feishin"
