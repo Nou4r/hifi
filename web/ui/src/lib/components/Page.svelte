@@ -4,6 +4,7 @@
 	import { Toaster, toast } from 'svelte-sonner';
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { formSchema } from '$lib/types/auth';
+	import { goto } from '$app/navigation';
 
 	import Button, { buttonVariants } from '$lib/components/ui/button.svelte';
 	import Input from '$lib/components/ui/input.svelte';
@@ -17,20 +18,27 @@
 
 	let open = $state(false);
 
-	const form = superForm(defaults(zod4(formSchema)), {
-		validators: zod4(formSchema),
-		SPA: true,
-		onUpdate: async ({ form: f }) => {
-			const logoValue = f.data.username?.trim() ?? '';
+	const { data } = $props();
 
-			if (!logoValue) {
-				return;
-			}
-			if (f.valid) {
-				await new Promise((r) => setTimeout(r, 500));
-				console.log('Form data:', f.data);
+	const form = superForm(data.form, {
+		resetForm: true,
+		validators: zod4(formSchema),
+		onResult: ({ result }) => {
+			if (result.type === 'success') {
 				open = false;
-				toast.success(`You submitted ${JSON.stringify(f.data, null, 2)}`);
+				toast.promise(
+					new Promise((resolve) => {
+						setTimeout(resolve, 800);
+					}),
+					{
+						loading: 'Account created successfully! Redirecting...',
+						success: () => {
+							goto('/signin');
+							return 'Redirected to sign in page.';
+						},
+						error: 'Something went wrong. Please try again.'
+					}
+				);
 			} else {
 				open = false;
 				toast.error('Something went wrong. Please try again.');

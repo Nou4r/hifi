@@ -9,6 +9,7 @@ import (
 )
 
 func SignupUser(w http.ResponseWriter, r *http.Request) {
+
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -35,8 +36,6 @@ func SignupUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	_ = json.NewEncoder(w).Encode(map[string]string{
-		"status":  "success",
 		"message": "User created successfully",
-		"user":    req.Username,
 	})
 }

@@ -23,6 +23,9 @@ importers:
       svelte-sonner:
         specifier: ^1.0.5
         version: 1.0.5(svelte@5.39.11)
+      typeid-js:
+        specifier: ^1.2.0
+        version: 1.2.0
       unplugin-icons:
         specifier: ^22.4.2
         version: 22.4.2(svelte@5.39.11)
@@ -1788,6 +1791,9 @@ packages:
   typebox@1.0.39:
     resolution: {integrity: sha512-nvIVOnhr3WFn9N6sOoiAaebNwMIl4nLelUmAI5MFsy7XJBVsQonxqm1hkgZsrY1ctp1Owso5z565wtnL3Sld8A==}
 
+  typeid-js@1.2.0:
+    resolution: {integrity: sha512-t76ZucAnvGC60ea/HjVsB0TSoB0cw9yjnfurUgtInXQWUI/VcrlZGpO23KN3iSe8yOGUgb1zr7W7uEzJ3hSljA==}
+
   typescript@5.9.3:
     resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
@@ -1828,6 +1834,10 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  uuid@10.0.0:
+    resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
+    hasBin: true
 
   uuid@11.1.0:
     resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
@@ -3455,6 +3465,10 @@ snapshots:
   typebox@1.0.39:
     optional: true
 
+  typeid-js@1.2.0:
+    dependencies:
+      uuid: 10.0.0
+
   typescript@5.9.3: {}
 
   ufo@1.6.1: {}
@@ -3483,6 +3497,8 @@ snapshots:
       punycode: 2.3.1
 
   util-deprecate@1.0.2: {}
+
+  uuid@10.0.0: {}
 
   uuid@11.1.0: {}
 
