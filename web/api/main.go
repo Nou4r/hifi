@@ -3,34 +3,19 @@ package main
 import (
 	"api/config"
 	"api/middleware"
+	"api/routes"
 	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
-	"strconv"
 )
-
-type routes struct {
-	value bool
-}
-
-func (ch routes) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
-	_, _ = rw.Write([]byte(strconv.FormatBool(ch.value)))
-}
-
-func Handle() *http.ServeMux {
-	mux := http.NewServeMux()
-	mux.Handle("/signup", routes{value: middleware.SignupUser()})
-	mux.Handle("/signin", routes{value: false})
-	return mux
-}
 
 func main() {
 
 	mux := http.NewServeMux()
 
 	// API v1 routes
-	mux.Handle("/v1/", http.StripPrefix("/v1", Handle()))
+	mux.Handle("/v1/", http.StripPrefix("/v1", routes.Handle()))
 
 	port := middleware.PortRotate()
 	handler := middleware.Recovery(mux)

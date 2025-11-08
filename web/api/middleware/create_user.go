@@ -1,6 +1,6 @@
 package middleware
 
-func SignupUser() bool {
-	val := false
+func SignupUser() string {
+	val := "false"
 	return val
 }
