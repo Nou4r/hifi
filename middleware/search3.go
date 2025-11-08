@@ -38,7 +38,7 @@ func search3(search string, user string, w http.ResponseWriter) {
 	q.Set("query", qu)
 	q.Set("limit", "100") // Max limit = 100
 	q.Set("offset", "0")
-	q.Set("types", "ARTISTS,ALBUMS,TRACKS,VIDEOS,PLAYLISTS,UPLOADS")
+	q.Set("types", "ARTISTS,ALBUMS,TRACKS")
 	q.Set("countryCode", "US")
 	q.Set("deviceType", "BROWSER")
 	tidalURL.RawQuery = q.Encode()
@@ -77,6 +77,10 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 	// ARTISTS
 	for _, a := range tidalSearch.Artists.Items {
+
+		if a.Picture == "" {
+			continue
+		}
 
 		artistID := a.ID
 
