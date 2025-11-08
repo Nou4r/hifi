@@ -58,6 +58,8 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 	body, err := io.ReadAll(resp.Body)
 
+	fmt.Println(string(body))
+
 	if err != nil {
 		http.Error(w, "failed to read Tidal response", http.StatusInternalServerError)
 		return
@@ -79,6 +81,8 @@ func search3(search string, user string, w http.ResponseWriter) {
 		artistsMu.RLock()
 		userArtists := artistsCache[user]
 		artistsMu.RUnlock()
+
+		fmt.Println(userArtists)
 
 		if userArtists != nil {
 			if _, found := userArtists[artistID]; found {
