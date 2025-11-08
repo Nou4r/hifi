@@ -8,6 +8,6 @@ import (
 
 func Handle() *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.Handle("/signup", &types.Routes{Value: middleware.SignupUser()})
+	mux.Handle("/signup", &types.Routes{User: middleware.SignupUser()})
 	return mux
 }
