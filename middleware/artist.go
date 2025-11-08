@@ -73,7 +73,6 @@ func getArtist(id string, user string, w http.ResponseWriter) {
 	}
 
 	for _, item := range tidalArtistAlbums.Items {
-
 		if validModules[item.ModuleId] {
 			for _, albumItem := range item.Items {
 				data := albumItem.Data
