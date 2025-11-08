@@ -31,11 +31,14 @@
 						setTimeout(resolve, 800);
 					}),
 					{
-						loading: 'Account created successfully! Redirecting...',
+						loading: 'Account created successfully!',
 						success: () => {
-							goto('/signin');
-							return 'Redirected to sign in page.';
+							setTimeout(() => {
+								goto('/signin');
+							}, 800);
+							return 'Redirecting to Sign In...';
 						},
+
 						error: 'Something went wrong. Please try again.'
 					}
 				);
