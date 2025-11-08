@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { defaults, superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { Toaster, toast } from 'svelte-sonner';
 	import * as Form from '$lib/components/ui/form/index.js';
@@ -20,7 +20,7 @@
 
 	const { data } = $props();
 
-	const form = superForm(defaults(data.form), {
+	const form = superForm(data.form, {
 		resetForm: true,
 		validators: zod4(formSchema),
 		onResult: ({ result }) => {
