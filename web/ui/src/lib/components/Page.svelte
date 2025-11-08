@@ -1,49 +1,9 @@
-<script lang="ts" module>
-	import { z } from 'zod/v4';
-
-	const formSchema = z.object({
-		username: z
-			.string()
-			.trim()
-			.superRefine((val, ctx) => {
-				if (!val) {
-					ctx.addIssue({ code: 'custom', message: 'Username is required' });
-					return;
-				}
-				if (val.length < 2) {
-					ctx.addIssue({ code: 'custom', message: 'Username must be at least 2 characters long' });
-					return;
-				}
-				if (val.length > 50) {
-					ctx.addIssue({ code: 'custom', message: 'Username must not exceed 50 characters' });
-					return;
-				}
-			}),
-		password: z
-			.string()
-			.trim()
-			.superRefine((val, ctx) => {
-				if (!val) {
-					ctx.addIssue({ code: 'custom', message: 'Password is required' });
-					return;
-				}
-				if (val.length < 2) {
-					ctx.addIssue({ code: 'custom', message: 'Password must be at least 2 characters long' });
-					return;
-				}
-				if (val.length > 50) {
-					ctx.addIssue({ code: 'custom', message: 'Password must not exceed 50 characters' });
-					return;
-				}
-			})
-	});
-</script>
-
 <script lang="ts">
 	import { defaults, superForm } from 'sveltekit-superforms';
 	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { Toaster, toast } from 'svelte-sonner';
 	import * as Form from '$lib/components/ui/form/index.js';
+	import { formSchema } from '$lib/types/auth';
 
 	import Button, { buttonVariants } from '$lib/components/ui/button.svelte';
 	import Input from '$lib/components/ui/input.svelte';
