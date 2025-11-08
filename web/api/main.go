@@ -17,7 +17,6 @@ func main() {
 	handler := middleware.Recovery(mux)
 
 	// Server setup
-
 	server := &http.Server{
 		Addr:    fmt.Sprintf("%s:%s", config.Host, port),
 		Handler: handler,
