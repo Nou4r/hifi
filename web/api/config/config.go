@@ -2,7 +2,7 @@ package config
 
 const (
 	Host = "127.0.0.1"
-	Port = "5005"
+	Port = "4747"
 
 	// HTTP methods
 	MethodGet     = "GET"
