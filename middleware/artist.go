@@ -99,7 +99,7 @@ func getArtist(id string, user string, w http.ResponseWriter) {
 		ID:         fmt.Sprint(artistData.ID),
 		Name:       artistData.Name,
 		CoverArt:   firstNonEmpty(artistData.Picture, artistData.SelectedAlbumCoverFallback),
-		AlbumCount: len(tidalArtistAlbums.Items[1].Items),
+		AlbumCount: len(albums),
 		Album:      albums,
 	}
 
