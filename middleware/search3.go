@@ -91,7 +91,6 @@ func search3(search string, user string, w http.ResponseWriter) {
 		if userArtists != nil {
 			if _, found := userArtists[artistID]; found {
 				sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, userArtists[artistID])
-				continue
 			}
 		}
 
@@ -148,7 +147,6 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 		if found {
 			sub.Subsonic.SearchResult3.Song = append(sub.Subsonic.SearchResult3.Song, cached)
-			continue
 		}
 
 		song := types.SubsonicSong{
