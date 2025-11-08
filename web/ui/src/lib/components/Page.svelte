@@ -20,7 +20,7 @@
 
 	const { data } = $props();
 
-	const form = superForm(data.form, {
+	const form = superForm(defaults(data.form), {
 		resetForm: true,
 		validators: zod4(formSchema),
 		onResult: ({ result }) => {
