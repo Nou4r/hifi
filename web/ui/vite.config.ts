@@ -1,3 +1,4 @@
+import devtoolsJson from 'vite-plugin-devtools-json';
 import Icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
 import { enhancedImages } from '@sveltejs/enhanced-img';
@@ -9,8 +10,7 @@ export default defineConfig({
 		tailwindcss(),
 		enhancedImages(),
 		sveltekit(),
-		Icons({
-			compiler: 'svelte'
-		})
+		Icons({ compiler: 'svelte' }),
+		devtoolsJson()
 	]
 });
