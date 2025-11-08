@@ -47,7 +47,7 @@ var (
 	Port = []string{"5000", "5005"}
 
 	// Hifi Server
-	Host = "127.0.0.1"
+	Host = "0.0.0.0"
 
 	// Hifi Scheme
 	HifiScheme = "http"

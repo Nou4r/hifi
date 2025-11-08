@@ -76,8 +76,6 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 		artistID := a.ID
 
-		fmt.Println("Artist ID:", artistID)
-
 		artistsMu.RLock()
 		userArtists := artistsCache[user]
 		artistsMu.RUnlock()
@@ -103,6 +101,10 @@ func search3(search string, user string, w http.ResponseWriter) {
 		artistsMu.Unlock()
 
 		sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, artist)
+
+		if len(artist.ID) >= 0 {
+			break
+		}
 
 	}
 
