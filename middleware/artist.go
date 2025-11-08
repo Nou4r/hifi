@@ -65,8 +65,16 @@ func getArtist(id string, user string, w http.ResponseWriter) {
 
 	var albums []types.SubsonicAlbum
 
+	validModules := map[string]bool{
+		"ARTIST_ALBUMS":      true,
+		"ARTIST_TOP_SINGLES": true,
+		"ARTIST_LIVE_ALBUMS": true,
+		"ARTIST_APPEARS_ON":  true,
+	}
+
 	for _, item := range tidalArtistAlbums.Items {
-		if item.ModuleId == "ARTIST_ALBUMS" {
+
+		if validModules[item.ModuleId] {
 			for _, albumItem := range item.Items {
 				data := albumItem.Data
 				id := fmt.Sprint(data.ID)
