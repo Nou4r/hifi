@@ -24,6 +24,10 @@ func search3(search string, user string, w http.ResponseWriter) {
 	qu := query[user]
 	queryMu.RUnlock()
 
+	if qu == "" {
+		qu = "top 40 hits"
+	}
+
 	// Tidal search URL
 	tidalURL := &url.URL{
 		Scheme: config.Scheme,
