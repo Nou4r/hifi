@@ -102,10 +102,6 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 		sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, artist)
 
-		if len(artist.ID) >= 0 {
-			break
-		}
-
 	}
 
 	// ALBUMS
