@@ -3,7 +3,9 @@ package middleware
 import (
 	"encoding/json"
 	"hifi/types"
+	"maps"
 	"net/http"
+	"slices"
 )
 
 func getArtists(user string, w http.ResponseWriter) {
@@ -14,11 +16,7 @@ func getArtists(user string, w http.ResponseWriter) {
 	userArtists := artistsCache[user]
 	artistsMu.RUnlock()
 
-	var artists []types.SubsonicArtist
-	for _, a := range userArtists {
-		artists = append(artists, a)
-
-	}
+	artists := slices.Collect(maps.Values(userArtists))
 
 	sub.Subsonic.Artists.Index = []types.SubsonicArtistIndexItem{
 		{Artist: artists},
