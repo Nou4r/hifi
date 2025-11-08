@@ -4,18 +4,36 @@ import (
 	"api/config"
 	"api/middleware"
 	"fmt"
-	"log"
+	"log/slog"
 	"net/http"
+	"os"
 )
 
 func main() {
 
 	mux := http.NewServeMux()
 
+	port := middleware.PortRotate()
 	handler := middleware.Recovery(mux)
 
-	fmt.Printf("Hifi web running at http://%s:%s\n", config.Host, config.Port)
-	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", config.Host, config.Port), handler); err != nil {
-		log.Fatal(err)
+	// Server setup
+
+	server := &http.Server{
+		Addr:    fmt.Sprintf("%s:%s", config.Host, port),
+		Handler: handler,
 	}
+
+	slog.Info("Hifi Web server running",
+		"host", config.Host,
+		"port", port,
+		"url", fmt.Sprintf("%s://%s:%s", config.HifiScheme, config.Host, port),
+	)
+
+	// Run server in background
+	go func() {
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			slog.Error("Failed to start server", "error", err)
+			os.Exit(1)
+		}
+	}()
 }

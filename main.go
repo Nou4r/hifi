@@ -36,10 +36,11 @@ func main() {
 
 	cors := middleware.CORS(session)
 
+	port := middleware.PortRotate()
+
 	handler := middleware.Recovery(cors)
 
 	// Server setup
-	port := middleware.PortRotate()
 
 	server := &http.Server{
 		Addr:    fmt.Sprintf("%s:%s", config.Host, port),

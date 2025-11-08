@@ -1,8 +1,19 @@
 package config
 
+var (
+
+	// Hifi Web Server
+	Host = "0.0.0.0"
+
+	// Hifi Scheme
+	HifiScheme = "http"
+
+	Port = []string{"5002", "5006"}
+)
+
 const (
-	Host = "127.0.0.1"
-	Port = "4747"
+	SubsonicHost     = "127.0.0.1"
+	SubsonicHostPort = "4747"
 
 	// HTTP methods
 	MethodGet     = "GET"
