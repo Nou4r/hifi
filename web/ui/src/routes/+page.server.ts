@@ -2,6 +2,7 @@ import { superValidate, message } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail, type Actions } from '@sveltejs/kit';
 import { formSchema } from '$lib/types/auth';
+import { redirect } from '@sveltejs/kit';
 
 export const load = async (event) => {
 	const form = await superValidate(event, zod4(formSchema));
@@ -17,6 +18,8 @@ export const actions: Actions = {
 			body: JSON.stringify(form.data)
 		});
 		const out = await res.json().catch(() => ({}));
-		return res.ok ? message(form, out.message) : fail(res.status, out.message);
+		return res.ok
+			? (message(form, out.message), redirect(303, '/signin'))
+			: fail(res.status, out.message);
 	}
 };

@@ -4,7 +4,6 @@
 	import { Toaster, toast } from 'svelte-sonner';
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { formSchema } from '$lib/types/auth';
-	import { goto } from '$app/navigation';
 
 	import Button, { buttonVariants } from '$lib/components/ui/button.svelte';
 	import Input from '$lib/components/ui/input.svelte';
@@ -15,36 +14,47 @@
 	import IconUserCircle from '@tabler/icons-svelte/icons/user-circle';
 	import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
+	import { promise } from 'zod/v4';
+	import { fa } from 'zod/v4/locales';
 
 	let open = $state(false);
 
 	const { data } = $props();
 
+	let resolveSubmit: (() => void) | null = null;
+	let rejectSubmit: ((err?: unknown) => void) | null = null;
+	let delayTimer: ReturnType<typeof setTimeout> | null = null;
+
+	function makeSubmitPromise() {
+		return new Promise<void>((resolve, reject) => {
+			resolveSubmit = resolve;
+			rejectSubmit = reject;
+		});
+	}
+
 	const form = superForm(data.form, {
 		resetForm: true,
 		validators: zod4(formSchema),
+		onSubmit: async () => {
+			await new Promise<void>((resolve) => {
+				delayTimer = setTimeout(resolve, 800);
+			});
+			open = false;
+			const p = makeSubmitPromise();
+			toast.promise(p, {
+				loading: 'Creating your account...',
+				success: 'Account created successfully, Redirecting...',
+				error: 'Something went wrong. Please try again.'
+			});
+		},
 		onResult: ({ result }) => {
-			if (result.type === 'success') {
-				open = false;
-				toast.promise(
-					new Promise((resolve) => {
-						setTimeout(resolve, 500);
-					}),
-					{
-						loading: 'Account created successfully!',
-						success: () => {
-							setTimeout(() => {
-								goto('/signin');
-							}, 300);
-							return 'Redirecting to Sign In...';
-						},
-
-						error: 'Something went wrong. Please try again.'
-					}
-				);
-			} else {
-				open = false;
-				toast.error('Something went wrong. Please try again.');
+			open = false;
+			if (result.type === 'failure') {
+				rejectSubmit?.('Something went wrong. Please try again.');
+				rejectSubmit = resolveSubmit = null;
+			} else if (result.type === 'redirect') {
+				resolveSubmit?.();
+				rejectSubmit = resolveSubmit = null;
 			}
 		}
 	});
