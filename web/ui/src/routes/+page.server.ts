@@ -18,8 +18,14 @@ export const actions: Actions = {
 			body: JSON.stringify(form.data)
 		});
 		const out = await res.json().catch(() => ({}));
-		return res.ok
-			? (message(form, out.message), redirect(303, '/signin'))
-			: fail(res.status, out.message);
+		console.log('signup response', res, out);
+
+		if (!res.ok) {
+			return fail(
+				res.status,
+				out.message ? { form, message: message(out.message, { status: 'error' }) } : { form }
+			);
+		}
+		throw redirect(303, '/signin');
 	}
 };

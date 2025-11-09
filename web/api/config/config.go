@@ -24,6 +24,10 @@ const (
 
 	// Content types
 	ContentTypeJSON = "application/json"
+	ContentTypeForm = "application/x-www-form-urlencoded"
+
+	// Cookie
+	Cookies = "Cookie"
 
 	// Common headers
 	HeaderContentType  = "Content-Type"
