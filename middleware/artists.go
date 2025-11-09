@@ -23,7 +23,6 @@ func getArtists(user string, w http.ResponseWriter) {
 		}
 	}
 
-	fmt.Println("after", artists)
 
 	sub.Subsonic.Artists.Index = []types.SubsonicArtistIndexItem{
 		{Artist: artists},

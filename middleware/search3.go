@@ -111,7 +111,6 @@ func search3(search string, user string, w http.ResponseWriter) {
 		artistsCache[user][artistID] = artist
 		artistsMu.Unlock()
 
-		fmt.Println("before", artist)
 		sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, artist)
 	}
 

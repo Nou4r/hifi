@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import Button from '$lib/components/ui/button.svelte';
 
 	import BookIcon from '@lucide/svelte/icons/book';
@@ -55,4 +55,4 @@
 			{/snippet}
 		</DropdownMenuItem>
 	</DropdownMenuContent>
-</DropdownMenu>
+</DropdownMenu> -->
