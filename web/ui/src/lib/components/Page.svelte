@@ -23,6 +23,9 @@
 	const form = superForm(data.form, {
 		resetForm: true,
 		validators: zod4(formSchema),
+		onSubmit: async () => {
+			await new Promise((resolve) => setTimeout(resolve, 800));
+		},
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
 				open = false;
