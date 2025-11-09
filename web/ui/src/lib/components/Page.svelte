@@ -14,45 +14,37 @@
 	import IconUserCircle from '@tabler/icons-svelte/icons/user-circle';
 	import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
+	import { goto } from '$app/navigation';
 
 	let open = $state(false);
 
 	const { data } = $props();
 
-	let resolveSubmit: (() => void) | null = null;
-	let rejectSubmit: ((err?: unknown) => void) | null = null;
-	let delayTimer: ReturnType<typeof setTimeout> | null = null;
-
-	function makeSubmitPromise() {
-		return new Promise<void>((resolve, reject) => {
-			resolveSubmit = resolve;
-			rejectSubmit = reject;
-		});
-	}
-
 	const form = superForm(data.form, {
 		resetForm: true,
 		validators: zod4(formSchema),
-		onSubmit: async () => {
-			await new Promise<void>((resolve) => {
-				delayTimer = setTimeout(resolve, 800);
-			});
-			open = false;
-			const p = makeSubmitPromise();
-			toast.promise(p, {
-				loading: 'Creating your account...',
-				success: 'Account created successfully, Redirecting...',
-				error: 'Something went wrong. Please try again.'
-			});
-		},
 		onResult: ({ result }) => {
-			open = false;
-			if (result.type === 'failure') {
-				rejectSubmit?.('Something went wrong. Please try again.');
-				rejectSubmit = resolveSubmit = null;
-			} else if (result.type === 'redirect') {
-				resolveSubmit?.();
-				rejectSubmit = resolveSubmit = null;
+			if (result.type === 'success') {
+				open = false;
+				toast.promise(
+					new Promise((resolve) => {
+						setTimeout(resolve, 500);
+					}),
+					{
+						loading: 'Account created successfully!',
+						success: () => {
+							setTimeout(() => {
+								goto('/signin');
+							}, 300);
+							return 'Redirecting to Sign In...';
+						},
+
+						error: 'Something went wrong. Please try again.'
+					}
+				);
+			} else {
+				open = false;
+				toast.error('Something went wrong. Please try again.');
 			}
 		}
 	});
