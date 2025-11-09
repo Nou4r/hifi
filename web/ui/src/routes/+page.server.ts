@@ -13,12 +13,13 @@ export const actions: Actions = {
 	default: async (e) => {
 		const form = await superValidate(e, zod4(formSchema));
 		if (!form.valid) return fail(400, { form });
+
 		const res = await e.fetch('http://localhost:5002/v1/signup', {
 			method: 'POST',
-			body: JSON.stringify(form.data)
+			body: JSON.stringify(form.data),
+			headers: { 'Content-Type': 'application/json' }
 		});
 		const out = await res.json().catch(() => ({}));
-		console.log('signup response', res, out);
 
 		if (!res.ok) {
 			return fail(
@@ -26,6 +27,7 @@ export const actions: Actions = {
 				out.message ? { form, message: message(out.message, { status: 'error' }) } : { form }
 			);
 		}
+
 		throw redirect(303, '/signin');
 	}
 };
