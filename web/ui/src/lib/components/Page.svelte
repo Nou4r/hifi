@@ -14,8 +14,6 @@
 	import IconUserCircle from '@tabler/icons-svelte/icons/user-circle';
 	import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
-	import { promise } from 'zod/v4';
-	import { fa } from 'zod/v4/locales';
 
 	let open = $state(false);
 
