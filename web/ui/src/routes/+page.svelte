@@ -3,6 +3,7 @@
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import Page from '$lib/components/Page.svelte';
 	import Settings from '$lib/components/Settings.svelte';
+
 	let currentTab = 'tab-0';
 
 	export let data;
