@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"encoding/json"
-	"fmt"
 	"hifi/types"
 	"net/http"
 )
@@ -22,7 +21,6 @@ func getArtists(user string, w http.ResponseWriter) {
 			artists = append(artists, a)
 		}
 	}
-
 
 	sub.Subsonic.Artists.Index = []types.SubsonicArtistIndexItem{
 		{Artist: artists},
