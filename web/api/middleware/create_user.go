@@ -34,8 +34,6 @@ func SignupUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Printf("Received signup: %+v\n", req)
-
 	endpoint := fmt.Sprintf("http://%s/admin/create_user_do", config.SubsonicHost)
 
 	form := url.Values{}
