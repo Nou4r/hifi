@@ -77,11 +77,9 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 	// ARTISTS
 	for _, a := range tidalSearch.Artists.Items {
-
 		if a.Picture == "" {
 			continue
 		}
-
 		artistID := a.ID
 
 		artistsMu.RLock()
@@ -104,11 +102,17 @@ func search3(search string, user string, w http.ResponseWriter) {
 		if artistsCache[user] == nil {
 			artistsCache[user] = make(map[int]types.SubsonicArtist)
 		}
+		if artistsOrder[user] == nil {
+			artistsOrder[user] = []int{}
+		}
+		if _, exists := artistsCache[user][artistID]; !exists {
+			artistsOrder[user] = append(artistsOrder[user], artistID)
+		}
 		artistsCache[user][artistID] = artist
 		artistsMu.Unlock()
 
+		fmt.Println("before", artist)
 		sub.Subsonic.SearchResult3.Artist = append(sub.Subsonic.SearchResult3.Artist, artist)
-
 	}
 
 	// ALBUMS

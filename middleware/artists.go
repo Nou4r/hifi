@@ -2,10 +2,9 @@ package middleware
 
 import (
 	"encoding/json"
+	"fmt"
 	"hifi/types"
-	"maps"
 	"net/http"
-	"slices"
 )
 
 func getArtists(user string, w http.ResponseWriter) {
@@ -13,10 +12,18 @@ func getArtists(user string, w http.ResponseWriter) {
 	sub.Subsonic.Artists = &types.SubsonicArtists{}
 
 	artistsMu.RLock()
+	ids := append([]int(nil), artistsOrder[user]...)
 	userArtists := artistsCache[user]
 	artistsMu.RUnlock()
 
-	artists := slices.Collect(maps.Values(userArtists))
+	artists := make([]types.SubsonicArtist, 0, len(ids))
+	for _, id := range ids {
+		if a, ok := userArtists[id]; ok {
+			artists = append(artists, a)
+		}
+	}
+
+	fmt.Println("after", artists)
 
 	sub.Subsonic.Artists.Index = []types.SubsonicArtistIndexItem{
 		{Artist: artists},

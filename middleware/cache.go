@@ -13,6 +13,7 @@ var (
 	albumYearMu  sync.RWMutex
 
 	artistsCache = make(map[string]map[int]types.SubsonicArtist)
+	artistsOrder = map[string][]int{}
 	artistsMu    sync.RWMutex
 
 	artistInfoCache = make(map[string]types.SubsonicArtistInfo)

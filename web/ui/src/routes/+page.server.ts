@@ -2,8 +2,6 @@ import { superValidate, message } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail, type Actions } from '@sveltejs/kit';
 import { formSchema } from '$lib/types/auth';
-import { typeid } from 'typeid-js';
-const tid = typeid();
 
 export const load = async (event) => {
 	const form = await superValidate(event, zod4(formSchema));
