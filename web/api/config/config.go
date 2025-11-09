@@ -12,8 +12,7 @@ var (
 )
 
 const (
-	SubsonicHost     = "127.0.0.1"
-	SubsonicHostPort = "4747"
+	SubsonicHost = "127.0.0.1:4747"
 
 	// HTTP methods
 	MethodGet     = "GET"
