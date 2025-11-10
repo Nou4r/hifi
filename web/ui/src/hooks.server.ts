@@ -2,9 +2,7 @@ import type { Handle } from '@sveltejs/kit';
 import { API_URL } from '$env/static/private';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	const response = await resolve(event, {
-		filterSerializedResponseHeaders: (name) => name === 'content-type'
-	});
+	const response = await resolve(event);
 
 	response.headers.set('Content-Security-Policy', 'script-src' + API_URL);
 
