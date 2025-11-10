@@ -17,7 +17,6 @@ export const actions: Actions = {
 			method: 'POST',
 			body: JSON.stringify(form.data)
 		});
-
 		return res.ok ? message(form, 'Signup successful!') : fail(res.status, 'Signup failed');
 	}
 };
