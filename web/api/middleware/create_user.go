@@ -3,72 +3,98 @@ package middleware
 import (
 	"api/config"
 	"api/types"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
+	"net/http/cookiejar"
 	"net/url"
 	"strings"
+	"time"
 )
 
-func SignupUser(w http.ResponseWriter, r *http.Request) {
+func startCreateUser(ctx context.Context, client *http.Client, createURL, newUser, newPass string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
+	out := make(chan types.CreateResult, 1)
+	go func() {
+		defer close(out)
 
+		select {
+		case lr := <-loginCh:
+			if lr.Err != nil || !lr.OK {
+				out <- types.CreateResult{Err: fmt.Errorf("login failed")}
+				return
+			}
+
+		case <-ctx.Done():
+			out <- types.CreateResult{Status: 0, Body: nil, Err: ctx.Err()}
+			return
+		}
+
+		form := url.Values{}
+		form.Set("username", newUser)
+		form.Set("password_one", newPass)
+		form.Set("password_two", newPass)
+
+		req, err := http.NewRequestWithContext(ctx, http.MethodPost, createURL, strings.NewReader(form.Encode()))
+		if err != nil {
+			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
+			return
+		}
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+		resp, err := client.Do(req)
+		if err != nil {
+			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
+			return
+		}
+		defer resp.Body.Close()
+
+		body, _ := io.ReadAll(resp.Body)
+		out <- types.CreateResult{Status: resp.StatusCode, Body: body, Err: nil}
+	}()
+	return out
+}
+
+func SignupUser(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
 	var req types.SignupRequest
-
-	err := json.NewDecoder(r.Body).Decode(&req)
-	if err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Invalid JSON payload", http.StatusBadRequest)
 		return
 	}
-
 	req.Username = strings.TrimSpace(req.Username)
 	req.Password = strings.TrimSpace(req.Password)
-
 	if req.Username == "" || req.Password == "" {
 		http.Error(w, "Username and password are required", http.StatusBadRequest)
 		return
 	}
 
-	endpoint := fmt.Sprintf("http://%s/admin/create_user_do", config.SubsonicHost)
+	base := fmt.Sprintf("http://%s", config.SubsonicHost)
 
-	form := url.Values{}
-	form.Set("username", req.Username)
-	form.Set("password_one", req.Password)
-	form.Set("password_two", req.Password)
+	jar, _ := cookiejar.New(nil)
+	client := &http.Client{Jar: jar}
 
-	req2, err := http.NewRequest(config.MethodPost, endpoint, strings.NewReader(form.Encode()))
-	if err != nil {
-		http.Error(w, "Failed to create request", http.StatusInternalServerError)
+	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
+	defer cancel()
+
+	createCh := startCreateUser(ctx, client, base+"/admin/create_user_do", req.Username, req.Password, startLogin(ctx, client, base+"/admin/login_do", "jack", "123"))
+
+	res := <-createCh
+	if res.Err != nil {
+		http.Error(w, res.Err.Error(), http.StatusBadGateway)
 		return
 	}
-	req2.Header.Set(config.HeaderContentType, config.ContentTypeForm)
-	req2.Header.Add(config.Cookies, "next-auth.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..jPtBFQtrrCNga6Y1.NlV8ZWOctkeQmLGcSPu202ycZK7lkkbj2uaBIFEOq_0b5jNgiRVSpKyvTVn_4CFtMRxxUcVt48ncdgdPgln16LCsiU9iCFY15GyohufVxIZhu8i0-Tyg7WnnKNhmA6COzbBP93XLUL3fRZvO5wA589O5vQTlOpg_EKsVDGDj17y957YYK6eh-VA0HJlWJH_ifdC3VmzLH9p9zgDpPHxTuddHH5fuZyqNb252Xn_a-zRjhRLRNUKJPoxJ80QaomI-va1D8P5-dI7jHhpKCrL2CMswhM0XtW1igUWrkrbDRHoOCK8M04D5Xc3yvXPa3G4IBxJNAAaKAatq0s5QzHzAmWFu4Bd2xtjnZryGI0usbQVOYR1tpnC1J90_XIFl.g6_Dx_QdH3Y8H0Q-m3r0Vg; gonic=MTc2MjY5NjQzOXxOd3dBTkZOTlFsQlpURUpXVlZKWFdVbFpUbGxMVUVwSlJFVTJUMHhNUTB4TFZrMVRRMWxDU2pST1Z6TkJRa3RCVTBkQ1NqWlVURkU9fMNa-5ztxiGjPfr3mSFigYQIUigq4oEdP18boELHpE5l")
-
-	resp, err := http.DefaultClient.Do(req2)
-	if err != nil {
-		http.Error(w, "Failed to communicate with user service", http.StatusInternalServerError)
+	if res.Status >= 400 {
+		http.Error(w, string(res.Body), http.StatusBadRequest)
 		return
 	}
 
-	defer resp.Body.Close()
-	b, _ := io.ReadAll(resp.Body)
-
-	switch resp.StatusCode {
-	case http.StatusInternalServerError:
-		http.Error(w, string(b), http.StatusBadRequest)
-		return
-
-	default:
-		w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
-		w.WriteHeader(http.StatusCreated)
-		_ = json.NewEncoder(w).Encode(map[string]string{
-			"message": "User created successfully",
-		})
-		return
-	}
+	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
+	w.WriteHeader(http.StatusCreated)
+	_ = json.NewEncoder(w).Encode(map[string]string{"message": "User created successfully"})
 }
