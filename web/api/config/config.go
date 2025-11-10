@@ -22,6 +22,8 @@ var (
 
 	// Subsonic Server
 	SubsonicHost = "127.0.0.1:4747"
+
+	HostUrl = "https://hifi.401658.xyz"
 )
 
 const (
@@ -42,12 +44,13 @@ const (
 	Cookies = "Cookie"
 
 	// Common headers
-	HeaderContentType  = "Content-Type"
-	HeaderCacheControl = "Cache-Control"
-	HeaderConnection   = "Connection"
-	HeaderAllowOrigin  = "Access-Control-Allow-Origin"
-	HeaderAllowMethods = "Access-Control-Allow-Methods"
-	HeaderAllowHeaders = "Access-Control-Allow-Headers"
+	HeaderContentType           = "Content-Type"
+	HeaderCacheControl          = "Cache-Control"
+	HeaderConnection            = "Connection"
+	HeaderAllowOrigin           = "Access-Control-Allow-Origin"
+	HeaderAllowMethods          = "Access-Control-Allow-Methods"
+	HeaderAllowHeaders          = "Access-Control-Allow-Headers"
+	HeaderContentSecurityPolicy = "Content-Security-Policy"
 
 	// HTTP State codes
 	StatusOK                  = 200
