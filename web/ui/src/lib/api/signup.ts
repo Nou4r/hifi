@@ -7,6 +7,7 @@ export async function signup(data: Record<string, string>) {
 		body: JSON.stringify(data)
 	});
 
-	const out = await res.json().catch(() => ({}));
-	return { ok: res.ok, data: out };
+	if (res.ok) {
+		return { ok: res.ok };
+	}
 }
