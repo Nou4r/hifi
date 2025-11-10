@@ -1,4 +1,4 @@
-import { superValidate, message } from 'sveltekit-superforms';
+import { superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail, type Actions } from '@sveltejs/kit';
 import { formSchema } from '$lib/types/auth';
