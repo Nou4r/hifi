@@ -28,7 +28,7 @@ export const formSchema = z.object({
 				ctx.addIssue({ code: 'custom', message: 'Password is required' });
 				return;
 			}
-			if (val.length < 2) {
+			if (val.length < 8) {
 				ctx.addIssue({ code: 'custom', message: 'Password must be at least 2 characters long' });
 				return;
 			}
