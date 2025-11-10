@@ -115,6 +115,10 @@ Soon...
 
 - [Feishin](https://github.com/jeffvli/feishin)
 
+### Android
+
+- [Ultrasonic](https://gitlab.com/ultrasonic/ultrasonic)
+
 <br>
 
 ## Contributing
