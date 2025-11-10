@@ -5,7 +5,6 @@ import { formSchema } from '$lib/types/auth';
 
 export const load = async (event) => {
 	const form = await superValidate(event, zod4(formSchema));
-
 	return { form };
 };
 
