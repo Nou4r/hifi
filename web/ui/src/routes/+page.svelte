@@ -6,7 +6,7 @@
 
 	let currentTab = 'tab-0';
 
-	export let data;
+	let { data } = $props();
 </script>
 
 <div class="flex min-h-screen items-start justify-center overflow-hidden bg-black">
