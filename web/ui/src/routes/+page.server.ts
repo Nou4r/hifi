@@ -15,6 +15,7 @@ export const actions: Actions = {
 		if (!form.valid) return fail(400, { form });
 		const res = await e.fetch(`${API_URL}/v1/signup`, {
 			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(form.data)
 		});
 		return res.ok ? message(form, 'Signup successful!') : fail(res.status, 'Signup failed');
