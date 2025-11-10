@@ -86,7 +86,7 @@ func startCreateUser(ctx context.Context, client *http.Client, createURL, newUse
 			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
 			return
 		}
-		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		req.Header.Set(config.HeaderContentType, config.ContentTypeForm)
 
 		resp, err := client.Do(req)
 		if err != nil {
