@@ -5,6 +5,7 @@ import { formSchema } from '$lib/types/auth';
 
 export const load = async (event) => {
 	const form = await superValidate(event, zod4(formSchema));
+
 	return { form };
 };
 
@@ -16,7 +17,9 @@ export const actions: Actions = {
 			method: 'POST',
 			body: JSON.stringify(form.data)
 		});
+
 		const out = await res.json().catch(() => ({}));
+
 		return res.ok ? message(form, out.message) : fail(res.status, out.message);
 	}
 };
