@@ -94,6 +94,7 @@
 												class="border-zinc-700 text-white"
 												placeholder="Joe Doe"
 												type="text"
+												autocomplete="username"
 												{...props}
 												bind:value={$formData.username}
 											/>
