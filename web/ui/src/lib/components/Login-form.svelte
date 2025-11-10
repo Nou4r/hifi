@@ -94,6 +94,8 @@
 	const { form: formData, submitting, enhance } = form;
 </script>
 
+<Toaster closeButton position="top-center" />
+
 <div class={cn('flex flex-col gap-6', className)} {...restProps}>
 	<Card.Root class="mx-auto max-w-md border border-zinc-700 bg-transparent">
 		<Card.Header class="text-center">
