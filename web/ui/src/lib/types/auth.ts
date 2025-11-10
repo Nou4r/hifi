@@ -3,6 +3,7 @@ import { z } from 'zod/v4';
 export const formSchema = z.object({
 	username: z
 		.string()
+		.regex(/^[a-zA-Z0-9]+$/, 'Username can only contain letters and numbers')
 		.trim()
 		.superRefine((val, ctx) => {
 			if (!val) {
@@ -20,6 +21,7 @@ export const formSchema = z.object({
 		}),
 	password: z
 		.string()
+		.regex(/^[a-zA-Z0-9]+$/, 'Password can only contain letters and numbers')
 		.trim()
 		.superRefine((val, ctx) => {
 			if (!val) {
