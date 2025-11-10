@@ -5,8 +5,6 @@
 	import Settings from '$lib/components/Settings.svelte';
 
 	let currentTab = 'tab-0';
-
-	let { data } = $props();
 </script>
 
 <div class="flex min-h-screen items-start justify-center overflow-hidden bg-black">
@@ -42,7 +40,7 @@
 								</TabsTrigger>
 							</TabsList>
 							<TabsContent value="tab-1">
-								<Page {data} />
+								<Page />
 							</TabsContent>
 							<TabsContent value="tab-2">
 								<Settings />
