@@ -17,6 +17,6 @@ export const actions: Actions = {
 			body: JSON.stringify(form.data)
 		});
 
-		return res.ok ? message(form, 'Signup successful!') : fail(400, 'Signup failed');
+		return res.ok ? 'Signup successful!' : fail(400, 'Signup failed');
 	}
 };
