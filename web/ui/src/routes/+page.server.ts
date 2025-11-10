@@ -16,14 +16,12 @@ export const actions: Actions = {
 		const form = await superValidate(e, zod4(formSchema));
 		if (!form.valid) return fail(400, { form });
 
-		onMount(async () => {
-			const ok = await signup(form.data);
+		const ok = await signup(form.data);
 
-			if (!ok) {
-				return fail(400, 'Signup failed. Please try again.');
-			}
+		if (!ok) {
+			return fail(400, 'Signup failed. Please try again.');
+		}
 
-			return 'Signup successful!';
-		});
+		return 'Signup successful!';
 	}
 };
