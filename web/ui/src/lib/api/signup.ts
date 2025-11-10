@@ -1,6 +1,9 @@
 export async function signup(data: Record<string, string>) {
 	const res = await fetch('http://localhost:5002/v1/signup', {
 		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
 		body: JSON.stringify(data)
 	});
 
