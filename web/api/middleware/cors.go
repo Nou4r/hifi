@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"hifi/config"
+	"api/config"
 	"net/http"
 	"slices"
 )

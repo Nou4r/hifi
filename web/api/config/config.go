@@ -2,6 +2,14 @@ package config
 
 var (
 
+	// Whitelist
+	ValidPaths = []string{
+		"/v1/signup",
+	}
+
+	// CORS
+	CORSAllowOrigin = "*"
+
 	// Hifi Scheme
 	HifiScheme = "http"
 
@@ -9,12 +17,15 @@ var (
 	Host = "127.0.0.1"
 
 	Port = []string{"5002", "5006"}
+
+	// Subsonic Scheme
+	SubsonicScheme = "http"
+
+	// Subsonic Server
+	SubsonicHost = "127.0.0.1:4747"
 )
 
 const (
-	SubsonicScheme = "http"
-
-	SubsonicHost = "127.0.0.1:4747"
 
 	// HTTP methods
 	MethodGet     = "GET"

@@ -17,8 +17,11 @@ func main() {
 	// API v1 routes
 	mux.Handle("/v1/", http.StripPrefix("/v1", routes.Handle()))
 
+	cors := middleware.CORS(mux)
+
+	handler := middleware.Recovery(cors)
+
 	port := middleware.PortRotate()
-	handler := middleware.Recovery(mux)
 
 	// Server setup
 	server := &http.Server{
