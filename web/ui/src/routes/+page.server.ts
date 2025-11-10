@@ -3,8 +3,9 @@ import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail, type Actions } from '@sveltejs/kit';
 import { formSchema } from '$lib/types/auth';
 import { signup } from '$lib/api/signup';
+import type { PageServerLoad } from './$types';
 
-export const load = async (event) => {
+export const load: PageServerLoad = async (event) => {
 	const form = await superValidate(event, zod4(formSchema));
 	return { form };
 };
