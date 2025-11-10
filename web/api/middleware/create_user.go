@@ -74,7 +74,7 @@ func SignupUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	base := fmt.Sprintf("http://%s", config.SubsonicHost)
+	base := fmt.Sprintf("%s://%s", config.SubsonicScheme, config.SubsonicHost)
 
 	jar, _ := cookiejar.New(nil)
 	client := &http.Client{Jar: jar}
