@@ -55,6 +55,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const response = await resolve(event);
 
 	response.headers.set('Access-Control-Allow-Origin', API_URL);
+	response.headers.set(
+		'Content-Security-Policy',
+		`default-src 'self'; script-src 'self' ${API_URL}; connect-src ${API_URL}; object-src 'none';`
+	);
 
 	return response;
 };
