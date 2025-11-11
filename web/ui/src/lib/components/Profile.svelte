@@ -90,7 +90,6 @@
 			}
 			if (f.valid) {
 				await new Promise((r) => setTimeout(r, 500));
-				console.log('Form data:', f.data);
 				open = false;
 				toast.success(`You submitted ${JSON.stringify(f.data, null, 2)}`);
 			} else {
