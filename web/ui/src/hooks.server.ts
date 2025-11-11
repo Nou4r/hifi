@@ -52,5 +52,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		return Response.redirect(new URL('/signin', event.url), 303);
 	}
 
-	return await resolve(event);
+	const response = await resolve(event);
+
+	response.headers.set('Access-Control-Allow-Origin', API_URL);
+
+	return response;
 };
