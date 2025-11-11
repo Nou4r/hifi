@@ -55,7 +55,7 @@ func SigninUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(map[string]string{"message": string(res.Body), "username": req.Username, "password": req.Password, "host": config.HostUrl})
 
 }
