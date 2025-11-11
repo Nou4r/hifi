@@ -57,7 +57,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	response.headers.set('Access-Control-Allow-Origin', API_URL);
 	response.headers.set(
 		'Content-Security-Policy',
-		`form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests; object-src 'none';`
+		`form-action 'self'; frame-ancestors 'self'; base-uri 'self'; upgrade-insecure-requests; object-src 'none';`
 	);
 
 	return response;
