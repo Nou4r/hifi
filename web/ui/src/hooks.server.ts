@@ -54,10 +54,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	const response = await resolve(event);
 
-	const nonce = crypto.randomUUID();
-
 	response.headers.set('Access-Control-Allow-Origin', API_URL);
-	response.headers.set('Content-Security-Policy', `script-src  ${API_URL} 'nonce-${nonce}';`);
+	response.headers.set(
+		'Content-Security-Policy',
+		`form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests; object-src 'none';`
+	);
 
 	return response;
 };
