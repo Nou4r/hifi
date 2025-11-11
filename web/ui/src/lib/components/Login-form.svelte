@@ -1,89 +1,50 @@
-<script lang="ts" module>
-	import { z } from 'zod/v4';
-
-	const formSchema = z.object({
-		logo: z
-			.string()
-			.trim()
-			.superRefine((val, ctx) => {
-				if (!val) {
-					ctx.addIssue({ code: 'custom', message: 'Logo is required' });
-					return;
-				}
-				if (val.length < 2) {
-					ctx.addIssue({ code: 'custom', message: 'Logo must be at least 2 characters long' });
-					return;
-				}
-				if (val.length > 50) {
-					ctx.addIssue({ code: 'custom', message: 'Logo must not exceed 50 characters' });
-					return;
-				}
-			}),
-		title: z
-			.string()
-			.trim()
-			.superRefine((val, ctx) => {
-				if (!val) {
-					ctx.addIssue({ code: 'custom', message: 'Title is required' });
-					return;
-				}
-				if (val.length < 2) {
-					ctx.addIssue({ code: 'custom', message: 'Title must be at least 2 characters long' });
-					return;
-				}
-				if (val.length > 50) {
-					ctx.addIssue({ code: 'custom', message: 'Title must not exceed 50 characters' });
-					return;
-				}
-			})
-	});
-</script>
-
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card/index.js';
-	import {
-		FieldGroup,
-		Field,
-		FieldLabel,
-		FieldDescription,
-		FieldSeparator
-	} from '$lib/components/ui/field/index.js';
+	import { FieldDescription } from '$lib/components/ui/field/index.js';
 	import type { HTMLAttributes } from 'svelte/elements';
-	let { class: className, ...restProps }: HTMLAttributes<HTMLDivElement> = $props();
-	const id = $props.id();
-
-	import { defaults, superForm } from 'sveltekit-superforms';
 	import { zod4 } from 'sveltekit-superforms/adapters';
+	import { formSchema } from '$lib/types/auth';
+	import { goto } from '$app/navigation';
+
+	import { superForm } from 'sveltekit-superforms';
 	import { Toaster, toast } from 'svelte-sonner';
 	import * as Form from '$lib/components/ui/form/index.js';
 
-	import Button, { buttonVariants } from '$lib/components/ui/button.svelte';
 	import Input from '$lib/components/ui/input.svelte';
-	import * as Dialog from '$lib/components/ui/dialog';
 	import { cn } from '$lib/utils';
 
 	import * as Empty from '$lib/components/ui/empty/index.js';
-	import IconUserCircle from '@tabler/icons-svelte/icons/user-circle';
-	import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
 	import UserCircle from '@lucide/svelte/icons/user-circle';
 
 	let open = $state(false);
+	const { data } = $props();
 
-	const form = superForm(defaults(zod4(formSchema)), {
+	const form = superForm(data.form, {
+		resetForm: true,
 		validators: zod4(formSchema),
-		SPA: true,
-		onUpdate: async ({ form: f }) => {
-			const logoValue = f.data.logo?.trim() ?? '';
-
-			if (!logoValue) {
-				return;
-			}
-			if (f.valid) {
-				await new Promise((r) => setTimeout(r, 500));
-				console.log('Form data:', f.data);
+		onSubmit: async () => {
+			await new Promise((resolve) => setTimeout(resolve, 800));
+		},
+		onResult: ({ result }) => {
+			if (result.type === 'success') {
 				open = false;
-				toast.success(`You submitted ${JSON.stringify(f.data, null, 2)}`);
+				toast.promise(
+					new Promise((resolve) => {
+						setTimeout(resolve, 500);
+					}),
+					{
+						loading: 'Account created successfully!',
+						success: () => {
+							setTimeout(() => {
+								goto('/signin');
+							}, 300);
+							return 'Redirecting to Sign In...';
+						},
+
+						error: 'Something went wrong. Please try again.'
+					}
+				);
 			} else {
 				open = false;
 				toast.error('Something went wrong. Please try again.');
@@ -96,7 +57,7 @@
 
 <Toaster closeButton position="top-center" />
 
-<div class={cn('flex flex-col gap-6', className)} {...restProps}>
+<div class="flex flex-col gap-6">
 	<Card.Root class="mx-auto max-w-md border border-zinc-700 bg-transparent">
 		<Card.Header class="text-center">
 			<Empty.Header>

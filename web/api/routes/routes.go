@@ -8,6 +8,8 @@ import (
 func Handle() *http.ServeMux {
 	mux := http.NewServeMux()
 
+	mux.HandleFunc("/signin", middleware.SigninUser)
+
 	mux.HandleFunc("/signup", middleware.SignupUser)
 
 	return mux

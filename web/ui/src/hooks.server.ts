@@ -7,11 +7,50 @@ export const handle: Handle = async ({ event, resolve }) => {
 		return new Response(null, { status: 404 });
 	}
 
-	const response = await resolve(event);
+	const token = event.cookies.get('hifi');
 
-	// Set security headers properly
-	response.headers.set('Content-Security-Policy', `script-src   ${API_URL}`);
-	response.headers.set('Access-Control-Allow-Origin', dev ? '*' : API_URL);
+	if (token) {
+		try {
+			const res = await fetch(`${API_URL}/auth/validate`, {
+				headers: { Authorization: `Bearer ${token}` }
+			});
 
-	return response;
+			if (res.ok) {
+				event.locals.user = await res.json();
+			} else {
+				event.cookies.delete('jwt', { path: '/' });
+				event.locals.user = null;
+			}
+		} catch {
+			event.locals.user = null;
+			event.cookies.delete('jwt', { path: '/' });
+		}
+	} else {
+		event.locals.user = null;
+	}
+
+	const publicRoutes = ['/', '/signin', '/settings'];
+
+	const redirectableRoutes = ['/connect'];
+
+	const isPublic = publicRoutes.some(
+		(path) => event.url.pathname === path || event.url.pathname.startsWith(`${path}/`)
+	);
+
+	if (!event.locals.user && !isPublic) {
+		const path = event.url.pathname;
+
+		if (path === '/dashboard') {
+			return Response.redirect(new URL('/signin', event.url), 303);
+		}
+
+		if (redirectableRoutes.some((r) => path === r || path.startsWith(`${r}/`))) {
+			const redirectUrl = `/signin?redirect=${encodeURIComponent(path + event.url.search)}`;
+			return Response.redirect(new URL(redirectUrl, event.url), 303);
+		}
+
+		return Response.redirect(new URL('/signin', event.url), 303);
+	}
+
+	return await resolve(event);
 };

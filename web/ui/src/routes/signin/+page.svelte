@@ -1,9 +1,11 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte';
-	import Login from '$lib/components/Login.svelte';
+	import LoginForm from '$lib/components/Login-form.svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 
 	let currentTab = 'tab-0';
+
+	const { data } = $props();
 </script>
 
 <div class="flex min-h-screen items-start justify-center overflow-hidden bg-black">
@@ -33,7 +35,9 @@
 								</TabsTrigger>
 							</TabsList>
 							<TabsContent value="tab-1">
-								<Login />
+								<div class="mt-5 flex w-full max-w-sm flex-col gap-6">
+									<LoginForm {data} />
+								</div>
 							</TabsContent>
 						</Tabs>
 					</TabsContent>
