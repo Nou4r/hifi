@@ -5,6 +5,7 @@ var (
 	// Whitelist
 	ValidPaths = []string{
 		"/v1/signup",
+		"/v1/signin",
 	}
 
 	// CORS
