@@ -23,6 +23,8 @@ export const actions: Actions = {
 			return fail(res.status, { form, error: 'Signin failed' });
 		}
 
-		return message(form, `Signin successful!`);
+		const data = await res.json();
+
+		return message(form, `Signin successful! Welcome back, ${data.host}!`);
 	}
 };

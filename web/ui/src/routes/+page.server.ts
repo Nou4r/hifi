@@ -23,8 +23,6 @@ export const actions: Actions = {
 			return fail(res.status, { form, error: 'Signup failed' });
 		}
 
-		const data = await res.json();
-
 		return message(form, `Signup successful!`);
 	}
 };
