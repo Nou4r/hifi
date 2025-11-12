@@ -6,8 +6,6 @@
 	let currentTab = 'tab-0';
 
 	const { data } = $props();
-
-	console.log('Signin page data:', data);
 </script>
 
 <div class="flex min-h-screen items-start justify-center overflow-hidden bg-black">

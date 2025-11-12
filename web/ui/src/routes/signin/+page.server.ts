@@ -19,6 +19,12 @@ export const actions: Actions = {
 			body: JSON.stringify(form.data)
 		});
 
-		return res.ok ? message(form, 'Signin successful!') : fail(res.status, 'Signin failed');
+		if (!res.ok) {
+			return fail(res.status, { form, error: 'Signin failed' });
+		}
+
+		const data = await res.json();
+
+		return message(form, `Signin successful! Welcome ${data.host}`);
 	}
 };
