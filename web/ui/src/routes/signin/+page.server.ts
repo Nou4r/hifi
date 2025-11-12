@@ -18,6 +18,7 @@ export const actions: Actions = {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(form.data)
 		});
+
 		return res.ok ? message(form, 'Signin successful!') : fail(res.status, 'Signin failed');
 	}
 };
