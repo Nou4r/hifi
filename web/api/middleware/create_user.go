@@ -45,10 +45,12 @@ func SignupUser(w http.ResponseWriter, r *http.Request) {
 	createCh := startCreateUser(ctx, client, base+"/admin/create_user_do", req.Username, req.Password, startLogin(ctx, client, base+"/admin/login_do", "jack", "123"))
 
 	res := <-createCh
+
 	if res.Err != nil {
 		http.Error(w, res.Err.Error(), http.StatusBadGateway)
 		return
 	}
+
 	if res.Status >= 400 {
 		http.Error(w, string(res.Body), http.StatusBadRequest)
 		return
