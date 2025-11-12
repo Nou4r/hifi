@@ -3,8 +3,17 @@ import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail, type Actions } from '@sveltejs/kit';
 import { formSchema } from '$lib/types/auth';
 import { API_URL } from '$env/static/private';
+import type { PageServerLoad } from './$types';
+import { redirect } from '@sveltejs/kit';
 
-export const load = async (event) => {
+export const load: PageServerLoad = async (event) => {
+	const { locals, url } = event;
+
+	if (locals.user) {
+		const redirectTo = url.searchParams.get('redirect') || '/connect';
+		throw redirect(303, redirectTo);
+	}
+
 	const form = await superValidate(event, zod4(formSchema));
 	return { form };
 };
