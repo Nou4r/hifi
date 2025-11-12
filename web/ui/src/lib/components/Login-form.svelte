@@ -47,7 +47,7 @@
 <Toaster closeButton position="top-center" />
 
 <div class="flex flex-col gap-6">
-	<Card.Root class="mx-auto max-w-md border border-zinc-700 bg-transparent">
+	<Card.Root class="mx-auto w-[350px] border border-zinc-700 bg-transparent">
 		<Card.Header class="text-center">
 			<Empty.Header>
 				<Empty.Media variant="icon">

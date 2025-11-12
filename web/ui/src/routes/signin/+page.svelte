@@ -22,7 +22,7 @@
 				<div
 					class="border-border relative col-span-1 min-w-[210px] rounded-lg border bg-zinc-900 p-8 md:col-span-2 md:min-h-[480px] md:overflow-y-hidden"
 				>
-					<TabsContent value="tab-0" class="md:min-h-[400px] xl:h-[600px]">
+					<TabsContent value="tab-0" class="md:min-h-[400px] xl:h-[650px]">
 						<Tabs value="tab-1" class=" items-center">
 							<TabsList
 								class="border-border h-auto gap-2 rounded-full border-b bg-zinc-800 px-10 py-2 text-zinc-400"
