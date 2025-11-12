@@ -152,11 +152,21 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	mu.RLock()
+	user, exists := users[claims.Username]
+	mu.RUnlock()
+
+	if !exists || user.ID != claims.ID {
+		http.Error(w, "User does not exist or data mismatch", http.StatusUnauthorized)
+		return
+	}
+
 	resp := map[string]any{
 		"id":          claims.ID,
 		"username":    claims.Username,
 		"description": "Welcome " + claims.Username + "! Verified via JWT.",
 	}
+
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	json.NewEncoder(w).Encode(resp)
 }
