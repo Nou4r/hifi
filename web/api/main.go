@@ -23,6 +23,8 @@ func main() {
 
 	port := middleware.PortRotate()
 
+	go middleware.RegistrationWorker()
+
 	// Server setup
 	server := &http.Server{
 		Addr:    fmt.Sprintf("%s:%s", config.Host, port),

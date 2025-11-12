@@ -11,7 +11,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	if (token) {
 		try {
-			const res = await fetch(`${API_URL}/auth/validate`, {
+			const res = await fetch(`${API_URL}/protected`, {
 				headers: { Authorization: `Bearer ${token}` }
 			});
 
