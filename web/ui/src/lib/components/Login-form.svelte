@@ -30,7 +30,7 @@
 						setTimeout(resolve, 500);
 					}),
 					{
-						loading: 'Account created successfully!',
+						loading: 'Signing you in...',
 
 						error: 'Something went wrong. Please try again.'
 					}
