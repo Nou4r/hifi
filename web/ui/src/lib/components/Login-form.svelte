@@ -60,7 +60,7 @@
 			<form method="POST" class="space-y-5" use:enhance>
 				<div class="space-y-4">
 					<div class="space-y-2">
-						<Form.Field {form} name="logo">
+						<Form.Field {form} name="username">
 							<Form.Control>
 								{#snippet children({ props })}
 									<Form.Label class="font-bold text-gray-300">Username</Form.Label>
@@ -69,7 +69,7 @@
 										placeholder="Joe Doe"
 										type="text"
 										{...props}
-										bind:value={$formData.logo}
+										bind:value={$formData.username}
 									/>
 								{/snippet}
 							</Form.Control>
@@ -77,7 +77,7 @@
 						</Form.Field>
 					</div>
 					<div class="space-y-2">
-						<Form.Field {form} name="title">
+						<Form.Field {form} name="password">
 							<Form.Control>
 								{#snippet children({ props })}
 									<Form.Label class="font-bold text-gray-300">Password</Form.Label>
@@ -86,7 +86,7 @@
 										placeholder="Secure Password"
 										type="password"
 										{...props}
-										bind:value={$formData.title}
+										bind:value={$formData.password}
 									/>
 								{/snippet}
 							</Form.Control>
