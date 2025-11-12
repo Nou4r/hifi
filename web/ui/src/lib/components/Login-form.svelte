@@ -31,7 +31,6 @@
 					}),
 					{
 						loading: 'Signing you in...',
-
 						error: 'Something went wrong. Please try again.'
 					}
 				);
