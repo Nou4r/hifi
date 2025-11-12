@@ -21,6 +21,8 @@ export const load: PageServerLoad = async (event) => {
 
 export const actions: Actions = {
 	default: async (e) => {
+		const { request, cookies, url } = e;
+
 		const form = await superValidate(e, zod4(formSchema));
 		if (!form.valid) return fail(400, { form });
 		const res = await e.fetch(`${API_URL}/v1/signin`, {
