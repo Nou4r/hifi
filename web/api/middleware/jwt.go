@@ -115,7 +115,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		"username": user.Username,
 		"maxAge":   maxAge,
 	}
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	json.NewEncoder(w).Encode(resp)
 }
 
@@ -152,6 +152,6 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 		"username":    claims.Username,
 		"description": "Welcome " + claims.Username + "! Verified via JWT.",
 	}
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	json.NewEncoder(w).Encode(resp)
 }
