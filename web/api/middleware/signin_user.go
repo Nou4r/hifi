@@ -42,7 +42,7 @@ func SigninUser(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
 
-	loginCh := startLoginUser(ctx, client, base+"/admin/rest/ping.view", req.Username, req.Password, startLogin(ctx, client, base+"/admin/login_do", "jack", "123"))
+	loginCh := startLoginUser(ctx, client, base+"/rest/ping.view", req.Username, req.Password, startLogin(ctx, client, base+"/admin/login_do", "jack", "123"))
 
 	res := <-loginCh
 	if res.Err != nil {
