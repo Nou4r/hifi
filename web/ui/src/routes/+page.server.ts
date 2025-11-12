@@ -22,7 +22,7 @@ export const actions: Actions = {
 		if (!res.ok) {
 			form.valid = false;
 			form.errors.username = ['Invalid username'];
-			return fail(401, { form });
+			return fail(400, { form });
 		}
 
 		return message(form, `Signup successful!`);
