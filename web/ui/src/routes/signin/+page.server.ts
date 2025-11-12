@@ -13,11 +13,11 @@ export const actions: Actions = {
 	default: async (e) => {
 		const form = await superValidate(e, zod4(formSchema));
 		if (!form.valid) return fail(400, { form });
-		const res = await e.fetch(`${API_URL}/v1/signup`, {
+		const res = await e.fetch(`${API_URL}/v1/signin`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(form.data)
 		});
-		return res.ok ? message(form, 'Signup successful!') : fail(res.status, 'Signup failed');
+		return res.ok ? message(form, 'Signin successful!') : fail(res.status, 'Signin failed');
 	}
 };
