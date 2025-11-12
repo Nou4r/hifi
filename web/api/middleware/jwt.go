@@ -142,13 +142,13 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if err != nil || !token.Valid {
-		http.Error(w, "Invalid or expired token", http.StatusUnauthorized)
+		http.Error(w, "Invalid or expired token", http.StatusBadRequest)
 		return
 	}
 
 	claims, ok := token.Claims.(*types.Claims)
 	if !ok {
-		http.Error(w, "Invalid claims", http.StatusUnauthorized)
+		http.Error(w, "Invalid claims", http.StatusBadRequest)
 		return
 	}
 
@@ -157,7 +157,7 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 	mu.RUnlock()
 
 	if !exists || user.ID != claims.ID {
-		http.Error(w, "User does not exist or data mismatch", http.StatusUnauthorized)
+		http.Error(w, "User does not exist or data mismatch", http.StatusBadRequest)
 		return
 	}
 
