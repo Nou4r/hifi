@@ -1,17 +1,14 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card/index.js';
 	import { FieldDescription } from '$lib/components/ui/field/index.js';
-	import type { HTMLAttributes } from 'svelte/elements';
 	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { formSchema } from '$lib/types/auth';
-	import { goto } from '$app/navigation';
 
 	import { superForm } from 'sveltekit-superforms';
 	import { Toaster, toast } from 'svelte-sonner';
 	import * as Form from '$lib/components/ui/form/index.js';
 
 	import Input from '$lib/components/ui/input.svelte';
-	import { cn } from '$lib/utils';
 
 	import * as Empty from '$lib/components/ui/empty/index.js';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
@@ -35,12 +32,6 @@
 					}),
 					{
 						loading: 'Account created successfully!',
-						success: () => {
-							setTimeout(() => {
-								goto('/signin');
-							}, 300);
-							return 'Redirecting to Sign In...';
-						},
 
 						error: 'Something went wrong. Please try again.'
 					}
