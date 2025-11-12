@@ -162,8 +162,6 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resp := map[string]any{
-		"id":          claims.ID,
-		"username":    claims.Username,
 		"description": "Welcome " + claims.Username + "! Verified via JWT.",
 	}
 
