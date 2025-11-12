@@ -25,6 +25,6 @@ export const actions: Actions = {
 
 		const data = await res.json();
 
-		return message(form, `Signin successful! Welcome ${data.host}`);
+		return message(form, `Signin successful!`);
 	}
 };
