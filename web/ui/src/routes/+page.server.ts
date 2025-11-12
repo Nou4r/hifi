@@ -20,7 +20,9 @@ export const actions: Actions = {
 		});
 
 		if (!res.ok) {
-			return fail(res.status, { form, error: 'Signup failed' });
+			form.valid = false;
+			form.errors.username = ['Invalid username'];
+			return fail(401, { form });
 		}
 
 		return message(form, `Signup successful!`);

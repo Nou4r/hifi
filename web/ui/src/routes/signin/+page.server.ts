@@ -32,7 +32,10 @@ export const actions: Actions = {
 		});
 
 		if (!res.ok) {
-			return fail(res.status, { form, error: 'Signin failed' });
+			form.valid = false;
+			form.errors.username = ['Invalid username or password'];
+			form.errors.password = ['Invalid username or password'];
+			return fail(401, { form });
 		}
 
 		const redirectTo = url.searchParams.get('redirect') || '/connect';
