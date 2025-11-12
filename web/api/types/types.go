@@ -23,14 +23,6 @@ type CreateResult struct {
 
 type Ping struct {
 	SubsonicResponse struct {
-		Status        string `json:"status"`
-		Version       string `json:"version"`
-		Type          string `json:"type"`
-		ServerVersion string `json:"serverVersion"`
-		OpenSubsonic  bool   `json:"openSubsonic"`
-		Error         struct {
-			Code    int    `json:"code"`
-			Message string `json:"message"`
-		} `json:"error"`
+		Status string `json:"status"`
 	} `json:"subsonic-response"`
 }
