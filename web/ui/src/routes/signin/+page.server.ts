@@ -7,6 +7,7 @@ import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async (event) => {
+	// Redirect authenticated users away from the signin page
 	const { locals, url } = event;
 
 	if (locals.user) {
