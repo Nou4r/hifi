@@ -14,18 +14,17 @@
 	import Loader2 from '@lucide/svelte/icons/loader-2';
 	import UserCircle from '@lucide/svelte/icons/user-circle';
 
-	let open = $state(false);
 	const { data } = $props();
 
 	const form = superForm(data.form, {
 		resetForm: true,
 		validators: zod4(formSchema),
+
 		onSubmit: async () => {
 			await new Promise((resolve) => setTimeout(resolve, 800));
 		},
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
-				open = false;
 				toast.promise(
 					new Promise((resolve) => {
 						setTimeout(resolve, 500);
@@ -37,7 +36,6 @@
 					}
 				);
 			} else {
-				open = false;
 				toast.error('Something went wrong. Please try again.');
 			}
 		}
