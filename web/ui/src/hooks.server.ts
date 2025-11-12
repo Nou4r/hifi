@@ -18,12 +18,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 			if (res.ok) {
 				event.locals.user = await res.json();
 			} else {
-				event.cookies.delete('jwt', { path: '/' });
+				event.cookies.delete('hifi', { path: '/' });
 				event.locals.user = null;
 			}
 		} catch {
 			event.locals.user = null;
-			event.cookies.delete('jwt', { path: '/' });
+			event.cookies.delete('hifi', { path: '/' });
 		}
 	} else {
 		event.locals.user = null;
