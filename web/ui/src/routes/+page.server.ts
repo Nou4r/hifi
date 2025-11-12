@@ -20,11 +20,11 @@ export const actions: Actions = {
 		});
 
 		if (!res.ok) {
-			return fail(res.status, { form, error: 'Signin failed' });
+			return fail(res.status, { form, error: 'Signup failed' });
 		}
 
 		const data = await res.json();
 
-		return message(form, `Signin successful! Welcome ${data.host}`);
+		return message(form, `Signup successful!`);
 	}
 };
