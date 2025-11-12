@@ -47,18 +47,15 @@ func SigninUser(w http.ResponseWriter, r *http.Request) {
 	loginCh := startLoginUser(ctx, client, base+"/rest/ping.view", req.Username, req.Password, startLogin(ctx, client, base+"/admin/login_do", "jack", "123"))
 
 	res := <-loginCh
+
 	if res.Err != nil {
 		http.Error(w, res.Err.Error(), http.StatusBadGateway)
-		return
-	}
-	if res.Status >= 400 {
-		http.Error(w, string(res.Body), http.StatusBadRequest)
 		return
 	}
 
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	w.WriteHeader(http.StatusOK)
-	_ = json.NewEncoder(w).Encode(map[string]string{"message": string(res.Body), "username": req.Username, "password": req.Password, "host": config.HostUrl})
+	_ = json.NewEncoder(w).Encode(map[string]string{"username": req.Username, "password": req.Password, "host": config.HostUrl})
 
 }
 
