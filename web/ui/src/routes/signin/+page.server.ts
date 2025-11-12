@@ -35,6 +35,8 @@ export const actions: Actions = {
 			return fail(res.status, { form, error: 'Signin failed' });
 		}
 
-		return message(form, `Signin successful!`);
+		const redirectTo = url.searchParams.get('redirect') || '/connect';
+
+		return message(form, redirect(303, redirectTo));
 	}
 };
