@@ -18,6 +18,11 @@ export const actions: Actions = {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(form.data)
 		});
-		return res.ok ? message(form, 'Signup successful!') : fail(res.status, 'Signup failed');
+
+		if (!res.ok) {
+			return fail(res.status, { form, error: 'Signup failed' });
+		}
+
+		return message(form, `Signup successful!`);
 	}
 };
