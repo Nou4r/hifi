@@ -5,7 +5,9 @@ import (
 	"api/types"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
@@ -87,9 +89,41 @@ func startLoginUser(ctx context.Context, client *http.Client, createURL, newUser
 		q.Set("f", "json")
 		u.RawQuery = q.Encode()
 
+		req, err := http.NewRequestWithContext(ctx, http.MethodPost, u.String(), nil)
+		if err != nil {
+			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
+			return
+		}
+		req.Header.Set(config.HeaderContentType, config.ContentTypeForm)
+
+		resp, err := client.Do(req)
+		if err != nil {
+			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
+			return
+		}
+		defer resp.Body.Close()
+
+		body, _ := io.ReadAll(resp.Body)
+
+		var ping types.Ping
+		if err := json.Unmarshal(body, &ping); err != nil {
+			out <- types.CreateResult{Status: resp.StatusCode, Body: nil, Err: fmt.Errorf("failed to unmarshal JSON: %w", err)}
+			return
+		}
+
+		if ping.SubsonicResponse.Status != "ok" {
+			errMsg := fmt.Sprintf("failed to sign in user: %s", string(body))
+			out <- types.CreateResult{
+				Status: resp.StatusCode,
+				Body:   []byte(ping.SubsonicResponse.Status),
+				Err:    errors.New(errMsg),
+			}
+			return
+		}
+
 		out <- types.CreateResult{
-			Status: http.StatusOK,
-			Body:   []byte(u.String()),
+			Status: resp.StatusCode,
+			Body:   []byte(ping.SubsonicResponse.Status),
 			Err:    nil,
 		}
 
