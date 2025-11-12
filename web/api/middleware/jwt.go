@@ -57,12 +57,17 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	select {
 	case registerJobs <- creds:
 		res := <-results
+
+		w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 		status := http.StatusCreated
 		if !res.Success {
 			status = http.StatusBadRequest
 		}
 		w.WriteHeader(status)
-		json.NewEncoder(w).Encode(map[string]string{"message": res.Message})
+
+		json.NewEncoder(w).Encode(map[string]string{
+			"message": res.Message,
+		})
 
 	default:
 		http.Error(w, "Server busy, try again later", http.StatusServiceUnavailable)
