@@ -79,9 +79,8 @@
 					<a
 						href="/connect"
 						aria-label="Connect account"
-						data-sveltekit-reload
 						title="Home"
-						class=" text-primary hover:text-primary/90 rounded-full p-3 hover:bg-zinc-600 hover:opacity-80 md:hidden"
+						class=" text-primary hover:text-primary/90 rounded-full p-3 hover:bg-zinc-600 hover:opacity-80"
 					>
 						<Unplug size={24} class="text-white" aria-hidden="true" />
 					</a>

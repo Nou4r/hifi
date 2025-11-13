@@ -5,7 +5,7 @@
 	import Profile from '$lib/components/Profile.svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import { Unplug, ShieldMinus, House } from 'lucide-svelte';
-	import Textarea from '$lib/components/Textarea.svelte';
+	import Textarea from '$lib/components/Connect.svelte';
 
 	let currentTab = 'tab-5';
 	const { data } = $props();
@@ -61,7 +61,7 @@
 							</TabsList>
 
 							<TabsContent value="tab-6">
-								<Deactivate />
+								<Deactivate {data} username={data.user?.username} />
 							</TabsContent>
 						</Tabs>
 					</TabsContent>
