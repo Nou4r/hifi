@@ -48,7 +48,7 @@ func SigninUser(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
 
-	loginCh := startLoginUser(ctx, client, base+"/rest/ping.view", req.Username, req.Password, startLogin(ctx, client, base+"/admin/login_do", "jack", "123"))
+	loginCh := startLoginUser(ctx, client, base+"/rest/ping.view", req.Username, req.Password)
 
 	res := <-loginCh
 
@@ -104,24 +104,13 @@ func SigninUser(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func startLoginUser(ctx context.Context, client *http.Client, createURL, newUser, newPass string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
+func startLoginUser(ctx context.Context, client *http.Client, createURL, newUser, newPass string) <-chan types.CreateResult {
 	out := make(chan types.CreateResult, 1)
+
+	fmt.Println(createURL)
 
 	go func() {
 		defer close(out)
-
-		select {
-
-		case lr := <-loginCh:
-			if lr.Err != nil || !lr.OK {
-				out <- types.CreateResult{Err: fmt.Errorf("login failed")}
-				return
-			}
-
-		case <-ctx.Done():
-			out <- types.CreateResult{Status: 0, Body: nil, Err: ctx.Err()}
-			return
-		}
 
 		u, _ := url.Parse(createURL)
 		q := u.Query()

@@ -1,10 +1,10 @@
 package middleware
 
 import (
+	"api/config"
 	"api/types"
 	"context"
 	"fmt"
-	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -32,9 +32,19 @@ func startLogin(ctx context.Context, client *http.Client, loginDoURL, user, pass
 		}
 		defer resp.Body.Close()
 
+		base := fmt.Sprintf("%s://%s", config.SubsonicScheme, config.SubsonicHost)
+
+		loginCh := startLoginUser(ctx, client, base+"/rest/ping.view", user, pass)
+
+		res := <-loginCh
+
+		if res.Err != nil {
+			token <- types.LoginResult{OK: false, Err: fmt.Errorf("invalid login: %d", resp.StatusCode)}
+			return
+		}
+
 		if resp.StatusCode >= 400 {
-			b, _ := io.ReadAll(resp.Body)
-			token <- types.LoginResult{OK: false, Err: fmt.Errorf("login failed: %d: %s", resp.StatusCode, string(b))}
+			token <- types.LoginResult{OK: false, Err: fmt.Errorf("login failed: %d", resp.StatusCode)}
 			return
 		}
 		token <- types.LoginResult{OK: true, Err: nil}
