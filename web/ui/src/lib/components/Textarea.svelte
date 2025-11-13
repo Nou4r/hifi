@@ -8,8 +8,6 @@
 
 	const { user } = $props();
 
-	console.log('Textarea user:', user?.username);
-
 	const slug = (s: string) =>
 		s
 			.toLowerCase()
