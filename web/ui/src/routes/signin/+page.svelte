@@ -11,7 +11,7 @@
 <div class="flex min-h-screen items-start justify-center overflow-hidden bg-black">
 	<div class="fixed mx-auto w-full max-w-7xl py-4">
 		<div class="px-4 py-4">
-			<Header />
+			<Header user={data} />
 		</div>
 
 		<Tabs
