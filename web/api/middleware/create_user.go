@@ -52,7 +52,7 @@ func SignupUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if res.Status >= 400 {
-		http.Error(w, string(res.Body), http.StatusBadRequest)
+		http.Error(w, "User creation failed", http.StatusBadGateway)
 		return
 	}
 
