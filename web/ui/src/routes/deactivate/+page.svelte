@@ -3,7 +3,7 @@
 	import Header from '$lib/components/Header.svelte';
 	import Profile from '$lib/components/Profile.svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
-	import { Unplug, ShieldMinus, House } from 'lucide-svelte';
+	import { Unplug, ShieldMinus } from 'lucide-svelte';
 	import Textarea from '$lib/components/Connect.svelte';
 	import { pushState } from '$app/navigation';
 	import { page } from '$app/state';
