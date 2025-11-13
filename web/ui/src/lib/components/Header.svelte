@@ -75,11 +75,11 @@
 					>
 				</a>
 
-				{#if (user?.username && page.url.pathname == '/connect') || page.url.pathname == '/' || page.url.pathname.startsWith('/deactivate')}
+				{#if (user?.username && page.url.pathname != '/connect') || page.url.pathname == '/' || page.url.pathname.startsWith('/deactivate')}
 					<a
 						href="/connect"
 						aria-label="Connect account"
-						title="Home"
+						title="Connect"
 						class=" text-primary hover:text-primary/90 rounded-full p-3 hover:bg-zinc-600 hover:opacity-80"
 					>
 						<Unplug size={24} class="text-white" aria-hidden="true" />
@@ -91,7 +91,7 @@
 						href="/deactivate"
 						aria-label="Deactivate account"
 						data-sveltekit-reload
-						title="Home"
+						title="Deactivate"
 						class=" text-primary hover:text-primary/90 rounded-full p-3 hover:bg-zinc-600 hover:opacity-80 md:hidden"
 					>
 						<ShieldMinus size={24} class="text-white" aria-hidden="true" />
