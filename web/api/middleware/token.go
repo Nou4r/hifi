@@ -41,15 +41,18 @@ func startLogin(ctx context.Context, client *http.Client, loginDoURL, user, pass
 
 		res := <-login
 
+		fmt.Println(string(res.Body))
+
 		if res.Err != nil {
-			token <- types.LoginResult{OK: false, Err: fmt.Errorf("invalid login: %d", resp.StatusCode)}
+			token <- types.LoginResult{OK: false, Err: fmt.Errorf("invalid login: %d", res.Status)}
 			return
 		}
 
-		if resp.StatusCode >= 400 {
-			token <- types.LoginResult{OK: false, Err: fmt.Errorf("login failed: %d", resp.StatusCode)}
+		if res.Status >= 400 {
+			token <- types.LoginResult{OK: false, Err: fmt.Errorf("login failed: %d", res.Status)}
 			return
 		}
+
 		token <- types.LoginResult{OK: true, Err: nil}
 	}()
 	return token
