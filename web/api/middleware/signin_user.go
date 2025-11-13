@@ -51,6 +51,7 @@ func SigninUser(w http.ResponseWriter, r *http.Request) {
 	loginCh := startLoginUser(ctx, client, base+"/rest/ping.view", req.Username, req.Password, startLogin(ctx, client, base+"/admin/login_do", "jack", "123"))
 
 	res := <-loginCh
+
 	if res.Err != nil {
 		http.Error(w, res.Err.Error(), http.StatusBadGateway)
 		return
@@ -64,6 +65,7 @@ func SigninUser(w http.ResponseWriter, r *http.Request) {
 	var result types.RegisterResult
 
 	result, err := registerUser(req.Username, req.Password)
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return

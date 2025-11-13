@@ -29,15 +29,15 @@ func RegistrationWorker() {
 		creds := job.Creds
 
 		mu.Lock()
-		if _, exists := users[creds.Username]; exists {
-			mu.Unlock()
-			job.Reply <- types.RegisterResult{
-				Success: false,
-				Message: "⚠️ User already exists",
-				User:    nil,
-			}
-			continue
-		}
+		// if _, exists := users[creds.Username]; exists {
+		// 	mu.Unlock()
+		// 	job.Reply <- types.RegisterResult{
+		// 		Success: false,
+		// 		Message: "⚠️ User already exists",
+		// 		User:    nil,
+		// 	}
+		// 	continue
+		// }
 
 		user := &types.User{
 			ID:       uuid.NewString(),
@@ -82,7 +82,6 @@ func registerUser(username, password string) (types.RegisterResult, error) {
 
 func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 	authHeader := r.Header.Get("Authorization")
-
 	if authHeader == "" {
 		http.Error(w, "Missing Authorization header", http.StatusUnauthorized)
 		return
@@ -127,7 +126,7 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resp := map[string]any{
-		"description": "Welcome " + user.Username + "!",
+		"description": "Welcome " + user.Username + "! Verified via JWT.",
 	}
 
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
