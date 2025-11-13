@@ -53,7 +53,7 @@
 							class="cursor-pointer hover:data-[state=off]:text-zinc-300 hover:data-[state=on]:text-zinc-300"
 						/>
 						<Password.Copy
-							class="cursor-pointer hover:bg-zinc-700 hover:text-zinc-200"
+							class="cursor-pointer hover:!bg-transparent hover:text-zinc-200"
 							aria-label="Copy Password"
 							title="Copy Password"
 						/>
