@@ -17,10 +17,8 @@
 		<div class="px-4 py-4">
 			<Header user={''} />
 		</div>
-		<Tabs
-			value={currentTab}
-			class="flex max-h-[calc(100dvh-3rem)]  w-full flex-col gap-8 md:flex-row"
-		>
+
+		<Tabs value={currentTab} class="flex max-h-[calc(100dvh-3rem)] w-full flex-col md:flex-row">
 			<TabsList class="sticky top-6 flex w-80 flex-col gap-2 self-start bg-transparent p-4">
 				<TabsTrigger
 					value="tab-0"
