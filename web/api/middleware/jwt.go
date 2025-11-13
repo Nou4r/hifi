@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"net/http"
 	"sync"
-	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
@@ -81,61 +80,9 @@ func registerUser(username, password string) (types.RegisterResult, error) {
 	}
 }
 
-func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
-	var creds types.SigninRequest
-	if err := json.NewDecoder(r.Body).Decode(&creds); err != nil {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
-		return
-	}
-
-	mu.RLock()
-	user, ok := users[creds.Username]
-	mu.RUnlock()
-
-	if !ok || user.Password != creds.Password {
-		http.Error(w, "Invalid username or password", http.StatusUnauthorized)
-		return
-	}
-
-	maxAge := 3600
-	expiration := time.Now().Add(time.Second * time.Duration(maxAge))
-
-	claims := &types.Claims{
-		ID:       user.ID,
-		Username: user.Username,
-		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(expiration),
-			IssuedAt:  jwt.NewNumericDate(time.Now()),
-			ID:        uuid.NewString(),
-		},
-	}
-
-	hash := sha256.Sum256([]byte(claims.RegisteredClaims.ID))
-	tokenHashes[claims.RegisteredClaims.ID] = hash
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(config.JwtSecret)
-	if err != nil {
-		http.Error(w, "Failed to create token", http.StatusInternalServerError)
-		return
-	}
-
-	resp := map[string]any{
-		"token":    tokenString,
-		"username": user.Username,
-		"maxAge":   maxAge,
-	}
-	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
-	json.NewEncoder(w).Encode(resp)
-}
-
 func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 	authHeader := r.Header.Get("Authorization")
+
 	if authHeader == "" {
 		http.Error(w, "Missing Authorization header", http.StatusUnauthorized)
 		return
@@ -180,7 +127,7 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resp := map[string]any{
-		"description": "Welcome " + user.Username + "! Verified via JWT.",
+		"description": "Welcome " + user.Username + "!",
 	}
 
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)

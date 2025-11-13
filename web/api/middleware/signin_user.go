@@ -4,6 +4,7 @@ import (
 	"api/config"
 	"api/types"
 	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -13,6 +14,9 @@ import (
 	"net/url"
 	"strings"
 	"time"
+
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 )
 
 func SigninUser(w http.ResponseWriter, r *http.Request) {
@@ -65,9 +69,35 @@ func SigninUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	maxAge := 3600
+	expiration := time.Now().Add(time.Second * time.Duration(maxAge))
+
+	claims := &types.Claims{
+		ID:       result.User.ID,
+		Username: result.User.Username,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expiration),
+			IssuedAt:  jwt.NewNumericDate(time.Now()),
+			ID:        uuid.NewString(),
+		},
+	}
+
+	hash := sha256.Sum256([]byte(claims.RegisteredClaims.ID))
+	tokenHashes[claims.RegisteredClaims.ID] = hash
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString(config.JwtSecret)
+
+	if err != nil {
+		http.Error(w, "Failed to create token", http.StatusInternalServerError)
+		return
+	}
+
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(map[string]string{
+		"token":    tokenString,
+		"maxAge":   fmt.Sprintf("%d", maxAge),
 		"username": result.User.Username,
 		"password": result.User.Password,
 		"host":     config.HostUrl,
