@@ -4,7 +4,7 @@
 
 	import CircleAlert from '@lucide/svelte/icons/circle-alert';
 	import * as Dialog from '$lib/components/ui/dialog';
-	import { formSchema } from '$lib/types/auth';
+	import { formSchema2 } from '$lib/types/auth';
 
 	import { defaults, superForm } from 'sveltekit-superforms';
 	import { zod4 } from 'sveltekit-superforms/adapters';
@@ -23,9 +23,8 @@
 
 	let open = $state(false);
 
-	const form = superForm(defaults(zod4(formSchema)), {
-		validators: zod4(formSchema),
-		SPA: true,
+	const form = superForm(defaults(zod4(formSchema2)), {
+		validators: zod4(formSchema2),
 		onUpdate: async ({ form: f }) => {
 			const usernameValue = f.data.username?.trim() ?? '';
 
@@ -43,7 +42,7 @@
 		}
 	});
 
-	const { form: formData, submitting, enhance } = form;
+	const { form: formData, submitting } = form;
 </script>
 
 <Toaster closeButton position="top-center" />
@@ -77,7 +76,7 @@
 					</Dialog.Header>
 				</div>
 
-				<form method="POST" class="space-y-5" use:enhance>
+				<form method="POST" class="space-y-5">
 					<div class="space-y-2">
 						<Form.Field {form} name="username">
 							<Form.Control>

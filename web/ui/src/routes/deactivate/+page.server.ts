@@ -3,7 +3,7 @@ import { redirect } from '@sveltejs/kit';
 
 import { superValidate, message } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
-import { formSchema } from '$lib/types/auth';
+import { formSchema2 } from '$lib/types/auth';
 
 import { fail, type Actions } from '@sveltejs/kit';
 import { API_URL } from '$env/static/private';
@@ -16,7 +16,7 @@ export const load: PageServerLoad = async (event) => {
 		throw redirect(303, redirectTo);
 	}
 
-	const form = await superValidate(event, zod4(formSchema));
+	const form = await superValidate(event, zod4(formSchema2));
 
 	return {
 		form,
@@ -26,7 +26,7 @@ export const load: PageServerLoad = async (event) => {
 
 export const actions: Actions = {
 	default: async (e) => {
-		const form = await superValidate(e, zod4(formSchema));
+		const form = await superValidate(e, zod4(formSchema2));
 		console.log('form', form);
 		if (!form.valid) return fail(400, { form });
 		const res = await e.fetch(`${API_URL}/v1/delete`, {
