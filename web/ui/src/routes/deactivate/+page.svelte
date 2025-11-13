@@ -15,7 +15,7 @@
 <div class="flex min-h-screen items-start justify-center overflow-hidden bg-black">
 	<div class="fixed mx-auto w-full max-w-7xl py-4">
 		<div class="px-4 py-4">
-			<Header user={''} />
+			<Header user={data.user} />
 		</div>
 
 		<Tabs value={currentTab} class="flex max-h-[calc(100dvh-3rem)] w-full flex-col md:flex-row">
