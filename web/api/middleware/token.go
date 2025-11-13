@@ -12,6 +12,9 @@ import (
 
 func startLogin(ctx context.Context, client *http.Client, loginDoURL, user, pass string) <-chan types.LoginResult {
 	token := make(chan types.LoginResult, 1)
+
+	fmt.Println(loginDoURL)
+
 	go func() {
 		defer close(token)
 
@@ -25,7 +28,9 @@ func startLogin(ctx context.Context, client *http.Client, loginDoURL, user, pass
 			return
 		}
 		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		
 		resp, err := client.Do(req)
+		
 		if err != nil {
 			token <- types.LoginResult{OK: false, Err: err}
 			return

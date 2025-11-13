@@ -31,7 +31,7 @@ var (
 
 	// Subsonic Admin Credentials
 	SubsonicAdmin         = "jack"
-	SubsonicAdminPassword = "1234"
+	SubsonicAdminPassword = "123"
 )
 
 const (

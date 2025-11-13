@@ -107,8 +107,6 @@ func SigninUser(w http.ResponseWriter, r *http.Request) {
 func startLoginUser(ctx context.Context, client *http.Client, createURL, newUser, newPass string) <-chan types.CreateResult {
 	out := make(chan types.CreateResult, 1)
 
-	fmt.Println(createURL)
-
 	go func() {
 		defer close(out)
 
