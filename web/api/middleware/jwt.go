@@ -3,6 +3,8 @@ package middleware
 import (
 	"api/config"
 	"api/types"
+	"crypto/sha256"
+	"crypto/subtle"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -19,6 +21,8 @@ var (
 
 	results      = make(chan types.RegisterResult)
 	registerJobs = make(chan types.SignupRequest, 10)
+
+	tokenHashes = make(map[string][32]byte)
 )
 
 func RegistrationWorker() {
@@ -60,11 +64,12 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 
 		w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 		status := http.StatusCreated
+
 		if !res.Success {
 			status = http.StatusBadRequest
 		}
-		w.WriteHeader(status)
 
+		w.WriteHeader(status)
 		json.NewEncoder(w).Encode(map[string]string{
 			"message": res.Message,
 		})
@@ -108,6 +113,9 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
+	hash := sha256.Sum256([]byte(claims.RegisteredClaims.ID))
+	tokenHashes[claims.RegisteredClaims.ID] = hash
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString(config.JwtSecret)
 	if err != nil {
@@ -149,6 +157,13 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 	claims, ok := token.Claims.(*types.Claims)
 	if !ok {
 		http.Error(w, "Invalid claims", http.StatusBadRequest)
+		return
+	}
+
+	computed := sha256.Sum256([]byte(claims.RegisteredClaims.ID))
+	stored, ok := tokenHashes[claims.RegisteredClaims.ID]
+	if !ok || subtle.ConstantTimeCompare(stored[:], computed[:]) != 1 {
+		http.Error(w, "Token Unknown", http.StatusUnauthorized)
 		return
 	}
 
