@@ -16,7 +16,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 			});
 
 			if (res.ok) {
-				event.locals.user = await res.json();
+				const { username } = await res.json();
+				console.log('Authenticated user:', username);
+				event.locals.user = { username };
 			} else {
 				event.cookies.delete('hifi', { path: '/' });
 				event.locals.user = null;
