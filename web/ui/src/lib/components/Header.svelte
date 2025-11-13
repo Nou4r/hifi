@@ -2,17 +2,8 @@
 	import Button from '$lib/components/ui/button.svelte';
 	import { NotificationMenu, UserMenu } from '$lib/components/_extras/navbars';
 	import { Popover, PopoverTrigger } from '$lib/components/ui/popover';
-	import { getContext } from 'svelte';
-
 	const title = 'Hifi';
-
-	interface AuthContext {
-		loggedIn: boolean;
-		login: () => void;
-		logout: () => void;
-	}
-
-	const auth = getContext<AuthContext>('auth');
+	const { user } = $props();
 </script>
 
 <svelte:head>
@@ -81,7 +72,7 @@
 					>
 				</a>
 
-				{#if auth.loggedIn}
+				{#if user?.username}
 					<a
 						href="/deactivate"
 						aria-label="Home"
@@ -108,7 +99,7 @@
 				<NotificationMenu />
 			</div>
 			<!-- User menu -->
-			<UserMenu />
+			<UserMenu {user} />
 		</div>
 	</div>
 </header>

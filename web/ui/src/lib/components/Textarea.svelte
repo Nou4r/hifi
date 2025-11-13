@@ -16,10 +16,7 @@
 			.replace(/[^a-z0-9_-]/g, '');
 
 	const baseFields = [
-		{
-			label: 'Hostname',
-			value: user?.host
-		},
+		{ label: 'Hostname', value: user?.host },
 		{ label: 'Username', value: user?.username },
 		{ label: 'Password', value: user?.password }
 	];
