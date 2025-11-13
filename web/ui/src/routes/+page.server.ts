@@ -5,8 +5,13 @@ import { formSchema } from '$lib/types/auth';
 import { API_URL } from '$env/static/private';
 
 export const load = async (event) => {
+	const sessionUser = event.locals.user;
 	const form = await superValidate(event, zod4(formSchema));
-	return { form };
+
+	return {
+		form,
+		user: sessionUser
+	};
 };
 
 export const actions: Actions = {
