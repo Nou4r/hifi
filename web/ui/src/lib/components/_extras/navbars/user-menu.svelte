@@ -32,7 +32,7 @@
 				<Avatar>
 					<!-- <AvatarImage src="" alt="Profile image" /> -->
 					<AvatarFallback>
-						<ProfileIcon username={guest} />
+						<ProfileIcon username={user?.username || guest} />
 					</AvatarFallback>
 				</Avatar>
 			</Button>
