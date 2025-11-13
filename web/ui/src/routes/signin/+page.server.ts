@@ -21,7 +21,7 @@ export const load: PageServerLoad = async (event) => {
 
 export const actions: Actions = {
 	default: async (e) => {
-		const { request, cookies, url } = e;
+		const { cookies, url } = e;
 
 		const form = await superValidate(e, zod4(formSchema));
 		if (!form.valid) return fail(400, { form });
@@ -37,6 +37,16 @@ export const actions: Actions = {
 			form.errors.password = ['Invalid username or password'];
 			return fail(401, { form });
 		}
+
+		const { token, maxAge } = await res.json();
+
+		cookies.set('hifi', token, {
+			path: '/',
+			httpOnly: true,
+			secure: true,
+			sameSite: 'strict',
+			maxAge
+		});
 
 		const redirectTo = url.searchParams.get('redirect') || '/connect';
 
