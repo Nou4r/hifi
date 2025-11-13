@@ -1,7 +1,6 @@
 <script lang="ts">
 	import * as InputGroup from '$lib/components/ui/input-group/index.js';
-	import CheckIcon from '@lucide/svelte/icons/check';
-	import CopyIcon from '@lucide/svelte/icons/copy';
+	import { CopyButton } from '$lib/components/ui/copy-button';
 	import { UseClipboard } from '$lib/hooks/use-clipboard.svelte.js';
 	import Label from './ui/label.svelte';
 	import * as Password from '$lib/components/ui/password';
@@ -53,9 +52,10 @@
 							class="cursor-pointer hover:data-[state=off]:text-zinc-300 hover:data-[state=on]:text-zinc-300"
 						/>
 						<Password.Copy
-							class="cursor-pointer hover:!bg-transparent hover:text-zinc-200"
-							aria-label="Copy Password"
-							title="Copy Password"
+							size="sm"
+							class="cursor-pointer hover:bg-zinc-700 hover:text-white"
+							aria-label="Copy {field.label}"
+							title="Copy {field.label}"
 						/>
 					</Password.Input>
 				</Password.Root>
@@ -70,20 +70,13 @@
 						class="text-zinc-300"
 					/>
 					<InputGroup.Addon align="inline-end">
-						<InputGroup.Button
-							aria-label={`Copy ${field.label}`}
-							title={`Copy ${field.label}`}
+						<CopyButton
+							aria-label="Copy {field.label}"
+							title="Copy {field.label}"
 							size="icon-xs"
-							autocomplete="current-password"
 							class="cursor-pointer hover:bg-zinc-700 hover:text-white"
-							onclick={() => clipboards[i].copy(field.value)}
-						>
-							{#if clipboards[i].copied}
-								<CheckIcon />
-							{:else}
-								<CopyIcon />
-							{/if}
-						</InputGroup.Button>
+							text={field.value}
+						/>
 					</InputGroup.Addon>
 				</InputGroup.Root>
 			{/if}
