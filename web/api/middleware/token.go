@@ -41,6 +41,8 @@ func startLogin(ctx context.Context, client *http.Client, loginDoURL, user, pass
 
 		res := <-login
 
+		fmt.Println(string(res.Body))
+
 		if res.Err != nil {
 			token <- types.LoginResult{OK: false, Err: fmt.Errorf("invalid login: %d", res.Status)}
 			return
