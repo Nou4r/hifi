@@ -1,7 +1,6 @@
 <script lang="ts">
 	import * as InputGroup from '$lib/components/ui/input-group/index.js';
 	import { CopyButton } from '$lib/components/ui/copy-button';
-	import { UseClipboard } from '$lib/hooks/use-clipboard.svelte.js';
 	import Label from './ui/label.svelte';
 	import * as Password from '$lib/components/ui/password';
 
