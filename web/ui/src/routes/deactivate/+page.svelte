@@ -8,7 +8,6 @@
 	import Textarea from '$lib/components/Connect.svelte';
 
 	let currentTab = 'tab-6';
-
 	const { data } = $props();
 </script>
 
