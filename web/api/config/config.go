@@ -28,6 +28,10 @@ var (
 	SubsonicHost = "127.0.0.1:4747"
 
 	HostUrl = "https://hifi.401658.xyz"
+
+	// Subsonic Admin Credentials
+	SubsonicAdmin         = "jack"
+	SubsonicAdminPassword = "12345678"
 )
 
 const (
