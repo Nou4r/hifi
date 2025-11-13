@@ -121,6 +121,11 @@
 				<Dialog.Content class="bg-zinc-900">
 					<div class="flex flex-col items-center gap-2">
 						<Dialog.Header>
+							<Empty.Header>
+								<Empty.Media variant="icon">
+									<UserPen />
+								</Empty.Media>
+							</Empty.Header>
 							<Dialog.Title class="mt-10 text-gray-300 sm:text-center">HiFi</Dialog.Title>
 							<Dialog.Description class="text-gray-400 sm:text-center">
 								Update your HiFi account
