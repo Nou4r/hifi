@@ -5,7 +5,7 @@
 	import { Unplug, ShieldMinus, House } from 'lucide-svelte';
 	import Textarea from '$lib/components/Connect.svelte';
 	import Deactivate from '$lib/components/Deactivate.svelte';
-	import { pushState, replaceState } from '$app/navigation';
+	import { pushState } from '$app/navigation';
 	import { page } from '$app/state';
 
 	let currentTab = 'tab-5';
