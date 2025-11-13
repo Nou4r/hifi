@@ -29,7 +29,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		event.locals.user = null;
 	}
 
-	const publicRoutes = ['/', '/signin', '/settings'];
+	const publicRoutes = ['/', '/signin'];
 
 	const redirectableRoutes = ['/connect'];
 
