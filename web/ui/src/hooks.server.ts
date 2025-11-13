@@ -31,7 +31,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	const publicRoutes = ['/', '/signin'];
 
-	const redirectableRoutes = ['/connect'];
+	const redirectableRoutes = ['/connect', '/deactivate'];
 
 	const isPublic = publicRoutes.some(
 		(path) => event.url.pathname === path || event.url.pathname.startsWith(`${path}/`)
