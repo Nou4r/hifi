@@ -75,7 +75,6 @@
 
 	import UserPen from '@lucide/svelte/icons/user-pen';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
-	import Delete from './Delete.svelte';
 
 	let open = $state(false);
 
@@ -126,7 +125,7 @@
 									<UserPen />
 								</Empty.Media>
 							</Empty.Header>
-							<Dialog.Title class="mt-10 text-gray-300 sm:text-center">HiFi</Dialog.Title>
+							<Dialog.Title class=" text-gray-300 sm:text-center">HiFi</Dialog.Title>
 							<Dialog.Description class="text-gray-400 sm:text-center">
 								Update your HiFi account
 							</Dialog.Description>
