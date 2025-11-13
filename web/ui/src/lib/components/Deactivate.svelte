@@ -42,7 +42,7 @@
 	import UserPen from '@lucide/svelte/icons/user-pen';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
 
-	let username = $state('JohnDoe');
+	const { username } = $props();
 
 	let open = $state(false);
 

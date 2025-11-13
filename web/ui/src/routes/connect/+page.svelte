@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import Deactivate from '$lib/components/Deactivate.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Profile from '$lib/components/Profile.svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
@@ -59,10 +58,6 @@
 									Account
 								</TabsTrigger>
 							</TabsList>
-
-							<TabsContent value="tab-6">
-								<Deactivate {data} username={data.user?.username} />
-							</TabsContent>
 						</Tabs>
 					</TabsContent>
 					<TabsContent value="tab-5" class="h-auto min-h-[300px]">

@@ -63,7 +63,7 @@
 							</TabsList>
 
 							<TabsContent value="tab-6">
-								<Deactivate data={data} username={data.user?.username} />
+								<Deactivate username={data.user?.username} />
 							</TabsContent>
 						</Tabs>
 					</TabsContent>
