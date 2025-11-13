@@ -27,10 +27,10 @@ func startLogin(ctx context.Context, client *http.Client, loginDoURL, user, pass
 			token <- types.LoginResult{OK: false, Err: err}
 			return
 		}
-		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-		
+		req.Header.Set(config.HeaderContentType, config.ContentTypeForm)
+
 		resp, err := client.Do(req)
-		
+
 		if err != nil {
 			token <- types.LoginResult{OK: false, Err: err}
 			return
