@@ -3,8 +3,8 @@ package middleware
 import (
 	"api/config"
 	"api/types"
+	"bytes"
 	"crypto/sha256"
-	"crypto/subtle"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -161,9 +161,10 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	computed := sha256.Sum256([]byte(claims.RegisteredClaims.ID))
+
 	stored, ok := tokenHashes[claims.RegisteredClaims.ID]
-	if !ok || subtle.ConstantTimeCompare(stored[:], computed[:]) != 1 {
-		http.Error(w, "Token Unknown", http.StatusUnauthorized)
+	if !ok || !bytes.Equal(stored[:], computed[:]) {
+		http.Error(w, "Invalid token", http.StatusBadRequest)
 		return
 	}
 
