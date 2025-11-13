@@ -39,9 +39,9 @@ func startLogin(ctx context.Context, client *http.Client, loginDoURL, user, pass
 
 		base := fmt.Sprintf("%s://%s", config.SubsonicScheme, config.SubsonicHost)
 
-		loginCh := startLoginUser(ctx, client, base+"/rest/ping.view", user, pass)
+		login := startLoginUser(ctx, client, base+"/rest/ping.view", user, pass)
 
-		res := <-loginCh
+		res := <-login
 
 		if res.Err != nil {
 			token <- types.LoginResult{OK: false, Err: fmt.Errorf("invalid login: %d", resp.StatusCode)}
