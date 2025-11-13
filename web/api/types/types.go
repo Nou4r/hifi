@@ -46,4 +46,10 @@ type Claims struct {
 type RegisterResult struct {
 	Success bool
 	Message string
+	User    *User `json:"user,omitempty"`
+}
+
+type RegisterJob struct {
+	Creds SignupRequest
+	Reply chan RegisterResult
 }

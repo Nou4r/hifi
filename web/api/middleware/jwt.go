@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"sync"
@@ -19,18 +20,23 @@ var (
 	users = make(map[string]*types.User)
 	mu    sync.RWMutex
 
-	results      = make(chan types.RegisterResult)
-	registerJobs = make(chan types.SignupRequest, 10)
+	registerJobs = make(chan types.RegisterJob, 10)
 
 	tokenHashes = make(map[string][32]byte)
 )
 
 func RegistrationWorker() {
-	for creds := range registerJobs {
+	for job := range registerJobs {
+		creds := job.Creds
+
 		mu.Lock()
 		if _, exists := users[creds.Username]; exists {
 			mu.Unlock()
-			results <- types.RegisterResult{Success: false, Message: "⚠️ User already exists"}
+			job.Reply <- types.RegisterResult{
+				Success: false,
+				Message: "⚠️ User already exists",
+				User:    nil,
+			}
 			continue
 		}
 
@@ -39,43 +45,39 @@ func RegistrationWorker() {
 			Username: creds.Username,
 			Password: creds.Password,
 		}
+
 		users[creds.Username] = user
 		mu.Unlock()
 
-		results <- types.RegisterResult{Success: true, Message: "✅ Registered user"}
+		job.Reply <- types.RegisterResult{
+			Success: true,
+			Message: "✅ User registered successfully",
+			User:    user,
+		}
 	}
 }
 
-func RegisterHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
-		return
-	}
+func registerUser(username, password string) (types.RegisterResult, error) {
+	replyCh := make(chan types.RegisterResult)
 
-	var creds types.SignupRequest
-	if err := json.NewDecoder(r.Body).Decode(&creds); err != nil {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
-		return
+	job := types.RegisterJob{
+		Creds: types.SignupRequest{
+			Username: username,
+			Password: password,
+		},
+		Reply: replyCh,
 	}
 
 	select {
-	case registerJobs <- creds:
-		res := <-results
-
-		w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
-		status := http.StatusCreated
-
+	case registerJobs <- job:
+		res := <-replyCh
 		if !res.Success {
-			status = http.StatusBadRequest
+			return res, errors.New(res.Message)
 		}
-
-		w.WriteHeader(status)
-		json.NewEncoder(w).Encode(map[string]string{
-			"message": res.Message,
-		})
+		return res, nil
 
 	default:
-		http.Error(w, "Server busy, try again later", http.StatusServiceUnavailable)
+		return types.RegisterResult{}, fmt.Errorf("server busy, try again later")
 	}
 }
 

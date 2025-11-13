@@ -51,16 +51,25 @@ func SigninUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, res.Err.Error(), http.StatusBadGateway)
 		return
 	}
+
 	if res.Status >= 400 {
 		http.Error(w, string(res.Body), http.StatusBadRequest)
+		return
+	}
+
+	var result types.RegisterResult
+
+	result, err := registerUser(req.Username, req.Password)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(map[string]string{
-		"username": req.Username,
-		"password": req.Password,
+		"username": result.User.Username,
+		"password": result.User.Password,
 		"host":     config.HostUrl,
 	})
 
