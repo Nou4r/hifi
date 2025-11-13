@@ -36,7 +36,7 @@
 	<style></style>
 </svelte:head>
 
-<div class="grid w-full max-w-[220px] gap-4">
+<div class="grid w-full max-w-[225px] gap-4">
 	{#each fields as field, i}
 		<div class="flex flex-col gap-2">
 			<Label for={field.id} class="text-left text-sm text-zinc-400">{field.label}</Label>
