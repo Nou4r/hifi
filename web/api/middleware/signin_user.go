@@ -98,11 +98,8 @@ func SigninUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(map[string]string{
-		"token":    tokenString,
-		"maxAge":   fmt.Sprintf("%d", maxAge),
-		"username": result.User.Username,
-		"password": result.User.Password,
-		"host":     config.HostUrl,
+		"token":  tokenString,
+		"maxAge": fmt.Sprintf("%d", maxAge),
 	})
 
 }
