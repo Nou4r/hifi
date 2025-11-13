@@ -1,33 +1,10 @@
-<script lang="ts" module>
-	import { z } from 'zod/v4';
-
-	const formSchema = z.object({
-		username: z
-			.string()
-			.trim()
-			.superRefine((val, ctx) => {
-				if (!val) {
-					ctx.addIssue({ code: 'custom', message: 'Username is required' });
-					return;
-				}
-				if (val.length < 2) {
-					ctx.addIssue({ code: 'custom', message: 'Username must be at least 2 characters long' });
-					return;
-				}
-				if (val.length > 50) {
-					ctx.addIssue({ code: 'custom', message: 'Username must not exceed 50 characters' });
-					return;
-				}
-			})
-	});
-</script>
-
 <script lang="ts">
 	import Button, { buttonVariants } from '$lib/components/ui/button.svelte';
 	import Input from '$lib/components/ui/input.svelte';
 
 	import CircleAlert from '@lucide/svelte/icons/circle-alert';
 	import * as Dialog from '$lib/components/ui/dialog';
+	import { formSchema } from '$lib/types/auth';
 
 	import { defaults, superForm } from 'sveltekit-superforms';
 	import { zod4 } from 'sveltekit-superforms/adapters';
