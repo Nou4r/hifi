@@ -26,6 +26,8 @@ export const load: PageServerLoad = async (event) => {
 
 export const actions: Actions = {
 	default: async (e) => {
+		const { cookies } = e;
+
 		const form = await superValidate(e, zod4(formSchema2));
 		console.log('form', form);
 		if (!form.valid) return fail(400, { form });
@@ -41,6 +43,8 @@ export const actions: Actions = {
 			return fail(400, { form });
 		}
 
-		return message(form, `Signup successful!`);
+		cookies.delete('hifi', { path: '/' });
+
+		throw redirect(303, '/signin');
 	}
 };

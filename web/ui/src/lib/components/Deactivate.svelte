@@ -34,7 +34,7 @@
 			if (f.valid) {
 				await new Promise((r) => setTimeout(r, 500));
 				open = false;
-				toast.success(`You submitted ${JSON.stringify(f.data, null, 2)}`);
+				toast.success('You successfully submitted the form!');
 			} else {
 				open = false;
 				toast.error('Something went wrong. Please try again.');
