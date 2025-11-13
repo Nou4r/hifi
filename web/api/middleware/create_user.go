@@ -84,6 +84,7 @@ func startCreateUser(ctx context.Context, client *http.Client, createURL, newUse
 		form.Set("password_two", newPass)
 
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, createURL, strings.NewReader(form.Encode()))
+
 		if err != nil {
 			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
 			return
@@ -98,6 +99,7 @@ func startCreateUser(ctx context.Context, client *http.Client, createURL, newUse
 		defer resp.Body.Close()
 
 		body, _ := io.ReadAll(resp.Body)
+
 		out <- types.CreateResult{Status: resp.StatusCode, Body: body, Err: nil}
 	}()
 	return out
