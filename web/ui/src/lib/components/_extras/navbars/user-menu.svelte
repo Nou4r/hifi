@@ -3,12 +3,11 @@
 	import { goto } from '$app/navigation';
 
 	import LogOutIcon from '@lucide/svelte/icons/log-out';
-	import { Unplug, LogInIcon } from 'lucide-svelte';
-	import { Avatar, AvatarFallback, AvatarImage } from '$lib/components/ui/avatar';
+	import { LogInIcon } from 'lucide-svelte';
+	import { Avatar, AvatarFallback } from '$lib/components/ui/avatar';
 	import {
 		DropdownMenu,
 		DropdownMenuContent,
-		DropdownMenuGroup,
 		DropdownMenuItem,
 		DropdownMenuLabel,
 		DropdownMenuSeparator,
