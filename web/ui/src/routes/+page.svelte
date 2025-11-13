@@ -35,23 +35,19 @@
 									Home
 								</TabsTrigger>
 
-								{#if data.user}
-									<TabsTrigger
-										value="tab-2"
-										class="relative cursor-pointer after:absolute  after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5  hover:text-white hover:after:bg-white data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:after:bg-white data-[state=active]:hover:text-white"
-									>
-										Settings
-									</TabsTrigger>
-								{/if}
+								<TabsTrigger
+									value="tab-2"
+									class="relative cursor-pointer after:absolute  after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5  hover:text-white hover:after:bg-white data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=active]:shadow-none data-[state=active]:after:bg-white data-[state=active]:hover:text-white"
+								>
+									Settings
+								</TabsTrigger>
 							</TabsList>
 							<TabsContent value="tab-1">
 								<Page {data} />
 							</TabsContent>
-							{#if data.user}
-								<TabsContent value="tab-2">
-									<Settings />
-								</TabsContent>
-							{/if}
+							<TabsContent value="tab-2">
+								<Settings />
+							</TabsContent>
 						</Tabs>
 					</TabsContent>
 				</div>
