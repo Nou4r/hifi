@@ -5,6 +5,7 @@
 	import Settings from '$lib/components/Settings.svelte';
 
 	let currentTab = 'tab-0';
+
 	const { data } = $props();
 </script>
 
