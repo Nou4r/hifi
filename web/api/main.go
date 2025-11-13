@@ -12,6 +12,8 @@ import (
 
 func main() {
 
+	go middleware.RegistrationWorker()
+
 	mux := http.NewServeMux()
 
 	// API v1 routes
@@ -22,8 +24,6 @@ func main() {
 	handler := middleware.Recovery(cors)
 
 	port := middleware.PortRotate()
-
-	go middleware.RegistrationWorker()
 
 	// Server setup
 	server := &http.Server{

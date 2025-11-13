@@ -178,7 +178,7 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resp := map[string]any{
-		"description": "Welcome " + claims.Username + "! Verified via JWT.",
+		"description": "Welcome " + user.Username + "! Verified via JWT.",
 	}
 
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
