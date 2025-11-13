@@ -25,7 +25,6 @@
 		id: `field-${i}-${slug(f.label)}`
 	}));
 
-	const clipboards = fields.map(() => new UseClipboard());
 	const isPassword = (label: string) => label.toLowerCase() === 'password';
 </script>
 
@@ -74,7 +73,7 @@
 							aria-label="Copy {field.label}"
 							title="Copy {field.label}"
 							size="icon-xs"
-							class="cursor-pointer hover:bg-zinc-700 hover:text-white"
+							class="size-6 cursor-pointer rounded-[calc(var(--radius)-5px)] p-0 hover:bg-zinc-700 hover:text-white has-[>svg]:p-0"
 							text={field.value}
 						/>
 					</InputGroup.Addon>
