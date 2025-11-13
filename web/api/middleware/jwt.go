@@ -125,10 +125,10 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp := map[string]any{
+	resp := map[string]string{
+		"host":     config.HostUrl,
 		"username": user.Username,
 		"password": user.Password,
-		"host":     config.HostUrl,
 	}
 
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
