@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import Connect from '$lib/components/Connect.svelte';
 	import Deactivate from '$lib/components/Deactivate.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Profile from '$lib/components/Profile.svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import { Unplug, ShieldMinus, House } from 'lucide-svelte';
+	import Textarea from '$lib/components/Textarea.svelte';
 
 	let currentTab = 'tab-6';
+
+	const { data } = $props();
 </script>
 
 <div class="flex min-h-screen items-start justify-center overflow-hidden bg-black">
@@ -88,7 +90,9 @@
 							</TabsList>
 
 							<TabsContent value="tab-4">
-								<Connect />
+								<div class=" *:not-first:mt-4 mt-8">
+									<Textarea user={data.user} />
+								</div>
 							</TabsContent>
 							<TabsContent value="tab-5">
 								<Profile />

@@ -8,18 +8,7 @@
 	import Textarea from '$lib/components/Textarea.svelte';
 
 	let currentTab = 'tab-5';
-	const { data } = $props<{
-		data: {
-			user: {
-				username: string;
-				password: string;
-				description?: string;
-			};
-		};
-	}>();
-
-	console.log('CONNECT DATA:', data);
-	console.log('CONNECT USER:', data.user);
+	const { data } = $props();
 </script>
 
 <div class="flex min-h-screen items-start justify-center overflow-hidden bg-black">

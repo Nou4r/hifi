@@ -1,10 +1,7 @@
 declare global {
 	namespace App {
 		interface Locals {
-			user: {
-				username: string;
-				password: string;
-			} | null;
+			user: {} | null;
 		}
 	}
 }

@@ -6,9 +6,7 @@
 	import Label from './ui/label.svelte';
 	import * as Password from '$lib/components/ui/password';
 
-	const { user } = $props<{
-		user: { username: string } | null;
-	}>();
+	const { user } = $props();
 
 	console.log('Textarea user:', user?.username);
 
@@ -22,11 +20,10 @@
 	const baseFields = [
 		{
 			label: 'Hostname',
-			value:
-				'Bearer eyJraWQiOiJ2OU1GbFhqWSIsImFsZyI6IkVTMjU2In0.eyJ0eXBlIjoibzJfYWNjZXNzIiwidWlkIjoxOTEwMDgxNjcsInNjb3BlIjoicl91c3Igd191c3IiLCJnVmVyIjowLCJzVmVyIjowLCJjaWQiOjgwNDksImN1ayI6IjVkNWY4ZGU1LTlmMmUtNGI2MS04OGQ1LTM5YzQwOGNhNzYzYSIsImNjIjoiVVMiLCJhdCI6IklOVEVSTkFMIiwiZXhwIjoxNzYyNjExNTU4LCJzaWQiOiJlMzY3YzQ5OC02MWE5LTRhOGQtYTMzNi0yMDk0MmI1YzdhNTciLCJpc3MiOiJodHRwczovL2F1dGgudGlkYWwuY29tL3YxIn0.B8bglN9nLdEHrEZwZq3bPwnN6-1D9whoz8fFvhUh__Ve0fKf3b5pbmNs_MKD46S1-0QvZgp9Kptnhv1XUN5osw'
+			value: user?.host
 		},
 		{ label: 'Username', value: user?.username },
-		{ label: 'Password', value: 'password123' }
+		{ label: 'Password', value: user?.password }
 	];
 
 	const fields = baseFields.map((f, i) => ({
