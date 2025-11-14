@@ -18,7 +18,7 @@
 		>
 			<div class="grid w-full grid-cols-1 gap-4 overflow-y-auto px-10 pb-20 md:grid-cols-2">
 				<div
-					class="border-border relative col-span-1 min-w-[210px] rounded-lg border bg-zinc-900 p-5 md:col-span-2 md:min-h-[480px] md:overflow-y-hidden md:p-8"
+					class="border-border relative col-span-1 min-w-[210px] rounded-lg border bg-zinc-900 p-5 md:col-span-2 md:min-h-[480px] md:overflow-y-hidden md:p-10"
 				>
 					<TabsContent value="tab-0" class="md:min-h-[300px] xl:h-[600px]">
 						<Tabs value="tab-1" class=" items-center">
