@@ -133,7 +133,8 @@
 							class="mt-2 w-full cursor-pointer "
 							type="submit"
 							variant="outline"
-							disabled={$submitting}
+							disabled={(!$formData.username && !$formData.oldpassword && !$formData.password) ||
+								$submitting}
 							>{#if $submitting}
 								<Loader2 class="size-4 animate-spin" />
 							{:else}
