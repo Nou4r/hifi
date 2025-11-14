@@ -60,7 +60,14 @@
 		<Empty.Media variant="icon">
 			<IconUserCircle />
 		</Empty.Media>
-		<Empty.Title class=" text-gray-200">Let’s Get Started</Empty.Title>
+
+		<Empty.Title class=" text-gray-200">
+			{#if data.user}
+				Welcome back, {data.user.username}!
+			{:else}
+				Let’s Get Started
+			{/if}</Empty.Title
+		>
 		<Empty.Description class="text-gray-400">
 			Get started by creating your HiFi account, and you’ll be ready to listen to TIDAL music.
 		</Empty.Description>
