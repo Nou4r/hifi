@@ -78,7 +78,7 @@
 					<form method="POST" class="space-y-5" use:enhance>
 						<div class="space-y-4">
 							<div class="space-y-2">
-								<Form.Field {form} name="password">
+								<Form.Field {form} name="username">
 									<Form.Control>
 										{#snippet children({ props })}
 											<Form.Label class="font-bold text-gray-300">Username</Form.Label>
@@ -87,7 +87,7 @@
 												placeholder={page.data.user?.username ?? 'John Doe'}
 												type="text"
 												{...props}
-												bind:value={$formData.password}
+												bind:value={$formData.username}
 											/>
 										{/snippet}
 									</Form.Control>
@@ -95,7 +95,7 @@
 								</Form.Field>
 							</div>
 							<div class="space-y-2">
-								<Form.Field {form} name="password">
+								<Form.Field {form} name="oldpassword">
 									<Form.Control>
 										{#snippet children({ props })}
 											<Form.Label class="font-bold text-gray-300">Old Password</Form.Label>
@@ -104,7 +104,7 @@
 												placeholder="SuperSecret123!"
 												type="password"
 												{...props}
-												bind:value={$formData.password}
+												bind:value={$formData.oldpassword}
 											/>
 										{/snippet}
 									</Form.Control>
