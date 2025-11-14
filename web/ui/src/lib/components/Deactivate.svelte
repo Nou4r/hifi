@@ -28,6 +28,7 @@
 		onSubmit: async () => {
 			await new Promise((resolve) => setTimeout(resolve, 800));
 		},
+
 		onUpdate: async ({ form: f }) => {
 			const usernameValue = f.data.username?.trim() ?? '';
 
