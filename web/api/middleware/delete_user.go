@@ -28,7 +28,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	req.Username = strings.TrimSpace(req.Username)
-	if req.Username == "" || req.Password == "" {
+	if req.Username == "" {
 		http.Error(w, "Username is required", http.StatusBadRequest)
 		return
 	}
@@ -51,13 +51,13 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if res.Status >= 400 {
-		http.Error(w, "User creation failed", http.StatusBadGateway)
+		http.Error(w, "User deletion failed", http.StatusBadGateway)
 		return
 	}
 
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	w.WriteHeader(http.StatusCreated)
-	_ = json.NewEncoder(w).Encode(map[string]string{"message": "User created successfully"})
+	_ = json.NewEncoder(w).Encode(map[string]string{"message": "User deleted successfully"})
 }
 
 func startDeleteUser(ctx context.Context, client *http.Client, deleteURL, username string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
@@ -77,10 +77,12 @@ func startDeleteUser(ctx context.Context, client *http.Client, deleteURL, userna
 			return
 		}
 
-		form := url.Values{}
-		form.Set("username", username)
+		u, _ := url.Parse(deleteURL)
+		q := u.Query()
+		q.Set("user", username)
+		u.RawQuery = q.Encode()
 
-		req, err := http.NewRequestWithContext(ctx, http.MethodPost, deleteURL, strings.NewReader(form.Encode()))
+		req, err := http.NewRequestWithContext(ctx, http.MethodPost, u.String(), nil)
 
 		if err != nil {
 			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
