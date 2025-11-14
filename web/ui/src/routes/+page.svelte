@@ -64,6 +64,11 @@
 											alt="album"
 											class="md:h-50 md:w-50 h-35 mx-auto w-40 rounded-2xl object-cover"
 										/>
+										<svelte:fragment slot="stickyEnd">
+											<div class="glass rounded-3xl px-4 py-2 text-2xl text-white">
+												Recent Albums
+											</div>
+										</svelte:fragment>
 									</Marqueeck>
 								</div>
 							</TabsContent>

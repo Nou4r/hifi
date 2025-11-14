@@ -437,3 +437,9 @@ a:hover {
 	);
 	mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
 }
+
+.glass {
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px); /* required for iOS Safari */
+	background-color: rgba(255, 255, 255, 0.4);
+}
