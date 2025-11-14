@@ -67,17 +67,12 @@
 												Recent Albums
 											</div>
 										</svelte:fragment>
-
-										{#if data.albums.length === 0}
-											<div class="flex items-center space-x-4">
-												<div class="space-y-2">
-													<Skeleton
-														class="md:h-50 md:w-50 h-35 w-35 mx-auto rounded-2xl  bg-zinc-800 object-cover"
-													/>
-												</div>
-											</div>
-										{/if}
 									</Marqueeck>
+									{#if data.albums.length === 0}
+										<Skeleton
+											class="md:h-50 md:w-50 h-35 w-35 mx-auto rounded-2xl  bg-zinc-800 object-cover"
+										/>
+									{/if}
 								</div>
 							</TabsContent>
 							<TabsContent value="tab-2">
