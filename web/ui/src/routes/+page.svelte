@@ -49,7 +49,9 @@
 							</TabsList>
 							<TabsContent value="tab-1">
 								<Page {data} />
-								<div class="fade-mask mx-auto grid w-[80%] items-center justify-center">
+								<div
+									class="fade-mask mx-auto grid items-center justify-center md:mt-[-1rem] md:w-[80%]"
+								>
 									<Marqueeck {options}>
 										<img
 											src="https://resources.tidal.com/images/ad522656/b4b6/4054/8b98/7ff39644cea6/640x640.jpg"
