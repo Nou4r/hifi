@@ -165,7 +165,7 @@
 			</div>
 		{:else}
 			<span
-				class="inline-flex items-center gap-x-1.5 rounded-full bg-zinc-700 px-3 py-1.5 text-xs font-semibold text-white dark:bg-white/10 dark:text-white"
+				class="inline-flex items-center gap-x-1.5 text-nowrap rounded-full bg-zinc-700 px-3 py-1.5 text-xs font-semibold text-white dark:bg-white/10 dark:text-white"
 			>
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 48 48"
 					><g fill="#dfdede"><circle cx="19" cy="33" r="9" /><path d="M24 6v27h4V14l11 3v-7z" /></g
@@ -174,7 +174,7 @@
 				{data.titles[0]}</span
 			>
 			<span
-				class="inline-flex items-center gap-x-1.5 rounded-full bg-zinc-700 px-3 py-1.5 text-xs font-semibold text-white dark:bg-white/10 dark:text-white"
+				class="inline-flex items-center gap-x-1.5 text-nowrap rounded-full bg-zinc-700 px-3 py-1.5 text-xs font-semibold text-white dark:bg-white/10 dark:text-white"
 			>
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 48 48"
 					><g fill="#dfdede"><circle cx="19" cy="33" r="9" /><path d="M24 6v27h4V14l11 3v-7z" /></g
