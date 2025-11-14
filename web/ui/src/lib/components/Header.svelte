@@ -75,7 +75,7 @@
 					>
 				</a>
 
-				{#if (user?.username && page.url.pathname !== '/connect' && page.url.pathname == '/') || page.url.pathname.startsWith('/deactivate')}
+				{#if (user?.username && page.url.pathname !== '/connect') || (user?.username && page.url.pathname == '/') || page.url.pathname.startsWith('/deactivate')}
 					<a
 						href="/connect"
 						aria-label="Connect account"
