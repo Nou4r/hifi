@@ -32,6 +32,7 @@
 				return;
 			}
 			if (f.valid) {
+				await new Promise((r) => setTimeout(r, 800));
 				open = false;
 				toast.success('You successfully submitted the form!');
 			} else {
