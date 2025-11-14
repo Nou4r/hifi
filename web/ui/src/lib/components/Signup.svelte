@@ -164,8 +164,14 @@
 				</Dialog.Root>
 			</div>
 		{:else}
-			<p class="text-gray-100">{data.titles[0]}</p>
-			<p class="text-gray-100">{data.titles[1]}</p>
+			<span
+				class="inline-flex items-center gap-x-1.5 rounded-full bg-zinc-700 px-3 py-1.5 text-xs font-semibold text-white dark:bg-white/10 dark:text-white"
+				>{data.titles[0]}</span
+			>
+			<span
+				class="inline-flex items-center gap-x-1.5 rounded-full bg-zinc-700 px-3 py-1.5 text-xs font-semibold text-white dark:bg-white/10 dark:text-white"
+				>{data.titles[1]}</span
+			>
 		{/if}
 	</Empty.Content>
 	<Button variant="link" class="text-gray-400" size="sm">
