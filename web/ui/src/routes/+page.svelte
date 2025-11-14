@@ -3,10 +3,13 @@
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import Page from '$lib/components/Signup.svelte';
 	import Settings from '$lib/components/Settings.svelte';
-	import { Marquee } from '@selemondev/svelte-marquee';
-	import '@selemondev/svelte-marquee/dist/style.css';
+	import Marqueeck, { type MarqueeckOptions } from '@arisbh/marqueeck';
 
 	const { data } = $props();
+
+	const options = {
+		gap: 10
+	};
 
 	let currentTab = 'tab-0';
 </script>
@@ -46,35 +49,20 @@
 							</TabsList>
 							<TabsContent value="tab-1">
 								<Page {data} />
-								<div class="hidden h-full items-center justify-center md:grid">
-									<Marquee
-										class="motion-reduce:overflow-auto "
-										innerClassName="motion-reduce:animate-none motion-reduce:first:hidden"
-										fade={true}
-										pauseOnHover={true}
-									>
+								<div class="fade-mask mx-auto grid w-[80%] items-center justify-center">
+									<Marqueeck {options}>
 										<img
 											src="https://resources.tidal.com/images/ad522656/b4b6/4054/8b98/7ff39644cea6/640x640.jpg"
 											alt="Album artwork for the track"
-											class="mx-auto h-32 w-32 object-cover"
+											class="h-50 w-50 mx-auto rounded-2xl object-cover"
 										/>
 
 										<img
 											src="https://resources.tidal.com/images/ad522656/b4b6/4054/8b98/7ff39644cea6/640x640.jpg"
 											alt="album"
-											class="mx-auto h-32 w-32 object-cover"
+											class="h-50 w-50 mx-auto rounded-2xl object-cover"
 										/>
-									</Marquee>
-								</div>
-
-								<div class="grid h-full items-center justify-center md:hidden">
-									<Marquee direction="up" fade={true} pauseOnHover={true}>
-										<img
-											src="https://resources.tidal.com/images/ad522656/b4b6/4054/8b98/7ff39644cea6/640x640.jpg"
-											alt=""
-											class="mx-auto h-32 w-32 object-cover"
-										/>
-									</Marquee>
+									</Marqueeck>
 								</div>
 							</TabsContent>
 							<TabsContent value="tab-2">
