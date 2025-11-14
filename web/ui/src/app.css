@@ -437,6 +437,27 @@ a:hover {
 		transparent 100%
 	);
 	mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+	position: relative;
+	overflow: hidden;
+}
+
+.fade-mask::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	opacity: 0.15;
+	filter: blur(20px);
+	animation: smoke-drift 12s infinite linear;
+	pointer-events: none;
+}
+
+@keyframes smoke-drift {
+	from {
+		transform: translateX(-20%) translateY(0);
+	}
+	to {
+		transform: translateX(20%) translateY(-5%);
+	}
 }
 
 .glass {
