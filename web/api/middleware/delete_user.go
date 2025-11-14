@@ -24,23 +24,18 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var req types.UpdateRequest
+	var req types.DeleteRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Invalid JSON payload", http.StatusBadRequest)
 		return
 	}
 
-	if req.Username != "" {
-		req.Username = strings.TrimSpace(req.Username)
-	}
-
-	if req.Password != "" {
-		req.Password = strings.TrimSpace(req.Password)
-	}
-
 	req.Username = strings.TrimSpace(req.Username)
-	req.Password = strings.TrimSpace(req.Password)
+	if req.Username == "" {
+		http.Error(w, "Username is required", http.StatusBadRequest)
+		return
+	}
 
 	authHeader := r.Header.Get("Authorization")
 	if authHeader == "" {
