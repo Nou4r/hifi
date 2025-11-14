@@ -7,7 +7,7 @@
 
 	const { data } = $props();
 
-	const options = {
+	const options: MarqueeckOptions = {
 		gap: 10
 	};
 
