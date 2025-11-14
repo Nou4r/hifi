@@ -54,7 +54,7 @@
 							<TabsContent value="tab-1">
 								<Page {data} />
 								<div
-									class="fade-mask mx-auto grid cursor-pointer items-center justify-center md:mt-[-1rem] md:w-[80%]"
+									class="fade-mask mx-auto grid cursor-pointer items-center justify-center md:mt-[-2rem] md:w-[80%]"
 								>
 									<Marqueeck {options}>
 										{#each data.albums as album}
