@@ -18,6 +18,11 @@ type SigninRequest struct {
 	Password string `json:"password"`
 }
 
+type UpdateRequest struct {
+	Username string `json:"username,omitempty"`
+	Password string `json:"password,omitempty"`
+}
+
 type LoginResult struct {
 	OK  bool
 	Err error
