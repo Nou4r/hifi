@@ -26,30 +26,42 @@ export const load: PageServerLoad = async (event) => {
 
 export const actions: Actions = {
 	default: async (e) => {
-		const { locals } = e;
+		const { cookies, locals } = e;
 
 		const form = await superValidate(e, zod4(updateSchema));
 		if (!form.valid) return fail(400, { form });
 
-		if (locals.user?.password !== form.data.oldpassword) {
+		if (locals.user?.password !== form.data.oldpassword && !form.data.username) {
 			form.valid = false;
 			form.errors.oldpassword = ['Old password is required'];
 			return fail(400, { form });
 		}
 
-		const token = e.cookies.get('hifi');
+		const pretoken = e.cookies.get('hifi');
 
 		const res = await e.fetch(`${API_URL}/v1/update`, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+			headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${pretoken}` },
 			body: JSON.stringify(form.data)
 		});
+
+		console.log({ res });
 
 		if (!res.ok) {
 			form.valid = false;
 			form.errors.username = ['Invalid deactivation'];
 			return fail(400, { form });
 		}
+
+		const { token, maxAge } = await res.json();
+
+		cookies.set('hifi', token, {
+			path: '/',
+			httpOnly: true,
+			secure: true,
+			sameSite: 'strict',
+			maxAge
+		});
 
 		return message(form, 'Username changed successfully');
 	}

@@ -32,8 +32,8 @@
 						setTimeout(resolve, 500);
 					}),
 					{
-						loading: 'Deactivating your account...',
-						success: 'Account deleted successfully!',
+						loading: 'Updating your account...',
+						success: 'Account updated successfully!',
 						error: 'Something went wrong. Please try again.'
 					}
 				);

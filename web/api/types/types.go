@@ -19,8 +19,9 @@ type SigninRequest struct {
 }
 
 type UpdateRequest struct {
-	Username string `json:"username,omitempty"`
-	Password string `json:"password,omitempty"`
+	Username    string `json:"username,omitempty"`
+	Password    string `json:"password,omitempty"`
+	OldUsername string `json:"oldusername,omitempty"`
 }
 
 type LoginResult struct {

@@ -19,6 +19,7 @@ import (
 )
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
+
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -33,16 +34,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	req.Username = strings.TrimSpace(req.Username)
 	req.Password = strings.TrimSpace(req.Password)
-
-	if req.Username == "" && req.Password == "" {
-		http.Error(w, "Username or Password is required", http.StatusBadRequest)
-		return
-	}
-
-	if req.Username == "" || req.Password == "" {
-		http.Error(w, "Username and Password are required", http.StatusBadRequest)
-		return
-	}
 
 	authHeader := r.Header.Get("Authorization")
 	if authHeader == "" {
@@ -65,11 +56,11 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	claims, ok := token.Claims.(*types.Claims)
-	if !ok {
-		http.Error(w, "Invalid claims", http.StatusBadRequest)
-		return
-	}
+	claims := token.Claims.(*types.Claims)
+	// if !ok {
+	// 	http.Error(w, "Invalid claims", http.StatusBadRequest)
+	// 	return
+	// }
 
 	computed := sha256.Sum256([]byte(claims.RegisteredClaims.ID))
 
@@ -88,10 +79,10 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if !exists || req.Username != claims.Username {
-		http.Error(w, "User does not exist or data mismatch", http.StatusBadRequest)
-		return
-	}
+	// if !exists || req.OldUsername != claims.Username {
+	// 	http.Error(w, "User does not exist or data mismatch", http.StatusBadRequest)
+	// 	return
+	// }
 
 	base := fmt.Sprintf("%s://%s", config.SubsonicScheme, config.SubsonicHost)
 
@@ -104,9 +95,17 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	createCh := startUpdateUser(ctx, client, base+"/admin/change_username_do", claims.Username, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
 
 	mu.Lock()
+
+	// rename
 	delete(users, claims.Username)
-	delete(tokenHashes, claims.RegisteredClaims.ID)
+	user.Username = req.Username
+	users[req.Username] = user
 	mu.Unlock()
+
+	// mu.Lock()
+	// delete(users, claims.Username)
+	// delete(tokenHashes, claims.RegisteredClaims.ID)
+	// mu.Unlock()
 
 	res := <-createCh
 
@@ -120,9 +119,37 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	maxAge := 3600
+	expiration := time.Now().Add(time.Second * time.Duration(maxAge))
+
+	fmt.Println(req.Username)
+
+	claims = &types.Claims{
+		Username: req.Username,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expiration),
+			IssuedAt:  jwt.NewNumericDate(time.Now()),
+		},
+	}
+
+	hash := sha256.Sum256([]byte(claims.RegisteredClaims.ID))
+	tokenHashes[claims.RegisteredClaims.ID] = hash
+
+	token = jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err = token.SignedString(config.JwtSecret)
+
+	if err != nil {
+		http.Error(w, "Failed to create token", http.StatusInternalServerError)
+		return
+	}
+
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
-	w.WriteHeader(http.StatusCreated)
-	_ = json.NewEncoder(w).Encode(map[string]string{"message": "User updated successfully"})
+	w.WriteHeader(http.StatusOK)
+	_ = json.NewEncoder(w).Encode(map[string]string{
+		"token":  tokenString,
+		"maxAge": fmt.Sprintf("%d", maxAge),
+	})
+
 }
 
 func startUpdateUser(ctx context.Context, client *http.Client, updateURL, oldUsername, newUsername string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
