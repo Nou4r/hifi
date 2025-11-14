@@ -5,7 +5,6 @@
 	import { Unplug, ShieldMinus } from 'lucide-svelte';
 	import Textarea from '$lib/components/Connect.svelte';
 	import Deactivate from '$lib/components/Account.svelte';
-	import { pushState } from '$app/navigation';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 
