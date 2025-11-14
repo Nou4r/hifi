@@ -13,10 +13,9 @@
 	import * as Empty from '$lib/components/ui/empty/index.js';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
 	import UserCircle from '@lucide/svelte/icons/user-circle';
+	import { page } from '$app/state';
 
-	const { data } = $props();
-
-	const form = superForm(data.form, {
+	const form = superForm(page.data.form, {
 		resetForm: true,
 		validators: zod4(formSchema),
 		onSubmit: async () => {

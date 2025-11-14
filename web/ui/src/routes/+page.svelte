@@ -3,7 +3,8 @@
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import Page from '$lib/components/Signup.svelte';
 	import Settings from '$lib/components/Settings.svelte';
-	import { page } from '$app/state';
+
+	const { data } = $props();
 
 	let currentTab = 'tab-0';
 </script>
@@ -42,7 +43,7 @@
 								</TabsTrigger>
 							</TabsList>
 							<TabsContent value="tab-1">
-								<Page data={page.data} />
+								<Page {data} />
 							</TabsContent>
 							<TabsContent value="tab-2">
 								<Settings />
