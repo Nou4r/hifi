@@ -29,21 +29,6 @@
 			await new Promise((resolve) => setTimeout(resolve, 800));
 		},
 
-		onUpdate: async ({ form: f }) => {
-			const usernameValue = f.data.username?.trim() ?? '';
-
-			if (!usernameValue) {
-				return;
-			}
-			if (f.valid) {
-				await new Promise((r) => setTimeout(r, 800));
-				open = false;
-				toast.success('You successfully submitted the form!');
-			} else {
-				open = false;
-				toast.error('Something went wrong. Please try again.');
-			}
-		},
 		onResult: ({ result }) => {
 			if (result.type === 'redirect') {
 				toast.promise(
