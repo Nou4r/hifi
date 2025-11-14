@@ -6,7 +6,6 @@
 	import { Unplug, ShieldMinus } from 'lucide-svelte';
 
 	const title = 'Hifi';
-	const { user } = $props();
 </script>
 
 <svelte:head>
@@ -75,7 +74,7 @@
 					>
 				</a>
 
-				{#if (user?.username && page.url.pathname !== '/connect') || (user?.username && page.url.pathname == '/') || page.url.pathname.startsWith('/deactivate')}
+				{#if (page.data.user?.username && page.url.pathname !== '/connect') || (page.data.user?.username && page.url.pathname == '/') || (page.data.user?.username && page.url.pathname.startsWith('/deactivate'))}
 					<a
 						href="/connect"
 						aria-label="Connect account"
@@ -86,7 +85,7 @@
 					</a>
 				{/if}
 
-				{#if user?.username && page.url.pathname !== '/deactivate' && page.url.pathname !== '/'}
+				{#if (page.data.user?.username && page.url.pathname !== '/deactivate') || (page.data.user?.username && page.url.pathname !== '/')}
 					<a
 						href="/deactivate"
 						aria-label="Deactivate account"
@@ -105,7 +104,7 @@
 				<NotificationMenu />
 			</div>
 			<!-- User menu -->
-			<UserMenu {user} />
+			<UserMenu user={page.data.user} />
 		</div>
 	</div>
 </header>
