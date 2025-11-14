@@ -35,7 +35,7 @@ export const actions: Actions = {
 			form.valid = false;
 			form.errors.username = ['Invalid username or password'];
 			form.errors.password = ['Invalid username or password'];
-			return fail(401, { form });
+			return fail(400, { form });
 		}
 
 		const { token, maxAge } = await res.json();
