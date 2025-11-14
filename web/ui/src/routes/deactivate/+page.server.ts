@@ -31,6 +31,7 @@ export const actions: Actions = {
 		const form = await superValidate(e, zod4(formSchema2));
 		console.log('form', form);
 		if (!form.valid) return fail(400, { form });
+
 		const res = await e.fetch(`${API_URL}/v1/delete`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
