@@ -90,7 +90,7 @@
 						<Dialog.Title class="text-gray-300 sm:text-center">Final confirmation</Dialog.Title>
 						<Dialog.Description class="text-gray-400 sm:text-center">
 							This action cannot be undone. To confirm, please enter the username
-							<span class="text-red-400">{username}</span>.
+							<span class="text-red-400">{username ?? 'John Doe'}</span>.
 						</Dialog.Description>
 					</Dialog.Header>
 				</div>
