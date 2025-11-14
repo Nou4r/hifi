@@ -101,19 +101,19 @@ export const updateSchema = z
 			});
 		}
 
-		if (hasOld && !hasNew) {
-			ctx.addIssue({
-				path: ['password'],
-				code: 'custom',
-				message: 'Old password is required'
-			});
-		}
-
 		if (!hasOld && hasNew) {
 			ctx.addIssue({
 				path: ['oldpassword'],
 				code: 'custom',
 				message: 'New password is required'
+			});
+		}
+
+		if (hasOld && !hasNew) {
+			ctx.addIssue({
+				path: ['password'],
+				code: 'custom',
+				message: 'Old password is required'
 			});
 		}
 	});
