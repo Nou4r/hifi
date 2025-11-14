@@ -23,3 +23,26 @@ export const load: PageServerLoad = async (event) => {
 		user: locals.user
 	};
 };
+
+export const actions: Actions = {
+	default: async (e) => {
+		const form = await superValidate(e, zod4(updateSchema));
+		if (!form.valid) return fail(400, { form });
+
+		const token = e.cookies.get('hifi');
+
+		const res = await e.fetch(`${API_URL}/v1/delete`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+			body: JSON.stringify(form.data)
+		});
+
+		if (!res.ok) {
+			form.valid = false;
+			form.errors.username = ['Invalid deactivation'];
+			return fail(400, { form });
+		}
+
+		return message(form, 'Username changed successfully');
+	}
+};
