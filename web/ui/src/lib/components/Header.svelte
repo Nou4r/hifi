@@ -85,7 +85,7 @@
 					</a>
 				{/if}
 
-				{#if (page.data.user?.username && page.url.pathname !== '/deactivate') || (page.data.user?.username && page.url.pathname !== '/')}
+				{#if page.data.user?.username && page.url.pathname !== '/deactivate' && page.data.user?.username && page.url.pathname !== '/'}
 					<a
 						href="/deactivate"
 						aria-label="Deactivate account"
