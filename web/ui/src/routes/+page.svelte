@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
-	import Page from '$lib/components/Page.svelte';
+	import Page from '$lib/components/Signup.svelte';
 	import Settings from '$lib/components/Settings.svelte';
 
 	let currentTab = 'tab-0';

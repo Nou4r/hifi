@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte';
-	import LoginForm from '$lib/components/Login-form.svelte';
+	import LoginForm from '$lib/components/Signin.svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 
 	let currentTab = 'tab-0';
