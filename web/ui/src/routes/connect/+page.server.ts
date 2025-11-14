@@ -39,7 +39,7 @@ export const actions: Actions = {
 
 		const token = e.cookies.get('hifi');
 
-		const res = await e.fetch(`${API_URL}/v1/delete`, {
+		const res = await e.fetch(`${API_URL}/v1/update`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
 			body: JSON.stringify(form.data)
