@@ -93,11 +93,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	mu.Lock()
-	delete(users, claims.Username)
-	delete(tokenHashes, claims.RegisteredClaims.ID)
-	mu.Unlock()
-
 	base := fmt.Sprintf("%s://%s", config.SubsonicScheme, config.SubsonicHost)
 
 	jar, _ := cookiejar.New(nil)
@@ -106,7 +101,12 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
 
-	createCh := startUpdateUser(ctx, client, base+"/admin/update_user_do", req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
+	createCh := startUpdateUser(ctx, client, base+"/admin/change_username_do", claims.Username, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
+
+	mu.Lock()
+	delete(users, claims.Username)
+	delete(tokenHashes, claims.RegisteredClaims.ID)
+	mu.Unlock()
 
 	res := <-createCh
 
@@ -116,16 +116,16 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if res.Status >= 400 {
-		http.Error(w, "User deletion failed", http.StatusBadGateway)
+		http.Error(w, "User update failed", http.StatusBadGateway)
 		return
 	}
 
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	w.WriteHeader(http.StatusCreated)
-	_ = json.NewEncoder(w).Encode(map[string]string{"message": "User deleted successfully"})
+	_ = json.NewEncoder(w).Encode(map[string]string{"message": "User updated successfully"})
 }
 
-func startUpdateUser(ctx context.Context, client *http.Client, updateURL, username string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
+func startUpdateUser(ctx context.Context, client *http.Client, updateURL, oldUsername, newUsername string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
 	out := make(chan types.CreateResult, 1)
 	go func() {
 		defer close(out)
@@ -144,10 +144,13 @@ func startUpdateUser(ctx context.Context, client *http.Client, updateURL, userna
 
 		u, _ := url.Parse(updateURL)
 		q := u.Query()
-		q.Set("user", username)
+		q.Set("user", oldUsername)
 		u.RawQuery = q.Encode()
 
-		req, err := http.NewRequestWithContext(ctx, http.MethodPost, u.String(), nil)
+		form := url.Values{}
+		form.Set("username", newUsername)
+
+		req, err := http.NewRequestWithContext(ctx, http.MethodPost, u.String(), strings.NewReader(form.Encode()))
 
 		if err != nil {
 			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
