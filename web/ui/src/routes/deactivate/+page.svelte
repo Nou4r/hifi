@@ -5,7 +5,6 @@
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import { Unplug, ShieldMinus } from 'lucide-svelte';
 	import Textarea from '$lib/components/Connect.svelte';
-	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 
 	let currentTab = 'tab-6';
@@ -22,7 +21,7 @@
 			<TabsList class="sticky top-6 flex w-80 flex-col gap-2 self-start bg-transparent p-4">
 				<TabsTrigger
 					value="tab-5"
-					onclick={() => goto('/connect', page.state)}
+					onclick={() => goto('/connect')}
 					class="hidden w-full cursor-pointer items-center  justify-start gap-3 rounded-md px-6 py-4 text-3xl font-bold text-white transition data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=inactive]:text-zinc-400 data-[state=inactive]:hover:bg-zinc-800 data-[state=inactive]:hover:text-white md:flex"
 				>
 					<Unplug class="h-8 w-8" /> Connect
@@ -30,7 +29,7 @@
 
 				<TabsTrigger
 					value="tab-6"
-					onclick={() => goto('/deactivate', page.state)}
+					onclick={() => goto('/deactivate')}
 					class="hidden w-full cursor-pointer items-center  justify-start gap-3 rounded-md px-6 py-4 text-3xl font-bold text-white transition data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=inactive]:text-zinc-400 data-[state=inactive]:hover:bg-zinc-800 data-[state=inactive]:hover:text-white md:flex"
 				>
 					<ShieldMinus class="h-8 w-8" /> Deactivate
