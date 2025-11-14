@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@arisbh/marqueeck':
+        specifier: ^0.5.1
+        version: 0.5.1(svelte@5.39.11)
       '@fontsource-variable/inter':
         specifier: ^5.2.8
         version: 5.2.8
@@ -137,6 +140,11 @@ packages:
 
   '@antfu/utils@9.3.0':
     resolution: {integrity: sha512-9hFT4RauhcUzqOE4f1+frMKLZrgNog5b06I7VmZQV1BkvwvqrbC8EBZf3L1eEL2AKb6rNKjER0sEvJiSP1FXEA==}
+
+  '@arisbh/marqueeck@0.5.1':
+    resolution: {integrity: sha512-7sjBwIRvm+UdQgb8fOK44ssy+oMC5A/33/CC+E62OzMtW2i5OotE3xw0YY+tjqOI7y9LV1d44rHixhni0IEGOw==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@ark/regex@0.0.0':
     resolution: {integrity: sha512-p4vsWnd/LRGOdGQglbwOguIVhPmCAf5UzquvnDoxqhhPWTP84wWgi1INea8MgJ4SnI2gp37f13oA4Waz9vwNYg==}
@@ -1957,6 +1965,10 @@ snapshots:
       tinyexec: 1.0.1
 
   '@antfu/utils@9.3.0': {}
+
+  '@arisbh/marqueeck@0.5.1(svelte@5.39.11)':
+    dependencies:
+      svelte: 5.39.11
 
   '@ark/regex@0.0.0':
     dependencies:
