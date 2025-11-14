@@ -13,6 +13,7 @@ func Handle() *http.ServeMux {
 	mux.HandleFunc("/signup", middleware.SignupUser)
 	mux.HandleFunc("/protected", middleware.ValidateHandler)
 	mux.HandleFunc("/delete", middleware.DeleteUser)
+	mux.HandleFunc("/update", middleware.UpdateUser)
 
 	return mux
 }
