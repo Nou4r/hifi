@@ -9,7 +9,8 @@
 	const { data } = $props();
 
 	const options: MarqueeckOptions = {
-		gap: 10
+		gap: 10,
+		speed: 30
 	};
 
 	let currentTab = 'tab-0';
