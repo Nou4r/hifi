@@ -121,7 +121,7 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 	mu.RUnlock()
 
 	if !exists || user.ID != claims.ID {
-		http.Error(w, "User does not exist or data mismatch", http.StatusBadRequest)
+		http.Error(w, "User does not exist", http.StatusBadRequest)
 		return
 	}
 

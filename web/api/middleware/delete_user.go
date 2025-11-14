@@ -77,7 +77,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	mu.RUnlock()
 
 	if !exists || user.ID != claims.ID {
-		http.Error(w, "User data mismatch", http.StatusBadRequest)
+		http.Error(w, "User does not exist", http.StatusBadRequest)
 		return
 	}
 
