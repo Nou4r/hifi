@@ -8,9 +8,21 @@ export const load = async (event) => {
 	const sessionUser = event.locals.user;
 	const form = await superValidate(event, zod4(formSchema));
 
+	const albums = [
+		{
+			src: 'https://resources.tidal.com/images/ad522656/b4b6/4054/8b98/7ff39644cea6/640x640.jpg',
+			alt: 'Album artwork for the track'
+		},
+		{
+			src: 'https://resources.tidal.com/images/ad522656/b4b6/4054/8b98/7ff39644cea6/640x640.jpg',
+			alt: 'Second album artwork'
+		}
+	];
+
 	return {
 		form,
-		user: sessionUser
+		user: sessionUser,
+		albums
 	};
 };
 

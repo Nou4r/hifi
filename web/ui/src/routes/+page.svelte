@@ -53,19 +53,15 @@
 									class="fade-mask mx-auto grid cursor-pointer items-center justify-center md:mt-[-1rem] md:w-[80%]"
 								>
 									<Marqueeck {options}>
-										<img
-											src="https://resources.tidal.com/images/ad522656/b4b6/4054/8b98/7ff39644cea6/640x640.jpg"
-											alt="Album artwork for the track"
-											class="md:h-50 md:w-50 h-35 w-35 mx-auto rounded-2xl object-cover"
-										/>
-
-										<img
-											src="https://resources.tidal.com/images/ad522656/b4b6/4054/8b98/7ff39644cea6/640x640.jpg"
-											alt="album"
-											class="md:h-50 md:w-50 h-35 mx-auto w-40 rounded-2xl object-cover"
-										/>
+										{#each data.albums as album}
+											<img
+												src={album.src}
+												alt={album.alt}
+												class="md:h-50 md:w-50 h-35 w-35 mx-auto rounded-2xl object-cover"
+											/>
+										{/each}
 										<svelte:fragment slot="stickyEnd">
-											<div class="glass rounded-3xl px-4 py-2 md:text-2xl text-white">
+											<div class="glass rounded-3xl px-4 py-2 text-white md:text-2xl">
 												Recent Albums
 											</div>
 										</svelte:fragment>
