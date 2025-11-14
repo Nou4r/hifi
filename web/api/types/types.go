@@ -4,6 +4,10 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+type DeleteRequest struct {
+	Username string `json:"username"`
+}
+
 type SignupRequest struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
