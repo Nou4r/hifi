@@ -10,7 +10,9 @@
 
 	const options: MarqueeckOptions = {
 		gap: 10,
-		speed: 30
+		speed: 30,
+		onHover: 'customSpeed',
+		hoverSpeed: 0
 	};
 
 	let currentTab = 'tab-0';
