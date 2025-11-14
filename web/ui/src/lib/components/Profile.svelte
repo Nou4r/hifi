@@ -13,6 +13,7 @@
 	import * as Empty from '$lib/components/ui/empty/index.js';
 	import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
 
+	import { page } from '$app/state';
 	import UserPen from '@lucide/svelte/icons/user-pen';
 	import Loader2 from '@lucide/svelte/icons/loader-2';
 
@@ -78,7 +79,7 @@
 											<Form.Label class="font-bold text-gray-300">Username</Form.Label>
 											<Input
 												class="border-zinc-700 text-white"
-												placeholder="John Doe"
+												placeholder={page.data.user?.username ?? 'John Doe'}
 												type="text"
 												{...props}
 												bind:value={$formData.password}
