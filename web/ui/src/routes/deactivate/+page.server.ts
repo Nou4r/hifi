@@ -29,7 +29,6 @@ export const actions: Actions = {
 		const { cookies } = e;
 
 		const form = await superValidate(e, zod4(formSchema2));
-		console.log('form', form);
 		if (!form.valid) return fail(400, { form });
 
 		const token = e.cookies.get('hifi');
