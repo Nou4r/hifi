@@ -46,11 +46,21 @@
 							</TabsList>
 							<TabsContent value="tab-1">
 								<Page {data} />
-								<Marquee fade={true}>
-									<div>Content 1</div>
-									<div>Content 2</div>
-									<div>Content 3</div>
-								</Marquee>
+								<div class="hidden h-full items-center justify-center md:grid">
+									<Marquee fade={true}>
+										<div>Content 1</div>
+										<div>Content 2</div>
+										<div>Content 3</div>
+									</Marquee>
+								</div>
+
+								<div class="grid h-full items-center justify-center md:hidden">
+									<Marquee direction="up" fade={true}>
+										<div>Content 1</div>
+										<div>Content 2</div>
+										<div>Content 3</div>
+									</Marquee>
+								</div>
 							</TabsContent>
 							<TabsContent value="tab-2">
 								<Settings />
