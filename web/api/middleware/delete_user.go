@@ -33,6 +33,14 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	authHeader := r.Header.Get("Authorization")
+	if authHeader == "" {
+		http.Error(w, "missing authorization header", http.StatusUnauthorized)
+		return
+	}
+
+	fmt.Println(authHeader)
+
 	base := fmt.Sprintf("%s://%s", config.SubsonicScheme, config.SubsonicHost)
 
 	jar, _ := cookiejar.New(nil)

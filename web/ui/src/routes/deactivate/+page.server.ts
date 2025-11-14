@@ -32,9 +32,11 @@ export const actions: Actions = {
 		console.log('form', form);
 		if (!form.valid) return fail(400, { form });
 
+		const token = e.cookies.get('hifi');
+
 		const res = await e.fetch(`${API_URL}/v1/delete`, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
 			body: JSON.stringify(form.data)
 		});
 
