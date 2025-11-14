@@ -42,7 +42,7 @@
 		}
 	});
 
-	const { form: formData, submitting } = form;
+	const { form: formData, submitting, enhance } = form;
 </script>
 
 <Toaster closeButton position="top-center" />
@@ -76,7 +76,7 @@
 					</Dialog.Header>
 				</div>
 
-				<form method="POST" class="space-y-5">
+				<form method="POST" class="space-y-5" use:enhance>
 					<div class="space-y-2">
 						<Form.Field {form} name="username">
 							<Form.Control>
