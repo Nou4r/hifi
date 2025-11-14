@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Deactivate from '$lib/components/Deactivate.svelte';
+	import Deactivate from '$lib/components/Account.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Profile from '$lib/components/Profile.svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';

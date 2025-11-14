@@ -4,7 +4,7 @@
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import { Unplug, ShieldMinus, House } from 'lucide-svelte';
 	import Textarea from '$lib/components/Connect.svelte';
-	import Deactivate from '$lib/components/Deactivate.svelte';
+	import Deactivate from '$lib/components/Account.svelte';
 	import { pushState } from '$app/navigation';
 	import { page } from '$app/state';
 
