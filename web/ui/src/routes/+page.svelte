@@ -4,6 +4,7 @@
 	import Page from '$lib/components/Signup.svelte';
 	import Settings from '$lib/components/Settings.svelte';
 	import Marqueeck, { type MarqueeckOptions } from '@arisbh/marqueeck';
+	import { Skeleton } from '$lib/components/ui/skeleton/index.js';
 
 	const { data } = $props();
 
@@ -60,11 +61,22 @@
 												class="md:h-50 md:w-50 h-35 w-35 mx-auto rounded-2xl object-cover"
 											/>
 										{/each}
+
 										<svelte:fragment slot="stickyEnd">
 											<div class="glass rounded-3xl px-4 py-2 text-white md:text-2xl">
 												Recent Albums
 											</div>
 										</svelte:fragment>
+
+										{#if data.albums.length === 0}
+											<div class="flex items-center space-x-4">
+												<div class="space-y-2">
+													<Skeleton
+														class="md:h-50 md:w-50 h-35 w-35 mx-auto rounded-2xl  bg-zinc-800 object-cover"
+													/>
+												</div>
+											</div>
+										{/if}
 									</Marqueeck>
 								</div>
 							</TabsContent>
