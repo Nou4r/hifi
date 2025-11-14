@@ -34,12 +34,13 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	req.Username = strings.TrimSpace(req.Username)
 	req.Password = strings.TrimSpace(req.Password)
 
-	if req.Username == "" {
-		http.Error(w, "Username is required", http.StatusBadRequest)
+	if req.Username == "" && req.Password == "" {
+		http.Error(w, "Username or Password is required", http.StatusBadRequest)
 		return
 	}
-	if req.Password == "" {
-		http.Error(w, "Password is required", http.StatusBadRequest)
+
+	if req.Username == "" || req.Password == "" {
+		http.Error(w, "Username and Password are required", http.StatusBadRequest)
 		return
 	}
 
