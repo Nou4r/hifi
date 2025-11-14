@@ -40,6 +40,7 @@
 				<Password.Root>
 					<Password.Input
 						id={field.id}
+						placeholder="SuperSecret123!"
 						name={field.label}
 						value={field.value}
 						autocomplete="off"
@@ -61,6 +62,7 @@
 				<InputGroup.Root class="border border-zinc-700 bg-zinc-900">
 					<InputGroup.Input
 						id={field.id}
+						placeholder="User {field.label}"
 						name={field.label}
 						value={field.value}
 						autocomplete="off"
