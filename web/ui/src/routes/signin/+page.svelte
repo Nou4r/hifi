@@ -2,16 +2,15 @@
 	import Header from '$lib/components/Header.svelte';
 	import LoginForm from '$lib/components/Signin.svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
+	import { page } from '$app/state';
 
 	let currentTab = 'tab-0';
-
-	const { data } = $props();
 </script>
 
 <div class="flex min-h-screen items-start justify-center overflow-hidden bg-black">
 	<div class="fixed mx-auto w-full max-w-7xl py-4">
 		<div class="px-4 py-4">
-			<Header user={data} />
+			<Header />
 		</div>
 
 		<Tabs
@@ -36,7 +35,7 @@
 							</TabsList>
 							<TabsContent value="tab-1">
 								<div class="mt-5 flex w-full max-w-sm flex-col gap-6">
-									<LoginForm {data} />
+									<LoginForm data={page.data} />
 								</div>
 							</TabsContent>
 						</Tabs>
