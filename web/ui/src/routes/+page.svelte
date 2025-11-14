@@ -3,16 +3,15 @@
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import Page from '$lib/components/Signup.svelte';
 	import Settings from '$lib/components/Settings.svelte';
+	import { page } from '$app/state';
 
 	let currentTab = 'tab-0';
-
-	const { data } = $props();
 </script>
 
 <div class="flex min-h-screen items-start justify-center overflow-hidden bg-black">
 	<div class="fixed mx-auto w-full max-w-7xl py-4">
 		<div class="px-4 py-4">
-			<Header user={data.user} />
+			<Header />
 		</div>
 
 		<Tabs
@@ -43,7 +42,7 @@
 								</TabsTrigger>
 							</TabsList>
 							<TabsContent value="tab-1">
-								<Page {data} />
+								<Page data={page.data} />
 							</TabsContent>
 							<TabsContent value="tab-2">
 								<Settings />
