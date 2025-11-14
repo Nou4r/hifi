@@ -19,10 +19,13 @@ export const load = async (event) => {
 		}
 	];
 
+	const titles = ['Album artwork for the track', 'Second album artwork'];
+
 	return {
 		form,
 		user: sessionUser,
-		albums
+		albums,
+		titles
 	};
 };
 
