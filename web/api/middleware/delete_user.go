@@ -31,10 +31,16 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Username != "" || req.Password != "" {
+	if req.Username != "" {
 		req.Username = strings.TrimSpace(req.Username)
+	}
+
+	if req.Password != "" {
 		req.Password = strings.TrimSpace(req.Password)
 	}
+
+	req.Username = strings.TrimSpace(req.Username)
+	req.Password = strings.TrimSpace(req.Password)
 
 	authHeader := r.Header.Get("Authorization")
 	if authHeader == "" {
