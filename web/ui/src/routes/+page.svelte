@@ -3,6 +3,8 @@
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import Page from '$lib/components/Signup.svelte';
 	import Settings from '$lib/components/Settings.svelte';
+	import { Marquee } from '@selemondev/svelte-marquee';
+	import '@selemondev/svelte-marquee/dist/style.css';
 
 	const { data } = $props();
 
@@ -21,9 +23,9 @@
 		>
 			<div class="grid w-full grid-cols-1 gap-4 overflow-y-auto px-10 pb-20 md:grid-cols-2">
 				<div
-					class="border-border relative col-span-1 min-w-[250px] rounded-lg border bg-zinc-900 p-8 md:col-span-2 md:min-h-[480px] md:overflow-y-hidden"
+					class="border-border relative col-span-1 min-w-[300px] rounded-lg border bg-zinc-900 p-8 md:col-span-2 md:min-h-[480px] md:overflow-y-hidden"
 				>
-					<TabsContent value="tab-0" class="md:min-h-[400px] xl:h-[600px]">
+					<TabsContent value="tab-0" class="h-[600px] md:min-h-[400px] xl:h-[600px]">
 						<Tabs value="tab-1" class=" items-center">
 							<TabsList
 								class="border-border h-auto  gap-2 rounded-full border-b bg-zinc-800 px-10 py-2 text-zinc-400"
@@ -44,6 +46,11 @@
 							</TabsList>
 							<TabsContent value="tab-1">
 								<Page {data} />
+								<Marquee fade={true}>
+									<div>Content 1</div>
+									<div>Content 2</div>
+									<div>Content 3</div>
+								</Marquee>
 							</TabsContent>
 							<TabsContent value="tab-2">
 								<Settings />
