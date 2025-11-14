@@ -39,7 +39,8 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(authHeader)
+	var tokenString string
+	fmt.Sscanf(authHeader, "Bearer %s", &tokenString)
 
 	base := fmt.Sprintf("%s://%s", config.SubsonicScheme, config.SubsonicHost)
 
