@@ -3,7 +3,7 @@
 	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { toast } from 'svelte-sonner';
 	import * as Form from '$lib/components/ui/form/index.js';
-	import { formSchema } from '$lib/types/auth';
+	import { formSchema, updateSchema } from '$lib/types/auth';
 
 	import Button, { buttonVariants } from '$lib/components/ui/button.svelte';
 	import Input from '$lib/components/ui/input.svelte';
@@ -19,20 +19,25 @@
 
 	let open = $state(false);
 
-	const form = superForm(defaults(zod4(formSchema)), {
-		validators: zod4(formSchema),
-		onUpdate: async ({ form: f }) => {
-			const usernameValue = f.data.username?.trim() ?? '';
+	const form = superForm(defaults(zod4(updateSchema)), {
+		validators: zod4(updateSchema),
+		onSubmit: async () => {
+			await new Promise((resolve) => setTimeout(resolve, 800));
+		},
 
-			if (!usernameValue) {
-				return;
-			}
-			if (f.valid) {
-				await new Promise((r) => setTimeout(r, 500));
-				open = false;
-				toast.success(`You submitted ${JSON.stringify(f.data, null, 2)}`);
+		onResult: ({ result }) => {
+			if (result.type === 'redirect') {
+				toast.promise(
+					new Promise((resolve) => {
+						setTimeout(resolve, 500);
+					}),
+					{
+						loading: 'Deactivating your account...',
+						success: 'Account deleted successfully!',
+						error: 'Something went wrong. Please try again.'
+					}
+				);
 			} else {
-				open = false;
 				toast.error('Something went wrong. Please try again.');
 			}
 		}
