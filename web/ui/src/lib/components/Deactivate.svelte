@@ -25,6 +25,9 @@
 
 	const form = superForm(defaults(zod4(formSchema2)), {
 		validators: zod4(formSchema2),
+		onSubmit: async () => {
+			await new Promise((resolve) => setTimeout(resolve, 800));
+		},
 		onUpdate: async ({ form: f }) => {
 			const usernameValue = f.data.username?.trim() ?? '';
 
@@ -37,6 +40,22 @@
 				toast.success('You successfully submitted the form!');
 			} else {
 				open = false;
+				toast.error('Something went wrong. Please try again.');
+			}
+		},
+		onResult: ({ result }) => {
+			if (result.type === 'redirect') {
+				toast.promise(
+					new Promise((resolve) => {
+						setTimeout(resolve, 500);
+					}),
+					{
+						loading: 'Deactivating your account...',
+						success: 'Account deleted successfully!',
+						error: 'Something went wrong. Please try again.'
+					}
+				);
+			} else {
 				toast.error('Something went wrong. Please try again.');
 			}
 		}
