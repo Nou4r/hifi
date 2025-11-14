@@ -3,7 +3,7 @@
 	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { toast } from 'svelte-sonner';
 	import * as Form from '$lib/components/ui/form/index.js';
-	import { formSchema, updateSchema } from '$lib/types/auth';
+	import { updateSchema } from '$lib/types/auth';
 
 	import Button, { buttonVariants } from '$lib/components/ui/button.svelte';
 	import Input from '$lib/components/ui/input.svelte';
