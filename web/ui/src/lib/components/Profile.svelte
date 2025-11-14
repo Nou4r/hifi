@@ -20,7 +20,6 @@
 
 	const form = superForm(defaults(zod4(formSchema)), {
 		validators: zod4(formSchema),
-		SPA: true,
 		onUpdate: async ({ form: f }) => {
 			const usernameValue = f.data.username?.trim() ?? '';
 
@@ -94,6 +93,23 @@
 									<Form.Control>
 										{#snippet children({ props })}
 											<Form.Label class="font-bold text-gray-300">Old Password</Form.Label>
+											<Input
+												class="border-zinc-700 text-white"
+												placeholder="SuperSecret123!"
+												type="password"
+												{...props}
+												bind:value={$formData.password}
+											/>
+										{/snippet}
+									</Form.Control>
+									<Form.FieldErrors />
+								</Form.Field>
+							</div>
+							<div class="space-y-2">
+								<Form.Field {form} name="password">
+									<Form.Control>
+										{#snippet children({ props })}
+											<Form.Label class="font-bold text-gray-300">New Password</Form.Label>
 											<Input
 												class="border-zinc-700 text-white"
 												placeholder="SuperSecret123!"
