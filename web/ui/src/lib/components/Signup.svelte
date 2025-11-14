@@ -66,79 +66,83 @@
 		</Empty.Description>
 	</Empty.Header>
 	<Empty.Content>
-		<div class="flex gap-2">
-			<Dialog.Root bind:open>
-				<Dialog.Trigger class={cn('cursor-pointer', buttonVariants({ variant: 'outline' }))}
-					>Get Started</Dialog.Trigger
-				>
-				<Dialog.Content class="bg-zinc-900">
-					<div class="flex flex-col items-center gap-2">
-						<Dialog.Header>
-							<Empty.Header>
-								<Empty.Media variant="icon">
-									<IconUserCircle />
-								</Empty.Media>
-							</Empty.Header>
-							<Dialog.Title class="text-gray-300 sm:text-center">HiFi</Dialog.Title>
-							<Dialog.Description class="text-gray-400 sm:text-center">
-								Create your HiFi account
-							</Dialog.Description>
-						</Dialog.Header>
-					</div>
-
-					<form method="POST" class="space-y-5" use:enhance>
-						<div class="space-y-4">
-							<div class="space-y-2">
-								<Form.Field {form} name="username">
-									<Form.Control>
-										{#snippet children({ props })}
-											<Form.Label class="font-bold text-gray-300">Username</Form.Label>
-											<Input
-												class="border-zinc-700 text-white"
-												placeholder="Joe Doe"
-												type="text"
-												autocomplete="username"
-												{...props}
-												bind:value={$formData.username}
-											/>
-										{/snippet}
-									</Form.Control>
-									<Form.FieldErrors />
-								</Form.Field>
-							</div>
-							<div class="space-y-2">
-								<Form.Field {form} name="password">
-									<Form.Control>
-										{#snippet children({ props })}
-											<Form.Label class="font-bold text-gray-300">Password</Form.Label>
-											<Input
-												class="border-zinc-700 text-white"
-												placeholder="Secure Password"
-												type="password"
-												{...props}
-												bind:value={$formData.password}
-											/>
-										{/snippet}
-									</Form.Control>
-									<Form.FieldErrors />
-								</Form.Field>
-							</div>
+		{#if !data.user}
+			<div class="flex gap-2">
+				<Dialog.Root bind:open>
+					<Dialog.Trigger class={cn('cursor-pointer', buttonVariants({ variant: 'outline' }))}
+						>Get Started</Dialog.Trigger
+					>
+					<Dialog.Content class="bg-zinc-900">
+						<div class="flex flex-col items-center gap-2">
+							<Dialog.Header>
+								<Empty.Header>
+									<Empty.Media variant="icon">
+										<IconUserCircle />
+									</Empty.Media>
+								</Empty.Header>
+								<Dialog.Title class="text-gray-300 sm:text-center">HiFi</Dialog.Title>
+								<Dialog.Description class="text-gray-400 sm:text-center">
+									Create your HiFi account
+								</Dialog.Description>
+							</Dialog.Header>
 						</div>
-						<Form.Button
-							class="mt-2 w-full cursor-pointer "
-							type="submit"
-							variant="outline"
-							disabled={$submitting}
-							>{#if $submitting}
-								<Loader2 class="size-4 animate-spin" />
-							{:else}
-								Create Account
-							{/if}
-						</Form.Button>
-					</form>
-				</Dialog.Content>
-			</Dialog.Root>
-		</div>
+
+						<form method="POST" class="space-y-5" use:enhance>
+							<div class="space-y-4">
+								<div class="space-y-2">
+									<Form.Field {form} name="username">
+										<Form.Control>
+											{#snippet children({ props })}
+												<Form.Label class="font-bold text-gray-300">Username</Form.Label>
+												<Input
+													class="border-zinc-700 text-white"
+													placeholder="Joe Doe"
+													type="text"
+													autocomplete="username"
+													{...props}
+													bind:value={$formData.username}
+												/>
+											{/snippet}
+										</Form.Control>
+										<Form.FieldErrors />
+									</Form.Field>
+								</div>
+								<div class="space-y-2">
+									<Form.Field {form} name="password">
+										<Form.Control>
+											{#snippet children({ props })}
+												<Form.Label class="font-bold text-gray-300">Password</Form.Label>
+												<Input
+													class="border-zinc-700 text-white"
+													placeholder="Secure Password"
+													type="password"
+													{...props}
+													bind:value={$formData.password}
+												/>
+											{/snippet}
+										</Form.Control>
+										<Form.FieldErrors />
+									</Form.Field>
+								</div>
+							</div>
+							<Form.Button
+								class="mt-2 w-full cursor-pointer "
+								type="submit"
+								variant="outline"
+								disabled={$submitting}
+								>{#if $submitting}
+									<Loader2 class="size-4 animate-spin" />
+								{:else}
+									Create Account
+								{/if}
+							</Form.Button>
+						</form>
+					</Dialog.Content>
+				</Dialog.Root>
+			</div>
+		{:else}
+			<p class="text-gray-400">You are already signed in.</p>
+		{/if}
 	</Empty.Content>
 	<Button variant="link" class="text-gray-400" size="sm">
 		<a href="https://github.com/sachinsenal0x64/hifi">
