@@ -103,7 +103,7 @@
 									<Form.Label class="font-bold text-gray-300">Username</Form.Label>
 									<Input
 										class="border-zinc-700 text-white"
-										placeholder="Type {username} to confirm"
+										placeholder="Type {username ?? 'John Doe'} to confirm"
 										type="text"
 										{...props}
 										bind:value={$formData.username}
