@@ -8,7 +8,7 @@
 
 	import { defaults, superForm } from 'sveltekit-superforms';
 	import { zod4 } from 'sveltekit-superforms/adapters';
-	import { Toaster, toast } from 'svelte-sonner';
+	import { toast } from 'svelte-sonner';
 	import * as Form from '$lib/components/ui/form/index.js';
 
 	import { cn } from '$lib/utils';
@@ -65,7 +65,6 @@
 	const { form: formData, submitting, enhance } = form;
 </script>
 
-<Toaster closeButton position="top-center" />
 <Empty.Root>
 	<Empty.Header>
 		<Empty.Media variant="icon">

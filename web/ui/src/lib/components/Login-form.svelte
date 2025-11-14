@@ -5,7 +5,7 @@
 	import { formSchema } from '$lib/types/auth';
 
 	import { superForm } from 'sveltekit-superforms';
-	import { Toaster, toast } from 'svelte-sonner';
+	import { toast } from 'svelte-sonner';
 	import * as Form from '$lib/components/ui/form/index.js';
 
 	import Input from '$lib/components/ui/input.svelte';
@@ -42,8 +42,6 @@
 
 	const { form: formData, submitting, enhance } = form;
 </script>
-
-<Toaster closeButton position="top-center" />
 
 <div class="flex flex-col gap-6">
 	<Card.Root class="mx-auto max-w-md border border-zinc-700 bg-transparent">
