@@ -39,7 +39,7 @@ export const actions: Actions = {
 
 		if (!res.ok) {
 			form.valid = false;
-			form.errors.username = ['Invalid username'];
+			form.errors.username = ['Invalid deactivation'];
 			return fail(400, { form });
 		}
 

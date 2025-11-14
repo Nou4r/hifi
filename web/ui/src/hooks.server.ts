@@ -40,7 +40,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (!event.locals.user && !isPublic) {
 		const path = event.url.pathname;
 
-		if (path === '/dashboard') {
+		if (path === '/connect') {
 			return Response.redirect(new URL('/signin', event.url), 303);
 		}
 
