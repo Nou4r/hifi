@@ -56,13 +56,13 @@
 										<img
 											src="https://resources.tidal.com/images/ad522656/b4b6/4054/8b98/7ff39644cea6/640x640.jpg"
 											alt="Album artwork for the track"
-											class="h-50 w-50 mx-auto rounded-2xl object-cover"
+											class="md:h-50 md:w-50 h-35 w-35 mx-auto rounded-2xl object-cover"
 										/>
 
 										<img
 											src="https://resources.tidal.com/images/ad522656/b4b6/4054/8b98/7ff39644cea6/640x640.jpg"
 											alt="album"
-											class="h-50 w-50 mx-auto rounded-2xl object-cover"
+											class="md:h-50 md:w-50 h-35 mx-auto w-40 rounded-2xl object-cover"
 										/>
 									</Marqueeck>
 								</div>
