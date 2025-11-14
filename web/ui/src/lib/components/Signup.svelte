@@ -69,7 +69,8 @@
 		{#if !data.user}
 			<div class="flex gap-2">
 				<Dialog.Root bind:open>
-					<Dialog.Trigger class={cn('cursor-pointer', buttonVariants({ variant: 'outline' }))}
+					<Dialog.Trigger
+						class={cn('cursor-pointer hover:opacity-90', buttonVariants({ variant: 'outline' }))}
 						>Get Started</Dialog.Trigger
 					>
 					<Dialog.Content class="bg-zinc-900">
