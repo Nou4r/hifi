@@ -47,6 +47,8 @@ export const actions: Actions = {
 
 		cookies.delete('hifi', { path: '/' });
 
-		throw redirect(303, '/signin');
+		const redirectTo = '/signin';
+
+		return message(form, redirect(303, redirectTo));
 	}
 };
