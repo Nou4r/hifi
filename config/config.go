@@ -30,10 +30,10 @@ var (
 
 	// ENV
 
-	// TIDAL API
 	ClientID     = os.Getenv("CLIENT_ID")
 	ClientSecret = os.Getenv("CLIENT_SECRET")
 
+	// TIDAL API
 	TidalHost    = os.Getenv("TIDAL_HOST")
 	RefreshToken = os.Getenv("TIDAL_REFRESH")
 
