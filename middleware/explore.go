@@ -28,7 +28,7 @@ func fetchAndCacheAlbum(user, id string) types.SubsonicAlbum {
 	}
 	q := tidalURL.Query()
 	q.Set("countryCode", "US")
-	q.Set("limit", "100")
+	q.Set("limit", "100") // Max limit = 100
 	q.Set("offset", "0")
 	tidalURL.RawQuery = q.Encode()
 
