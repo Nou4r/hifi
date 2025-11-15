@@ -19,8 +19,8 @@ func extractIDs(t *types.TidalNew, moduleIndex int) []int {
 
 		for _, module := range row.Modules {
 			for _, item := range module.PagedList.Items {
-				idStr := item.ID
-				ids = append(ids, idStr)
+				id := item.ID
+				ids = append(ids, id)
 
 				go func(id int, title, cover string) {
 					slog.Info("Tidal item",
@@ -28,7 +28,7 @@ func extractIDs(t *types.TidalNew, moduleIndex int) []int {
 						"id", id,
 						"cover", cover,
 					)
-				}(idStr, item.Title, item.Cover)
+				}(id, item.Title, item.Cover)
 			}
 		}
 	}
