@@ -24,9 +24,8 @@
 		onSubmit: async () => {
 			await new Promise((resolve) => setTimeout(resolve, 800));
 		},
-
 		onResult: ({ result }) => {
-			if (result.type === 'redirect') {
+			if (result.type === 'success') {
 				toast.promise(
 					new Promise((resolve) => {
 						setTimeout(resolve, 500);
