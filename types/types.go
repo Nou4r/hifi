@@ -246,3 +246,17 @@ type SubsonicWrapper struct {
 		Artist        *SubsonicArtistWithAlbums `json:"artist,omitempty"`
 	} `json:"subsonic-response"`
 }
+
+type TidalNew struct {
+	Rows []struct {
+		Modules []struct {
+			PagedList struct {
+				Items []struct {
+					Title string `json:"title"`
+					ID    string `json:"id"`
+					Cover string `json:"cover"`
+				} `json:"items"`
+			} `json:"pagedList"`
+		} `json:"modules"`
+	} `json:"rows"`
+}
