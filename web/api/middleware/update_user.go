@@ -114,8 +114,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	mu.Lock()
-	delete(users, claims.Username)
-	delete(tokenHashes, claims.RegisteredClaims.ID)
 	user.Username = req.Username
 	users[req.Username] = user
 	mu.Unlock()
