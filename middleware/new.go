@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"encoding/json"
-	"fmt"
 	"hifi/config"
 	"hifi/types"
 	"io"
@@ -10,18 +9,23 @@ import (
 	"net/http"
 )
 
-func PrintTidalItems(t *types.TidalNew) {
+func printTidalItems(t *types.TidalNew) {
 	for _, row := range t.Rows {
 		for _, module := range row.Modules {
 			for _, item := range module.PagedList.Items {
-				fmt.Printf("Title: %s, ID: %s, Cover: %s\n",
-					item.Title, item.ID, item.Cover)
+				slog.Info("Tidal item",
+					"title", item.Title,
+					"id", item.ID,
+					"cover", item.Cover,
+				)
 			}
 		}
 	}
 }
 
 func GetNew() {
+
+	slog.Info("GetNew: starting")
 
 	var tidalNew types.TidalNew
 
@@ -30,6 +34,7 @@ func GetNew() {
 
 	q := tidalURL.Query()
 	q.Set("countryCode", "US")
+	q.Set("deviceType", "BROWSER")
 	tidalURL.RawQuery = q.Encode()
 
 	req, _ := http.NewRequest(config.MethodGet, tidalURL.String(), nil)
@@ -44,6 +49,8 @@ func GetNew() {
 
 	body, err := io.ReadAll(resp.Body)
 
+	slog.Info("GetNew: response received", "body", string(body))
+
 	if err != nil {
 		slog.Error("failed to read Tidal response", "error", err)
 		return
@@ -54,5 +61,5 @@ func GetNew() {
 		return
 	}
 
-	PrintTidalItems(&tidalNew)
+	go printTidalItems(&tidalNew)
 }

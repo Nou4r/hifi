@@ -27,6 +27,7 @@ func main() {
 
 	go middleware.StartTidalRefresher()
 	go middleware.RecentAlbum()
+	go middleware.GetNew()
 
 	// HTTP server setup
 	mux := http.NewServeMux()

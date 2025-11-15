@@ -25,7 +25,7 @@ type TidalNew struct {
 		Modules []struct {
 			PagedList struct {
 				Items []struct {
-					ID    string `json:"id"`
+					ID    int    `json:"id"`
 					Title string `json:"title"`
 					Cover string `json:"cover"`
 				} `json:"items"`
