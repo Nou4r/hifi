@@ -16,7 +16,6 @@ func GetNewAndTop() []int {
 		ids := <-ch
 		all = append(all, ids...)
 	}
-	close(ch)
 
 	return all
 }
