@@ -5,8 +5,6 @@ import { formSchema } from '$lib/types/auth';
 import { API_URL } from '$env/static/private';
 
 export const load = async (event) => {
-	const { setHeaders } = event;
-
 	const sessionUser = event.locals.user;
 	const form = await superValidate(event, zod4(formSchema));
 
@@ -31,10 +29,6 @@ export const load = async (event) => {
 	];
 
 	const titles = ['Album artwork for the track', 'Second album artwork'];
-
-	setHeaders({
-		'cache-control': 'public, max-age=3600'
-	});
 
 	return {
 		form,

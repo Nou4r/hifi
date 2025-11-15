@@ -51,6 +51,7 @@
 			<div class="flex items-center">
 				<a
 					href="/"
+					data-sveltekit-reload
 					aria-label="Home"
 					title="Home"
 					class=" text-primary hover:text-primary/90 rounded-full p-3 hover:bg-zinc-600 hover:opacity-80"
