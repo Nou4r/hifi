@@ -87,6 +87,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	mu.Lock()
+	delete(users, claims.ID)
 	delete(users, claims.Username)
 	delete(tokenHashes, claims.RegisteredClaims.ID)
 	mu.Unlock()
