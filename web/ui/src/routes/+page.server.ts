@@ -11,20 +11,20 @@ export const load = async (event) => {
 	const albums = [
 		{
 			src: 'https://resources.tidal.com/images/ad522656/b4b6/4054/8b98/7ff39644cea6/640x640.jpg',
-			alt: 'Album artwork for the track'
+			alt: 'artwork for the track'
 		},
 		{
 			src: 'https://resources.tidal.com/images/19ae210b/e256/4c4b/a2e9/c82d7b694c28/640x640.jpg',
-			alt: 'Second album artwork'
+			alt: 'artwork for the track'
 		},
 		{
 			src: 'https://resources.tidal.com/images/2b3c28fe/bfb8/48b1/9ad7/f912847f3d71/640x640.jpg',
-			alt: 'Second album artwork'
+			alt: 'artwork for the track'
 		},
 
 		{
 			src: 'https://resources.tidal.com/images/4baa9b68/cd53/44cb/bb70/b7abd1fe618d/640x640.jpg',
-			alt: 'Second album artwork'
+			alt: 'artwork for the track'
 		}
 	];
 
