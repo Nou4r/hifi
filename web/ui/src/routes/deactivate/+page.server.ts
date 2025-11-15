@@ -47,8 +47,6 @@ export const actions: Actions = {
 
 		const { message } = await res.json();
 
-		console.log(message);
-
 		cookies.delete('hifi', { path: '/' });
 
 		const redirectTo = '/signin';
