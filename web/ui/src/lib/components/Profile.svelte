@@ -42,7 +42,7 @@
 
 				promise.then(() => {
 					setTimeout(() => {
-						location.reload();
+						location.replace('/connect');
 					}, 800);
 				});
 			} else {
