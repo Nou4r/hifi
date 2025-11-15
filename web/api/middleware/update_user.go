@@ -123,8 +123,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	maxAge := 3600
 	expiration := time.Now().Add(time.Second * time.Duration(maxAge))
 
-	fmt.Println(req.Username)
-
 	claims = &types.Claims{
 		Username: req.Username,
 		RegisteredClaims: jwt.RegisteredClaims{
