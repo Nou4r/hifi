@@ -27,16 +27,22 @@
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
 				open = false;
-				toast.promise(
-					new Promise((resolve) => {
-						setTimeout(resolve, 500);
-					}),
-					{
-						loading: 'Updating your account...',
-						success: 'Account updated successfully!',
-						error: 'Something went wrong. Please try again.'
-					}
-				);
+
+				const promise = new Promise<void>((resolve) => {
+					setTimeout(() => {
+						resolve();
+					}, 800);
+				});
+
+				toast.promise(promise, {
+					loading: 'Updating your account...',
+					success: 'Account updated successfully!',
+					error: 'Something went wrong. Please try again.'
+				});
+
+				promise.then(() => {
+					location.reload();
+				});
 			} else {
 				open = false;
 				toast.error('Something went wrong. Please try again.');
