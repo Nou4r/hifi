@@ -49,8 +49,6 @@ export const actions: Actions = {
 			body: JSON.stringify(form.data)
 		});
 
-		console.log({ res });
-
 		if (!res.ok) {
 			form.valid = false;
 			form.errors.username = ['Invalid deactivation'];
