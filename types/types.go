@@ -34,6 +34,12 @@ type TidalNew struct {
 	} `json:"rows"`
 }
 
+type ExploreItem struct {
+	ID    int    `json:"id"`
+	Title string `json:"title"`
+	Cover string `json:"cover"`
+}
+
 type TidalSearchResponse struct {
 	Tracks struct {
 		Items []struct {
