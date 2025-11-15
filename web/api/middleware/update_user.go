@@ -42,6 +42,9 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	olduSername := r.Header.Get("X-Username")
+
+	fmt.Println(olduSername)
+
 	if olduSername == "" {
 		http.Error(w, "missing username header", http.StatusUnauthorized)
 		return
@@ -58,16 +61,22 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return config.JwtSecret, nil
 	})
 
+	fmt.Println(olduSername)
+
 	if err != nil || !token.Valid {
 		http.Error(w, "Invalid or expired token", http.StatusBadRequest)
 		return
 	}
+
+	fmt.Println(olduSername)
 
 	claims, ok := token.Claims.(*types.Claims)
 	if !ok {
 		http.Error(w, "Invalid claims", http.StatusBadRequest)
 		return
 	}
+
+	fmt.Println(olduSername)
 
 	computed := sha256.Sum256([]byte(claims.RegisteredClaims.ID))
 
@@ -76,6 +85,8 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid token", http.StatusBadRequest)
 		return
 	}
+
+	fmt.Println(olduSername)
 
 	mu.RLock()
 	user, exists := users[claims.Username]
@@ -86,10 +97,12 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if !exists || olduSername != claims.Username {
-		http.Error(w, "User does not exist or data mismatch", http.StatusBadRequest)
-		return
-	}
+	fmt.Println(olduSername)
+
+	// if !exists || olduSername != claims.Username {
+	// 	http.Error(w, "User does not exist or data mismatch", http.StatusBadRequest)
+	// 	return
+	// }
 
 	base := fmt.Sprintf("%s://%s", config.SubsonicScheme, config.SubsonicHost)
 
@@ -99,9 +112,11 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
 
-	createCh := startUpdateUser(ctx, client, base+"/admin/change_username_do", claims.Username, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
+	createCh := startUpdateUser(ctx, client, base+"/admin/change_username_do", olduSername, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
 
 	res := <-createCh
+
+	fmt.Println("after req"+olduSername, string(res.Body), res.Err)
 
 	if res.Err != nil {
 		http.Error(w, res.Err.Error(), http.StatusBadGateway)
@@ -126,7 +141,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func startUpdateUser(ctx context.Context, client *http.Client, updateURL, oldUsername, newUsername string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
+func startUpdateUser(ctx context.Context, client *http.Client, updateURL, olduSername, newUsername string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
 	out := make(chan types.CreateResult, 1)
 	go func() {
 		defer close(out)
@@ -145,7 +160,7 @@ func startUpdateUser(ctx context.Context, client *http.Client, updateURL, oldUse
 
 		u, _ := url.Parse(updateURL)
 		q := u.Query()
-		q.Set("user", oldUsername)
+		q.Set("user", olduSername)
 		u.RawQuery = q.Encode()
 
 		form := url.Values{}
