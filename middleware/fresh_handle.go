@@ -96,6 +96,12 @@ func getFreshCachedItems() []types.ExploreItem {
 }
 
 func FreshHandler(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != http.MethodGet {
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
 	items := getFreshCachedItems()
 
 	if len(items) == 0 {
