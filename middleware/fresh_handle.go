@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"sync"
 	"time"
+
+	"github.com/go-co-op/gocron/v2"
 )
 
 var (
@@ -16,25 +18,81 @@ var (
 	freshCacheExp time.Time
 )
 
+const (
+	freshTTL          = 2 * time.Minute
+	freshRefreshEvery = 1 * time.Minute
+)
+
+func refreshFreshCache() {
+	items := GetNewAndTopItems()
+
+	now := time.Now()
+	exp := now.Add(freshTTL)
+
+	freshCacheMu.Lock()
+	freshCache = items
+	freshCacheExp = exp
+	freshCacheMu.Unlock()
+
+	slog.Info("New TTL window started",
+		"ttlMinutes", int(freshTTL.Minutes()),
+		"expiresAt", exp.Format(time.RFC3339),
+	)
+
+	slog.Info("Fresh cache refreshed",
+		"items", len(items),
+		"refreshedAt", now.Format(time.RFC3339),
+	)
+}
+
+func StartFreshRefresher() {
+	s, err := gocron.NewScheduler()
+	if err != nil {
+		slog.Error("Failed to create fresh scheduler", "error", err)
+	}
+
+	refreshFreshCache()
+
+	_, err = s.NewJob(
+		gocron.DurationJob(freshRefreshEvery),
+		gocron.NewTask(func() {
+
+			slog.Info("Scheduled refresh triggered",
+				"refreshEveryMinutes", int(freshRefreshEvery.Minutes()),
+				"nextRefreshAt", time.Now().Add(freshRefreshEvery).Format(time.RFC3339),
+			)
+
+			refreshFreshCache()
+		}),
+	)
+	if err != nil {
+		slog.Error("Failed to schedule fresh refresher job", "error", err)
+	}
+
+	s.Start()
+
+	slog.Info("Fresh cache refresher started",
+		"refreshInterval", freshRefreshEvery.String(),
+		"ttl", freshTTL.String())
+}
+
 func getFreshCachedItems() []types.ExploreItem {
 	now := time.Now()
 
 	freshCacheMu.RLock()
-	if freshCache != nil && now.Before(freshCacheExp) {
-		items := freshCache
-		freshCacheMu.RUnlock()
-		return items
-	}
+	valid := freshCache != nil && now.Before(freshCacheExp)
+	items := freshCache
 	freshCacheMu.RUnlock()
 
-	items := GetNewAndTopItems()
+	if valid {
+		return items
+	}
 
-	freshCacheMu.Lock()
-	freshCache = items
-	freshCacheExp = now.Add(1 * time.Minute)
-	freshCacheMu.Unlock()
+	refreshFreshCache()
 
-	return items
+	freshCacheMu.RLock()
+	defer freshCacheMu.RUnlock()
+	return freshCache
 }
 
 func FreshHandler(w http.ResponseWriter, r *http.Request) {
@@ -42,7 +100,6 @@ func FreshHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(items) == 0 {
 		w.WriteHeader(http.StatusNoContent)
-		return
 	}
 
 	w.Header().Set(config.HeaderCacheControl, "public, max-age=86400")
@@ -51,6 +108,5 @@ func FreshHandler(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(items); err != nil {
 		slog.Error("failed to encode items", "error", err)
 		http.Error(w, "internal error", http.StatusInternalServerError)
-		return
 	}
 }
