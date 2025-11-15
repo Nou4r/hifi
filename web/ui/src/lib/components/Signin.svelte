@@ -43,7 +43,7 @@
 </script>
 
 <div class="flex flex-col gap-6">
-	<Card.Root class="mx-auto max-w-md border border-zinc-700 bg-transparent">
+	<Card.Root class="mx-auto max-w-md border border-zinc-700 bg-transparent xl:w-[350px]">
 		<Card.Header class="text-center">
 			<Empty.Header>
 				<Empty.Media variant="icon">
@@ -108,7 +108,7 @@
 			<a href="/" class="underline underline-offset-4">Sign up</a>
 		</FieldDescription>
 		<FieldDescription class="px-6 text-center">
-			By clicking Log in , you agree to our <a
+			By clicking Log in you agree to our <a
 				href="https://github.com/sachinsenal0x64/hifi?tab=readme-ov-file#project-terms">Terms</a
 			>.
 		</FieldDescription>
