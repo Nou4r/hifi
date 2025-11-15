@@ -41,7 +41,11 @@ export const actions: Actions = {
 
 		const res = await e.fetch(`${API_URL}/v1/update`, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${pretoken}` },
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${pretoken}`,
+				'X-Username': `${locals.user?.username}`
+			},
 			body: JSON.stringify(form.data)
 		});
 

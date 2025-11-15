@@ -41,7 +41,14 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	olduSername := r.Header.Get("X-Username")
+	if olduSername == "" {
+		http.Error(w, "missing username header", http.StatusUnauthorized)
+		return
+	}
+
 	var tokenString string
+
 	fmt.Sscanf(authHeader, "Bearer %s", &tokenString)
 
 	token, err := jwt.ParseWithClaims(tokenString, &types.Claims{}, func(t *jwt.Token) (any, error) {
@@ -56,11 +63,11 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	claims := token.Claims.(*types.Claims)
-	// if !ok {
-	// 	http.Error(w, "Invalid claims", http.StatusBadRequest)
-	// 	return
-	// }
+	claims, ok := token.Claims.(*types.Claims)
+	if !ok {
+		http.Error(w, "Invalid claims", http.StatusBadRequest)
+		return
+	}
 
 	computed := sha256.Sum256([]byte(claims.RegisteredClaims.ID))
 
@@ -79,10 +86,10 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// if !exists || req.OldUsername != claims.Username {
-	// 	http.Error(w, "User does not exist or data mismatch", http.StatusBadRequest)
-	// 	return
-	// }
+	if !exists || olduSername != claims.Username {
+		http.Error(w, "User does not exist or data mismatch", http.StatusBadRequest)
+		return
+	}
 
 	base := fmt.Sprintf("%s://%s", config.SubsonicScheme, config.SubsonicHost)
 
