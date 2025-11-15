@@ -41,9 +41,13 @@ export const actions: Actions = {
 
 		if (!res.ok) {
 			form.valid = false;
-			form.errors.username = ['Invalid deactivation'];
+			form.errors.username = ['Please try again later'];
 			return fail(400, { form });
 		}
+
+		const { message } = await res.json();
+
+		console.log(message);
 
 		cookies.delete('hifi', { path: '/' });
 

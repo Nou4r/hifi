@@ -168,3 +168,50 @@ func startUpdateUser(ctx context.Context, client *http.Client, updateURL, olduSe
 	}()
 	return out
 }
+
+func startUpdateUserPassword(ctx context.Context, client *http.Client, updateURL, olduSername, newUsername string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
+	out := make(chan types.CreateResult, 1)
+	go func() {
+		defer close(out)
+
+		select {
+		case lr := <-loginCh:
+			if lr.Err != nil || !lr.OK {
+				out <- types.CreateResult{Err: fmt.Errorf("login failed")}
+				return
+			}
+
+		case <-ctx.Done():
+			out <- types.CreateResult{Status: 0, Body: nil, Err: ctx.Err()}
+			return
+		}
+
+		u, _ := url.Parse(updateURL)
+		q := u.Query()
+		q.Set("user", olduSername)
+		u.RawQuery = q.Encode()
+
+		form := url.Values{}
+		form.Set("username", newUsername)
+
+		req, err := http.NewRequestWithContext(ctx, http.MethodPost, u.String(), strings.NewReader(form.Encode()))
+
+		if err != nil {
+			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
+			return
+		}
+		req.Header.Set(config.HeaderContentType, config.ContentTypeForm)
+
+		resp, err := client.Do(req)
+		if err != nil {
+			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
+			return
+		}
+		defer resp.Body.Close()
+
+		body, _ := io.ReadAll(resp.Body)
+
+		out <- types.CreateResult{Status: resp.StatusCode, Body: body, Err: nil}
+	}()
+	return out
+}
