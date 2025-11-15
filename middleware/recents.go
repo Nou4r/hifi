@@ -11,7 +11,8 @@ func RecentAlbum() {
 
 	var allAlbums []types.SubsonicAlbum
 
-	ids := GetNewAndTop()
+	ids := getFreshCachedItems()
+
 	if len(ids) == 0 {
 		slog.Warn("No IDs returned from GetNewAndTop")
 		return
@@ -24,7 +25,7 @@ func RecentAlbum() {
 		go func(albumID string) {
 			album := fetchAndCacheAlbum(user, albumID)
 			results <- album
-		}(strconv.Itoa(id))
+		}(strconv.Itoa(id.ID))
 	}
 
 	for range ids {
