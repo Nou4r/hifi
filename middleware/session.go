@@ -30,6 +30,11 @@ func Session(userName, passWord, targetHost string, ValidPaths []string) func(ht
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
+			if r.URL.Path == rest.Fresh() {
+				next.ServeHTTP(w, r)
+				return
+			}
+
 			if !slices.Contains(ValidPaths, r.URL.Path) {
 				w.WriteHeader(config.StatusNotFound)
 				return

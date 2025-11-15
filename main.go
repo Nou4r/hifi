@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"hifi/config"
 	"hifi/middleware"
+	"hifi/routes/rest"
 	"log/slog"
 	"net/http"
 	"os"
@@ -31,6 +32,8 @@ func main() {
 
 	// HTTP server setup
 	mux := http.NewServeMux()
+
+	mux.HandleFunc(rest.Fresh(), middleware.FreshHandler)
 
 	// Middleware setup
 	session := middleware.Session(person.UserName, person.PassWord, targetHost, validPaths)(mux)

@@ -9,8 +9,7 @@ import (
 	"net/http"
 )
 
-func GetNew() []int {
-
+func GetNewItems() []types.ExploreItem {
 	var tidalNew types.TidalNew
 
 	tidalURL := QueryBuild(config.TidalHost, "/v1/pages/explore_new_music")
@@ -41,5 +40,5 @@ func GetNew() []int {
 		return nil
 	}
 
-	return extractIDs(&tidalNew, 2)
+	return extractItems(&tidalNew, 2)
 }

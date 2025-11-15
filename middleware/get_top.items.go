@@ -9,11 +9,10 @@ import (
 	"net/http"
 )
 
-func GetNew() []int {
-
+func GetTopItems() []types.ExploreItem {
 	var tidalNew types.TidalNew
 
-	tidalURL := QueryBuild(config.TidalHost, "/v1/pages/explore_new_music")
+	tidalURL := QueryBuild(config.TidalHost, "/v1/pages/explore_top_music")
 
 	q := tidalURL.Query()
 	q.Set("countryCode", "US")
@@ -25,21 +24,21 @@ func GetNew() []int {
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		slog.Error("failed to send request to Tidal", "error", err)
+		slog.Error("failed to send request to Tidal (top)", "error", err)
 		return nil
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		slog.Error("failed to read Tidal response", "error", err)
+		slog.Error("failed to read Tidal response (top)", "error", err)
 		return nil
 	}
 
 	if err := json.Unmarshal(body, &tidalNew); err != nil {
-		slog.Error("failed to parse Tidal response", "error", err)
+		slog.Error("failed to parse Tidal response (top)", "error", err)
 		return nil
 	}
 
-	return extractIDs(&tidalNew, 2)
+	return extractItems(&tidalNew, 2)
 }
