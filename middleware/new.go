@@ -9,8 +9,11 @@ import (
 	"net/http"
 )
 
-func printTidalItems(t *types.TidalNew) {
-	for _, row := range t.Rows {
+func printTidalItems(t *types.TidalNew, moduleIndex int) {
+	for index, row := range t.Rows {
+		if index != moduleIndex {
+			continue
+		}
 		for _, module := range row.Modules {
 			for _, item := range module.PagedList.Items {
 				slog.Info("Tidal item",
@@ -49,8 +52,6 @@ func GetNew() {
 
 	body, err := io.ReadAll(resp.Body)
 
-	slog.Info("GetNew: response received", "body", string(body))
-
 	if err != nil {
 		slog.Error("failed to read Tidal response", "error", err)
 		return
@@ -61,5 +62,5 @@ func GetNew() {
 		return
 	}
 
-	go printTidalItems(&tidalNew)
+	go printTidalItems(&tidalNew, 2)
 }
