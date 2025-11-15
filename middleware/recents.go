@@ -4,29 +4,27 @@ import (
 	"fmt"
 	"hifi/types"
 	"log/slog"
+	"strconv"
 )
 
 func RecentAlbum() {
 
 	var allAlbums []types.SubsonicAlbum
 
-	user := Public
-	ids := []string{
-		"247415928",
-		"463900363",
-		"441821356",
-		"462795478",
-		"469227943",
-		"466488538",
+	ids := GetNew()
+	if len(ids) == 0 {
+		slog.Warn("no Tidal IDs returned from GetNew")
+		return
 	}
 
+	user := Public
 	results := make(chan types.SubsonicAlbum, len(ids))
 
 	for _, id := range ids {
 		go func(albumID string) {
 			album := fetchAndCacheAlbum(user, albumID)
 			results <- album
-		}(id)
+		}(strconv.Itoa(id))
 	}
 
 	for range ids {

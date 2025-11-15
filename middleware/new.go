@@ -9,28 +9,36 @@ import (
 	"net/http"
 )
 
-func printTidalItems(t *types.TidalNew, moduleIndex int) {
+func extractIDsAndLogAsync(t *types.TidalNew, moduleIndex int) []int {
+	var ids []int
+
 	for index, row := range t.Rows {
 		if index != moduleIndex {
 			continue
 		}
+
 		for _, module := range row.Modules {
 			for _, item := range module.PagedList.Items {
-				slog.Info("Tidal item",
-					"title", item.Title,
-					"id", item.ID,
-					"cover", item.Cover,
-				)
+				idStr := item.ID
+				ids = append(ids, idStr)
+
+				go func(id int, title, cover string) {
+					slog.Info("Tidal item",
+						"title", title,
+						"id", id,
+						"cover", cover,
+					)
+				}(idStr, item.Title, item.Cover)
 			}
 		}
 	}
+
+	return ids
 }
 
-func GetNew() {
-
+func GetNew() []int {
 	var tidalNew types.TidalNew
 
-	// Build Tidal request
 	tidalURL := QueryBuild(config.TidalHost, "/v1/pages/explore_new_music")
 
 	q := tidalURL.Query()
@@ -44,21 +52,20 @@ func GetNew() {
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		slog.Error("failed to send request to Tidal", "error", err)
-		return
+		return nil
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
-
 	if err != nil {
 		slog.Error("failed to read Tidal response", "error", err)
-		return
+		return nil
 	}
 
 	if err := json.Unmarshal(body, &tidalNew); err != nil {
 		slog.Error("failed to parse Tidal response", "error", err)
-		return
+		return nil
 	}
 
-	go printTidalItems(&tidalNew, 2)
+	return extractIDsAndLogAsync(&tidalNew, 2)
 }
