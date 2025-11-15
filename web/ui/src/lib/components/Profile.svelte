@@ -26,6 +26,7 @@
 		},
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
+				open = false;
 				toast.promise(
 					new Promise((resolve) => {
 						setTimeout(resolve, 500);
@@ -37,6 +38,7 @@
 					}
 				);
 			} else {
+				open = false;
 				toast.error('Something went wrong. Please try again.');
 			}
 		}
