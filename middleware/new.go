@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func extractIDsAndLogAsync(t *types.TidalNew, moduleIndex int) []int {
+func extractIDs(t *types.TidalNew, moduleIndex int) []int {
 	var ids []int
 
 	for index, row := range t.Rows {
@@ -67,5 +67,5 @@ func GetNew() []int {
 		return nil
 	}
 
-	return extractIDsAndLogAsync(&tidalNew, 2)
+	return extractIDs(&tidalNew, 2)
 }
