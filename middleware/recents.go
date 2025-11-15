@@ -11,7 +11,7 @@ func RecentAlbum() {
 
 	var allAlbums []types.SubsonicAlbum
 
-	ids := GetNew()
+	ids := GetNewAndTop()
 	if len(ids) == 0 {
 		slog.Warn("no Tidal IDs returned from GetNew")
 		return
