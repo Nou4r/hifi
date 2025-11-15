@@ -41,7 +41,9 @@
 				});
 
 				promise.then(() => {
-					location.reload();
+					setTimeout(() => {
+						location.reload();
+					}, 800);
 				});
 			} else {
 				open = false;
