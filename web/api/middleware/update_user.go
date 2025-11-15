@@ -118,11 +118,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	users[req.Username] = user
 	mu.Unlock()
 
-	if err != nil {
-		http.Error(w, "Failed to create token", http.StatusInternalServerError)
-		return
-	}
-
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(map[string]string{
