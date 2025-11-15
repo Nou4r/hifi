@@ -116,8 +116,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	res := <-createCh
 
-	fmt.Println("after req"+olduSername, string(res.Body), res.Err)
-
 	if res.Err != nil {
 		http.Error(w, res.Err.Error(), http.StatusBadGateway)
 		return
