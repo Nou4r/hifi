@@ -20,6 +20,20 @@ type ManifestData struct {
 	Urls []string `json:"urls,omitempty"`
 }
 
+type TidalNew struct {
+	Rows []struct {
+		Modules []struct {
+			PagedList struct {
+				Items []struct {
+					ID    string `json:"id"`
+					Title string `json:"title"`
+					Cover string `json:"cover"`
+				} `json:"items"`
+			} `json:"pagedList"`
+		} `json:"modules"`
+	} `json:"rows"`
+}
+
 type TidalSearchResponse struct {
 	Tracks struct {
 		Items []struct {
@@ -245,18 +259,4 @@ type SubsonicWrapper struct {
 		ArtistInfo    *SubsonicArtistInfo       `json:"artistInfo,omitempty"`
 		Artist        *SubsonicArtistWithAlbums `json:"artist,omitempty"`
 	} `json:"subsonic-response"`
-}
-
-type TidalNew struct {
-	Rows []struct {
-		Modules []struct {
-			PagedList struct {
-				Items []struct {
-					Title string `json:"title"`
-					ID    string `json:"id"`
-					Cover string `json:"cover"`
-				} `json:"items"`
-			} `json:"pagedList"`
-		} `json:"modules"`
-	} `json:"rows"`
 }
