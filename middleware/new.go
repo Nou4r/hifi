@@ -28,8 +28,6 @@ func printTidalItems(t *types.TidalNew, moduleIndex int) {
 
 func GetNew() {
 
-	slog.Info("GetNew: starting")
-
 	var tidalNew types.TidalNew
 
 	// Build Tidal request
