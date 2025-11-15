@@ -26,7 +26,7 @@ export const load: PageServerLoad = async (event) => {
 
 export const actions: Actions = {
 	default: async (e) => {
-		const { cookies, locals } = e;
+		const { locals } = e;
 
 		const form = await superValidate(e, zod4(updateSchema));
 		if (!form.valid) return fail(400, { form });
@@ -52,16 +52,6 @@ export const actions: Actions = {
 			form.errors.username = ['Invalid deactivation'];
 			return fail(400, { form });
 		}
-
-		const { token, maxAge } = await res.json();
-
-		cookies.set('hifi', token, {
-			path: '/',
-			httpOnly: true,
-			secure: true,
-			sameSite: 'strict',
-			maxAge
-		});
 
 		return message(form, 'Username changed successfully');
 	}

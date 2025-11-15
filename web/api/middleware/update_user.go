@@ -95,17 +95,11 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	createCh := startUpdateUser(ctx, client, base+"/admin/change_username_do", claims.Username, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
 
 	mu.Lock()
-
-	// rename
 	delete(users, claims.Username)
+	delete(tokenHashes, claims.RegisteredClaims.ID)
 	user.Username = req.Username
 	users[req.Username] = user
 	mu.Unlock()
-
-	// mu.Lock()
-	// delete(users, claims.Username)
-	// delete(tokenHashes, claims.RegisteredClaims.ID)
-	// mu.Unlock()
 
 	res := <-createCh
 
