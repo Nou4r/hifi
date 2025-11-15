@@ -13,7 +13,7 @@ func RecentAlbum() {
 
 	ids := GetNewAndTop()
 	if len(ids) == 0 {
-		slog.Warn("no Tidal IDs returned from GetNew")
+		slog.Warn("No IDs returned from GetNewAndTop")
 		return
 	}
 
