@@ -94,13 +94,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	createCh := startUpdateUser(ctx, client, base+"/admin/change_username_do", claims.Username, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
 
-	mu.Lock()
-	delete(users, claims.Username)
-	delete(tokenHashes, claims.RegisteredClaims.ID)
-	user.Username = req.Username
-	users[req.Username] = user
-	mu.Unlock()
-
 	res := <-createCh
 
 	if res.Err != nil {
@@ -112,6 +105,13 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "User update failed", http.StatusBadGateway)
 		return
 	}
+
+	mu.Lock()
+	delete(users, claims.Username)
+	delete(tokenHashes, claims.RegisteredClaims.ID)
+	user.Username = req.Username
+	users[req.Username] = user
+	mu.Unlock()
 
 	maxAge := 3600
 	expiration := time.Now().Add(time.Second * time.Duration(maxAge))
