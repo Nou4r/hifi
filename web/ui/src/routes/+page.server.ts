@@ -2,7 +2,7 @@ import { superValidate, message } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail, type Actions } from '@sveltejs/kit';
 import { formSchema } from '$lib/types/auth';
-import { API_URL } from '$env/static/private';
+import { API_URL, STATIC_URL } from '$env/static/private';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
@@ -10,7 +10,7 @@ export const load: PageServerLoad = async (event) => {
 	const form = await superValidate(event, zod4(formSchema));
 
 	const titles = ['Album artwork for the track', 'Second album artwork'];
-	const albumres = await event.fetch('http://127.0.0.1:5000/rest/fresh.view');
+	const albumres = await event.fetch(`${STATIC_URL}/rest/fresh.view`);
 	const albums = albumres.ok ? await albumres.json() : [];
 
 	return {
