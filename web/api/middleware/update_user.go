@@ -100,54 +100,54 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// if req.Username != "" && req.Password != "" {
+	if req.Username != "" && req.Password != "" {
 
-	// 	updateUsername := startUpdateUser(
-	// 		ctx, client,
-	// 		base+"/admin/change_username_do",
-	// 		olduSername,
-	// 		req.Username,
-	// 		startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword),
-	// 	)
+		updateUsername := startUpdateUser(
+			ctx, client,
+			base+"/admin/change_username_do",
+			olduSername,
+			req.Username,
+			startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword),
+		)
 
-	// 	resUsername := <-updateUsername
+		resUsername := <-updateUsername
 
-	// 	if resUsername.Err != nil || resUsername.Status >= 400 {
-	// 		http.Error(w, "User update failed", http.StatusBadGateway)
-	// 		return
-	// 	}
+		if resUsername.Err != nil || resUsername.Status >= 400 {
+			http.Error(w, "User update failed", http.StatusBadGateway)
+			return
+		}
 
-	// 	updatePassword := startUpdateUserPassword(
-	// 		ctx, client,
-	// 		base+"/admin/change_password_do",
-	// 		olduSername,
-	// 		req.Password,
-	// 		startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword),
-	// 	)
+		updatePassword := startUpdateUserPassword(
+			ctx, client,
+			base+"/admin/change_password_do",
+			olduSername,
+			req.Password,
+			startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword),
+		)
 
-	// 	resPassword := <-updatePassword
+		resPassword := <-updatePassword
 
-	// 	if resPassword.Err != nil || resPassword.Status >= 400 {
-	// 		http.Error(w, "User update failed", http.StatusBadGateway)
-	// 		return
-	// 	}
+		if resPassword.Err != nil || resPassword.Status >= 400 {
+			http.Error(w, "User update failed", http.StatusBadGateway)
+			return
+		}
 
-	// 	mu.Lock()
-	// 	delete(users, olduSername)
-	// 	delete(tokenHashes, claims.RegisteredClaims.ID)
+		mu.Lock()
+		delete(users, olduSername)
+		delete(tokenHashes, claims.RegisteredClaims.ID)
 
-	// 	user.Username = req.Username
-	// 	users[req.Username] = user
-	// 	mu.Unlock()
+		user.Username = req.Username
+		users[req.Username] = user
+		mu.Unlock()
 
-	// 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
-	// 	w.WriteHeader(http.StatusOK)
-	// 	_ = json.NewEncoder(w).Encode(map[string]string{
-	// 		"message": "User updated successfully",
-	// 	})
+		w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
+		w.WriteHeader(http.StatusOK)
+		_ = json.NewEncoder(w).Encode(map[string]string{
+			"message": "User updated successfully",
+		})
 
-	// 	return
-	// }
+		return
+	}
 
 	if req.Username != "" {
 
