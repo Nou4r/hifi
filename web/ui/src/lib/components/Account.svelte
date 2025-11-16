@@ -113,7 +113,10 @@
 						</Form.Button>
 
 						{#if !$submitting}
-							<Dialog.Close class="{buttonVariants({ variant: 'outline' })} flex-1 cursor-pointer">
+							<Dialog.Close
+								type="button"
+								class="{buttonVariants({ variant: 'outline' })} flex-1 cursor-pointer"
+							>
 								Cancel
 							</Dialog.Close>
 						{/if}
