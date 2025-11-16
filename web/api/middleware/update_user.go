@@ -100,6 +100,51 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if req.Username != "" && req.Password != "" {
+		updateUsername := startUpdateUser(ctx, client, base+"/admin/change_username_do", olduSername, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
+		resUsername := <-updateUsername
+
+		if resUsername.Err != nil {
+			http.Error(w, resUsername.Err.Error(), http.StatusBadGateway)
+			return
+		}
+
+		if resUsername.Status >= 400 {
+			http.Error(w, "User update failed", http.StatusBadGateway)
+			return
+		}
+
+		updatePassword := startUpdateUserPassword(ctx, client, base+"/admin/change_password_do", req.Username, req.Password, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
+		resPassword := <-updatePassword
+
+		if resPassword.Err != nil {
+			http.Error(w, resPassword.Err.Error(), http.StatusBadGateway)
+			return
+		}
+
+		if resPassword.Status >= 400 {
+			http.Error(w, "User update failed", http.StatusBadGateway)
+			return
+		}
+
+		mu.Lock()
+
+		delete(users, claims.RegisteredClaims.ID)
+		delete(tokenHashes, claims.RegisteredClaims.ID)
+
+		user.Username = req.Username
+		users[req.Username] = user
+		mu.Unlock()
+
+		w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
+		w.WriteHeader(http.StatusOK)
+		_ = json.NewEncoder(w).Encode(map[string]string{
+			"message": "User updated successfully",
+		})
+		return
+
+	}
+
 	if req.Username != "" {
 
 		updateUsername := startUpdateUser(ctx, client, base+"/admin/change_username_do", olduSername, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
