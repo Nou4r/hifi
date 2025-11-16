@@ -18,7 +18,7 @@ export const load: PageServerLoad = async (event) => {
 
 	if (albums.length > 0) {
 		const first = albums[0].title;
-		const last = albums[albums.length - 2].title;
+		const last = albums[albums.length - 7].title;
 
 		titles.push(first, last);
 	}
