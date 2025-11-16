@@ -17,10 +17,10 @@ export const load: PageServerLoad = async (event) => {
 	const titles = [];
 
 	if (albums.length > 0) {
-		const first = albums[0].title;
-		const last = albums[albums.length - 7].title;
+		const shuffled = [...albums].sort(() => Math.random() - 0.5);
+		const randomTwo = shuffled.slice(0, 2).map((a) => a.title);
 
-		titles.push(first, last);
+		titles.push(...randomTwo);
 	}
 
 	return {
