@@ -95,6 +95,11 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
 
+	if req.Username == "" && req.Password == "" {
+		http.Error(w, "no username or password provided", http.StatusBadRequest)
+		return
+	}
+
 	if req.Username != "" {
 
 		updateUsername := startUpdateUser(ctx, client, base+"/admin/change_username_do", olduSername, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
