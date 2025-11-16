@@ -160,8 +160,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		}
 
 		mu.Lock()
-		delete(users, olduSername)
-
 		user.Username = req.Username
 		users[req.Username] = user
 		mu.Unlock()
