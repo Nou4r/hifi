@@ -122,7 +122,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func startUpdateUser(ctx context.Context, client *http.Client, updateURL, olduSername, newUsername string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
+func startUpdateUser(ctx context.Context, client *http.Client, updateURL, olduSername, newPassword string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
 	out := make(chan types.CreateResult, 1)
 	go func() {
 		defer close(out)
@@ -145,7 +145,7 @@ func startUpdateUser(ctx context.Context, client *http.Client, updateURL, olduSe
 		u.RawQuery = q.Encode()
 
 		form := url.Values{}
-		form.Set("username", newUsername)
+		form.Set("username", newPassword)
 
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, u.String(), strings.NewReader(form.Encode()))
 

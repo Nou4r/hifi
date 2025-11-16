@@ -6,11 +6,13 @@ import { API_URL, STATIC_URL } from '$env/static/private';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
+	const { fetch } = event;
+
 	const sessionUser = event.locals.user;
 	const form = await superValidate(event, zod4(formSchema));
 
 	const titles = ['Album artwork for the track', 'Second album artwork'];
-	const albumres = await event.fetch(`${STATIC_URL}/rest/fresh.view`);
+	const albumres = await fetch(`${STATIC_URL}/rest/fresh.view`);
 	const albums = albumres.ok ? await albumres.json() : [];
 
 	return {
