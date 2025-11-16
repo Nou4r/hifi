@@ -95,24 +95,46 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
 
-	updateUsername := startUpdateUser(ctx, client, base+"/admin/change_username_do", olduSername, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
+	if req.Username != "" {
 
-	res := <-updateUsername
+		updateUsername := startUpdateUser(ctx, client, base+"/admin/change_username_do", olduSername, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
+		res := <-updateUsername
 
-	if res.Err != nil {
-		http.Error(w, res.Err.Error(), http.StatusBadGateway)
-		return
+		if res.Err != nil {
+			http.Error(w, res.Err.Error(), http.StatusBadGateway)
+			return
+		}
+
+		if res.Status >= 400 {
+			http.Error(w, "User update failed", http.StatusBadGateway)
+			return
+		}
+
+		mu.Lock()
+		user.Username = req.Username
+		users[req.Username] = user
+		mu.Unlock()
 	}
+	if req.Password != "" {
 
-	if res.Status >= 400 {
-		http.Error(w, "User update failed", http.StatusBadGateway)
-		return
+		updatePassword := startUpdateUserPassword(ctx, client, base+"/admin/change_password_do", olduSername, req.Password, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
+		res := <-updatePassword
+
+		if res.Err != nil {
+			http.Error(w, res.Err.Error(), http.StatusBadGateway)
+			return
+		}
+
+		if res.Status >= 400 {
+			http.Error(w, "User update failed", http.StatusBadGateway)
+			return
+		}
+
+		mu.Lock()
+		delete(users, claims.RegisteredClaims.ID)
+		delete(tokenHashes, claims.RegisteredClaims.ID)
+		mu.Unlock()
 	}
-
-	mu.Lock()
-	user.Username = req.Username
-	users[req.Username] = user
-	mu.Unlock()
 
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 	w.WriteHeader(http.StatusOK)
@@ -192,7 +214,8 @@ func startUpdateUserPassword(ctx context.Context, client *http.Client, updateURL
 		u.RawQuery = q.Encode()
 
 		form := url.Values{}
-		form.Set("password", newPassword)
+		form.Set("password_one", newPassword)
+		form.Set("password_two", newPassword)
 
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, u.String(), strings.NewReader(form.Encode()))
 
