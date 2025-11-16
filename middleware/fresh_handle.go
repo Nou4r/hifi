@@ -108,6 +108,19 @@ func FreshHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 	}
 
+	var wg sync.WaitGroup
+
+	for i := range items {
+		wg.Add(1)
+
+		go func(idx int) {
+			defer wg.Done()
+			items[idx].Cover = NormalizeCover(items[idx].Cover)
+		}(i)
+	}
+
+	wg.Wait()
+
 	w.Header().Set(config.HeaderCacheControl, "public, max-age=86400")
 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 
