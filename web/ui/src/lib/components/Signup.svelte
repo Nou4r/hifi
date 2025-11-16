@@ -83,7 +83,7 @@
 					<p class="mt-4 text-gray-200">New releases:</p>
 				</div>
 			{:else}
-				Get started by creating your HiFi account, and you’ll be ready to listen to TIDAL music.
+				Listen to Tidal music on your favorite Subsonic client by creating a HiFi account.
 			{/if}
 		</Empty.Description>
 	</Empty.Header>
