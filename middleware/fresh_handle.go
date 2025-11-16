@@ -115,7 +115,7 @@ func FreshHandler(w http.ResponseWriter, r *http.Request) {
 
 		go func(idx int) {
 			defer wg.Done()
-			items[idx].Cover = NormalizeCover(items[idx].Cover)
+			items[idx].Cover = CoverFormat(items[idx].Cover)
 		}(i)
 	}
 

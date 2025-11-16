@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func NormalizeCover(id string) string {
+func CoverFormat(id string) string {
 	if id == "" {
 		return ""
 	}
