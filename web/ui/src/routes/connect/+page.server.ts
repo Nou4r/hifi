@@ -31,9 +31,11 @@ export const actions: Actions = {
 		const form = await superValidate(e, zod4(updateSchema));
 		if (!form.valid) return fail(400, { form });
 
-		if (locals.user?.password !== form.data.oldpassword && !form.data.username) {
+		const isChangingPassword = !!form.data.password;
+
+		if (isChangingPassword && locals.user?.password !== form.data.oldpassword) {
 			form.valid = false;
-			form.errors.oldpassword = ['Old password is required'];
+			form.errors.oldpassword = ['Old password is incorrect'];
 			return fail(400, { form });
 		}
 
