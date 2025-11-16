@@ -105,7 +105,7 @@ export const updateSchema = z
 			ctx.addIssue({
 				path: ['oldpassword'],
 				code: 'custom',
-				message: 'New password is required'
+				message: 'Old password is required'
 			});
 		}
 
@@ -113,7 +113,7 @@ export const updateSchema = z
 			ctx.addIssue({
 				path: ['password'],
 				code: 'custom',
-				message: 'Old password is required'
+				message: 'New password is required'
 			});
 		}
 	});
