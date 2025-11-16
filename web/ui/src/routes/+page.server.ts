@@ -15,12 +15,14 @@ export const load: PageServerLoad = async (event) => {
 	const albums = albumres.ok ? await albumres.json() : [];
 
 	const titles = [];
+	if (albums.length > 1) {
+		const i = Math.floor(Math.random() * albums.length);
+		let j = Math.floor(Math.random() * albums.length);
 
-	if (albums.length > 0) {
-		const shuffled = [...albums].sort(() => Math.random() - 0.5);
-		const randomTwo = shuffled.slice(0, 2).map((a) => a.title);
-
-		titles.push(...randomTwo);
+		while (j === i) {
+			j = Math.floor(Math.random() * albums.length);
+		}
+		titles.push(albums[i].title, albums[j].title);
 	}
 
 	return {
