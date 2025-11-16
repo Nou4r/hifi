@@ -11,9 +11,17 @@ export const load: PageServerLoad = async (event) => {
 	const sessionUser = event.locals.user;
 	const form = await superValidate(event, zod4(formSchema));
 
-	const titles = ['Album artwork for the track', 'Second album artwork'];
 	const albumres = await fetch(`${STATIC_URL}/rest/fresh.view`);
 	const albums = albumres.ok ? await albumres.json() : [];
+
+	const titles = [];
+
+	if (albums.length > 0) {
+		const first = albums[0].title;
+		const last = albums[albums.length - 2].title;
+
+		titles.push(first, last);
+	}
 
 	return {
 		form,
