@@ -3,32 +3,15 @@ import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail, type Actions } from '@sveltejs/kit';
 import { formSchema } from '$lib/types/auth';
 import { API_URL } from '$env/static/private';
+import type { PageServerLoad } from './$types';
 
-export const load = async (event) => {
+export const load: PageServerLoad = async (event) => {
 	const sessionUser = event.locals.user;
 	const form = await superValidate(event, zod4(formSchema));
 
-	const albums = [
-		{
-			src: 'https://resources.tidal.com/images/ad522656/b4b6/4054/8b98/7ff39644cea6/640x640.jpg',
-			alt: 'artwork for the track'
-		},
-		{
-			src: 'https://resources.tidal.com/images/19ae210b/e256/4c4b/a2e9/c82d7b694c28/640x640.jpg',
-			alt: 'artwork for the track'
-		},
-		{
-			src: 'https://resources.tidal.com/images/2b3c28fe/bfb8/48b1/9ad7/f912847f3d71/640x640.jpg',
-			alt: 'artwork for the track'
-		},
-
-		{
-			src: 'https://resources.tidal.com/images/4baa9b68/cd53/44cb/bb70/b7abd1fe618d/640x640.jpg',
-			alt: 'artwork for the track'
-		}
-	];
-
 	const titles = ['Album artwork for the track', 'Second album artwork'];
+	const albumres = await event.fetch('http://127.0.0.1:5000/rest/fresh.view');
+	const albums = albumres.ok ? await albumres.json() : [];
 
 	return {
 		form,

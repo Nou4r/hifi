@@ -14,5 +14,5 @@ func CoverFormat(id string) string {
 		return id
 	}
 
-	return config.Scheme + "://" + config.TidalStaticHost + "/images/" + FormatCoverID(id)
+	return config.Scheme + "://" + config.TidalStaticHost + "/images/" + FormatCoverID(id) + "/640x640.jpg"
 }

@@ -58,8 +58,8 @@
 									<Marqueeck {options}>
 										{#each data.albums as album}
 											<img
-												src={album.src}
-												alt={album.alt}
+												src={album.cover}
+												alt={album.title}
 												class="md:h-50 md:w-50 h-35 w-35 mx-auto rounded-2xl object-cover text-white hover:opacity-85"
 											/>
 										{/each}
