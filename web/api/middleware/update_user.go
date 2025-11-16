@@ -100,49 +100,54 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Username != "" && req.Password != "" {
-		updateUsername := startUpdateUser(ctx, client, base+"/admin/change_username_do", olduSername, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
-		resUsername := <-updateUsername
+	// if req.Username != "" && req.Password != "" {
 
-		if resUsername.Err != nil {
-			http.Error(w, resUsername.Err.Error(), http.StatusBadGateway)
-			return
-		}
+	// 	updateUsername := startUpdateUser(
+	// 		ctx, client,
+	// 		base+"/admin/change_username_do",
+	// 		olduSername,
+	// 		req.Username,
+	// 		startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword),
+	// 	)
 
-		if resUsername.Status >= 400 {
-			http.Error(w, "User update failed", http.StatusBadGateway)
-			return
-		}
+	// 	resUsername := <-updateUsername
 
-		updatePassword := startUpdateUserPassword(ctx, client, base+"/admin/change_password_do", olduSername, req.Password, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
-		resPassword := <-updatePassword
+	// 	if resUsername.Err != nil || resUsername.Status >= 400 {
+	// 		http.Error(w, "User update failed", http.StatusBadGateway)
+	// 		return
+	// 	}
 
-		if resPassword.Err != nil {
-			http.Error(w, resPassword.Err.Error(), http.StatusBadGateway)
-			return
-		}
+	// 	updatePassword := startUpdateUserPassword(
+	// 		ctx, client,
+	// 		base+"/admin/change_password_do",
+	// 		olduSername,
+	// 		req.Password,
+	// 		startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword),
+	// 	)
 
-		if resPassword.Status >= 400 {
-			http.Error(w, "User update failed", http.StatusBadGateway)
-			return
-		}
+	// 	resPassword := <-updatePassword
 
-		mu.Lock()
-		delete(users, olduSername)
-		delete(tokenHashes, claims.RegisteredClaims.ID)
+	// 	if resPassword.Err != nil || resPassword.Status >= 400 {
+	// 		http.Error(w, "User update failed", http.StatusBadGateway)
+	// 		return
+	// 	}
 
-		user.Username = req.Username
-		users[req.Username] = user
-		mu.Unlock()
+	// 	mu.Lock()
+	// 	delete(users, olduSername)
+	// 	delete(tokenHashes, claims.RegisteredClaims.ID)
 
-		w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
-		w.WriteHeader(http.StatusOK)
-		_ = json.NewEncoder(w).Encode(map[string]string{
-			"message": "User updated successfully",
-		})
-		return
+	// 	user.Username = req.Username
+	// 	users[req.Username] = user
+	// 	mu.Unlock()
 
-	}
+	// 	w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
+	// 	w.WriteHeader(http.StatusOK)
+	// 	_ = json.NewEncoder(w).Encode(map[string]string{
+	// 		"message": "User updated successfully",
+	// 	})
+
+	// 	return
+	// }
 
 	if req.Username != "" {
 
@@ -193,7 +198,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func startUpdateUser(ctx context.Context, client *http.Client, updateURL, olduSername, newPassword string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
+func startUpdateUser(ctx context.Context, client *http.Client, updateURL, olduSername, reqUsername string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
 	out := make(chan types.CreateResult, 1)
 	go func() {
 		defer close(out)
@@ -216,7 +221,7 @@ func startUpdateUser(ctx context.Context, client *http.Client, updateURL, olduSe
 		u.RawQuery = q.Encode()
 
 		form := url.Values{}
-		form.Set("username", newPassword)
+		form.Set("username", reqUsername)
 
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, u.String(), strings.NewReader(form.Encode()))
 
