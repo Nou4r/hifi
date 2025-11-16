@@ -95,9 +95,9 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
 
-	createCh := startUpdateUser(ctx, client, base+"/admin/change_username_do", olduSername, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
+	updateUsername := startUpdateUser(ctx, client, base+"/admin/change_username_do", olduSername, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
 
-	res := <-createCh
+	res := <-updateUsername
 
 	if res.Err != nil {
 		http.Error(w, res.Err.Error(), http.StatusBadGateway)
@@ -169,7 +169,7 @@ func startUpdateUser(ctx context.Context, client *http.Client, updateURL, olduSe
 	return out
 }
 
-func startUpdateUserPassword(ctx context.Context, client *http.Client, updateURL, olduSername, newUsername string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
+func startUpdateUserPassword(ctx context.Context, client *http.Client, updateURL, olduSername, newPassword string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
 	out := make(chan types.CreateResult, 1)
 	go func() {
 		defer close(out)
@@ -192,7 +192,7 @@ func startUpdateUserPassword(ctx context.Context, client *http.Client, updateURL
 		u.RawQuery = q.Encode()
 
 		form := url.Values{}
-		form.Set("username", newUsername)
+		form.Set("password", newPassword)
 
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, u.String(), strings.NewReader(form.Encode()))
 
