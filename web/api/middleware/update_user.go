@@ -114,7 +114,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		updatePassword := startUpdateUserPassword(ctx, client, base+"/admin/change_password_do", req.Username, req.Password, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
+		updatePassword := startUpdateUserPassword(ctx, client, base+"/admin/change_password_do", olduSername, req.Password, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
 		resPassword := <-updatePassword
 
 		if resPassword.Err != nil {
@@ -128,8 +128,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		}
 
 		mu.Lock()
-
-		delete(users, claims.RegisteredClaims.ID)
+		delete(users, olduSername)
 		delete(tokenHashes, claims.RegisteredClaims.ID)
 
 		user.Username = req.Username
@@ -161,6 +160,8 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		}
 
 		mu.Lock()
+		delete(users, olduSername)
+
 		user.Username = req.Username
 		users[req.Username] = user
 		mu.Unlock()

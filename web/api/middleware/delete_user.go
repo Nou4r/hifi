@@ -87,9 +87,9 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	mu.Lock()
-	delete(tokenHashes, claims.RegisteredClaims.ID)
-	delete(users, claims.ID)
+	delete(users, req.Username)
 	delete(users, claims.Username)
+	delete(tokenHashes, claims.RegisteredClaims.ID)
 	mu.Unlock()
 
 	base := fmt.Sprintf("%s://%s", config.SubsonicScheme, config.SubsonicHost)
