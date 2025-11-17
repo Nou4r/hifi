@@ -18,7 +18,7 @@ var (
 
 	// Hifi Web Server
 	Host = "0.0.0.0"
-	Port = []string{"5002", "5006"}
+	Port = []string{"8080", "5002", "5006"}
 
 	// Subsonic Scheme
 	SubsonicScheme = "http"
