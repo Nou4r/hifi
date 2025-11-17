@@ -6,10 +6,7 @@ import { zod4 } from 'sveltekit-superforms/adapters';
 import { formSchema2 } from '$lib/types/auth';
 
 import { fail, type Actions } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
-
-const API_URL = env.API_URL;
-export const _API_URL = API_URL;
+import { env } from '../../env/server';
 
 export const load: PageServerLoad = async (event) => {
 	const { locals } = event;
@@ -36,7 +33,7 @@ export const actions: Actions = {
 
 		const token = e.cookies.get('hifi');
 
-		const res = await e.fetch(`${API_URL}/v1/delete`, {
+		const res = await e.fetch(`${env.API_URL}/v1/delete`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
 			body: JSON.stringify(form.data)

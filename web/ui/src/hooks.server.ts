@@ -1,9 +1,7 @@
 import type { Handle } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
 
 import { dev } from '$app/environment';
-
-const API_URL = env.API_URL;
+import { env } from './env/server';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	if (dev && event.url.pathname === '/.well-known/appspecific/com.chrome.devtools.json') {
@@ -14,7 +12,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	if (token) {
 		try {
-			const res = await fetch(`${API_URL}/v1/validate`, {
+			const res = await fetch(`${env.API_URL}/v1/validate`, {
 				headers: { Authorization: `Bearer ${token}` }
 			});
 
@@ -57,7 +55,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	const response = await resolve(event);
 
-	response.headers.set('Access-Control-Allow-Origin', API_URL);
+	response.headers.set('Access-Control-Allow-Origin', `${env.API_URL}`);
 	response.headers.set(
 		'Content-Security-Policy',
 		`form-action 'self'; frame-ancestors 'self'; base-uri 'self'; upgrade-insecure-requests; object-src 'none';`

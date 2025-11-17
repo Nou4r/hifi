@@ -2,13 +2,11 @@ import { superValidate, message } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail, type Actions } from '@sveltejs/kit';
 import { formSchema } from '$lib/types/auth';
-import { env } from '$env/dynamic/private';
 
-const API_URL = env.API_URL;
-export const _API_URL = API_URL;
 
 import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
+import { env } from '../../env/server';
 
 export const load: PageServerLoad = async (event) => {
 	// Redirect authenticated users away from the signin page
@@ -29,7 +27,7 @@ export const actions: Actions = {
 
 		const form = await superValidate(e, zod4(formSchema));
 		if (!form.valid) return fail(400, { form });
-		const res = await e.fetch(`${API_URL}/v1/signin`, {
+		const res = await e.fetch(`${env.API_URL}/v1/signin`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(form.data)

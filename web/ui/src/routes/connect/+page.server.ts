@@ -4,11 +4,8 @@ import { redirect } from '@sveltejs/kit';
 import { superValidate, message } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { updateSchema } from '$lib/types/auth';
-
 import { fail, type Actions } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
-
-const API_URL = env.API_URL;
+import { env } from '../../env/server';
 
 export const load: PageServerLoad = async (event) => {
 	const { locals } = event;
@@ -49,7 +46,7 @@ export const actions: Actions = {
 
 		const pretoken = e.cookies.get('hifi');
 
-		const res = await e.fetch(`${API_URL}/v1/update`, {
+		const res = await e.fetch(`${env.API_URL}/v1/update`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

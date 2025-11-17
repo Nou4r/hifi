@@ -2,14 +2,9 @@ import { superValidate, message } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail, type Actions } from '@sveltejs/kit';
 import { formSchema } from '$lib/types/auth';
-import { env } from '$env/dynamic/private';
 
-const API_URL = env.API_URL;
-const STATIC_URL = env.STATIC_URL;
-
-export const _API_URL = API_URL;
-export const _STATIC_URL = STATIC_URL;
 import type { PageServerLoad } from './$types';
+import { env } from '../env/server';
 
 export const load: PageServerLoad = async (event) => {
 	const { fetch } = event;
@@ -17,7 +12,7 @@ export const load: PageServerLoad = async (event) => {
 	const sessionUser = event.locals.user;
 	const form = await superValidate(event, zod4(formSchema));
 
-	const albumres = await fetch(`${STATIC_URL}/rest/fresh.view`);
+	const albumres = await fetch(`${env.STATIC_URL}/rest/fresh.view`);
 	const albums = albumres.ok ? await albumres.json() : [];
 
 	const titles = [];
@@ -43,7 +38,7 @@ export const actions: Actions = {
 	default: async (e) => {
 		const form = await superValidate(e, zod4(formSchema));
 		if (!form.valid) return fail(400, { form });
-		const res = await e.fetch(`${API_URL}/v1/signup`, {
+		const res = await e.fetch(`${env.API_URL}/v1/signup`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(form.data)
