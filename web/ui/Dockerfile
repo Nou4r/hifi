@@ -18,8 +18,6 @@ WORKDIR /app
 
 COPY dist/hifi-webui ./hifi-webui
 
-RUN chmod +x ./hifi-webui
-
 EXPOSE 3000
 
 CMD ["./hifi-webui"]
