@@ -28,9 +28,7 @@ var (
 	HostUrl   = os.Getenv("HOST_URL")
 
 	// Subsonic Server
-	SubsonicHost = os.Getenv("SUBSONIC_HOST")
-
-	// Subsonic Admin Credentials
+	SubsonicHost          = os.Getenv("SUBSONIC_HOST")
 	SubsonicAdmin         = os.Getenv("SUBSONIC_ADMIN")
 	SubsonicAdminPassword = os.Getenv("SUBSONIC_ADMIN_PASSWORD")
 )
