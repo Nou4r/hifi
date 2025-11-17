@@ -3,7 +3,6 @@ package config
 import "os"
 
 var (
-	JwtSecret = []byte(os.Getenv("JWT_SECRET"))
 
 	// Whitelist
 	ValidPaths = []string{
@@ -24,14 +23,17 @@ var (
 	// Subsonic Scheme
 	SubsonicScheme = "http"
 
-	// Subsonic Server
-	SubsonicHost = "127.0.0.1:4747"
+	// ENV
+	JwtSecret = []byte(os.Getenv("JWT_SECRET"))
 
-	HostUrl = "https://hifi.401658.xyz"
+	// Subsonic Server
+	SubsonicHost = os.Getenv("SUBSONIC_HOST")
+
+	HostUrl = os.Getenv("HOST_URL")
 
 	// Subsonic Admin Credentials
-	SubsonicAdmin         = "jack"
-	SubsonicAdminPassword = "12345678"
+	SubsonicAdmin         = os.Getenv("SUBSONIC_ADMIN")
+	SubsonicAdminPassword = os.Getenv("SUBSONIC_ADMIN_PASSWORD")
 )
 
 const (
