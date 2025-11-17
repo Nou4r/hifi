@@ -206,3 +206,4 @@ dist
 .pnp.*
 
 *.json
+web/ui/fly.toml
