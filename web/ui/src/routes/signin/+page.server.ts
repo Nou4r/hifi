@@ -2,7 +2,11 @@ import { superValidate, message } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail, type Actions } from '@sveltejs/kit';
 import { formSchema } from '$lib/types/auth';
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
+
+const API_URL = env.API_URL;
+export const _API_URL = API_URL;
+
 import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 

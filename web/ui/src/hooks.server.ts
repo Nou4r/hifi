@@ -1,6 +1,9 @@
 import type { Handle } from '@sveltejs/kit';
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
+
 import { dev } from '$app/environment';
+
+const API_URL = env.API_URL;
 
 export const handle: Handle = async ({ event, resolve }) => {
 	if (dev && event.url.pathname === '/.well-known/appspecific/com.chrome.devtools.json') {

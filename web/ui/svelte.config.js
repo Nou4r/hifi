@@ -1,14 +1,15 @@
-import adapter from '@sveltejs/adapter-node';
+import adapter from '@jesterkit/exe-sveltekit';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+
 // import path from 'node:path';
 // import { fileURLToPath } from 'node:url';
 
 // const dirname = path.resolve(fileURLToPath(import.meta.url), '../');
 
-const adapterOptions = { precompress: true };
+const adapterOptions = { precompress: true, binaryName: 'hifi-webui' };
 
 const config = {
-	extensions: [".svelte", ".svx", ".md"],
+	extensions: ['.svelte', '.svx', '.md'],
 	preprocess: [vitePreprocess()],
 
 	kit: {

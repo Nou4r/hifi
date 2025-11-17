@@ -14,6 +14,9 @@ importers:
       '@fontsource-variable/inter':
         specifier: ^5.2.8
         version: 5.2.8
+      '@jesterkit/exe-sveltekit':
+        specifier: ^0.1.6
+        version: 0.1.6(typescript@5.9.3)
       '@sveltejs/enhanced-img':
         specifier: ^0.8.4
         version: 0.8.4(@sveltejs/vite-plugin-svelte@6.2.1(svelte@5.39.11)(vite@7.1.9(jiti@2.6.1)(lightningcss@1.30.1)))(rollup@4.52.4)(svelte@5.39.11)(vite@7.1.9(jiti@2.6.1)(lightningcss@1.30.1))
@@ -545,6 +548,11 @@ packages:
   '@isaacs/fs-minipass@4.0.1':
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
     engines: {node: '>=18.0.0'}
+
+  '@jesterkit/exe-sveltekit@0.1.6':
+    resolution: {integrity: sha512-LZACzZm+G2IX0KRTIAze/clHFNnxevIr4ECvsKaJS3OiRMcV5IdIG3iNcdGoKAsu+YVD6pxEZS6TRupPusSS0w==}
+    peerDependencies:
+      typescript: ^5
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -2281,6 +2289,10 @@ snapshots:
   '@isaacs/fs-minipass@4.0.1':
     dependencies:
       minipass: 7.1.2
+
+  '@jesterkit/exe-sveltekit@0.1.6(typescript@5.9.3)':
+    dependencies:
+      typescript: 5.9.3
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
