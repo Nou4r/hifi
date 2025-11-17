@@ -25,11 +25,10 @@ var (
 
 	// ENV
 	JwtSecret = []byte(os.Getenv("JWT_SECRET"))
+	HostUrl   = os.Getenv("HOST_URL")
 
 	// Subsonic Server
 	SubsonicHost = os.Getenv("SUBSONIC_HOST")
-
-	HostUrl = os.Getenv("HOST_URL")
 
 	// Subsonic Admin Credentials
 	SubsonicAdmin         = os.Getenv("SUBSONIC_ADMIN")
