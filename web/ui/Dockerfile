@@ -1,15 +1,13 @@
-FROM oven/bun:1 AS builder
+FROM debian:stable-slim AS runner
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+# Copy the native binary
+COPY dist/hifi-webui ./hifi-webui
 
-RUN bun install -g pnpm
+# Mark executable
+RUN chmod +x ./hifi-webui
 
-RUN pnpm install
+EXPOSE 3000
 
-COPY . .
-
-RUN pnpm run build
-
-CMD ["./dist/hifi-webui"]
+CMD ["./hifi-webui"]
