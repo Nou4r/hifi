@@ -12,6 +12,12 @@ func MetaBanner() SubsonicWrapper {
 
 // -------------------- TRANSFORM --------------------
 
+type ExploreItem struct {
+	ID    int    `json:"id"`
+	Title string `json:"title"`
+	Cover string `json:"cover"`
+}
+
 type PlaybackInfo struct {
 	Manifest string `json:"manifest,omitempty"`
 }
@@ -32,12 +38,6 @@ type TidalNew struct {
 			} `json:"pagedList"`
 		} `json:"modules"`
 	} `json:"rows"`
-}
-
-type ExploreItem struct {
-	ID    int    `json:"id"`
-	Title string `json:"title"`
-	Cover string `json:"cover"`
 }
 
 type TidalSearchResponse struct {
