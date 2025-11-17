@@ -207,3 +207,4 @@ dist
 
 *.json
 web/ui/fly.toml
+web/api/fly.toml
