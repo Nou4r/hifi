@@ -15,7 +15,7 @@ FROM oven/bun:latest AS runner
 
 WORKDIR /app
 
-COPY dist/hifi-webui ./hifi-webui
+COPY dist/ ./hifi-webui
 
 EXPOSE 3000
 
