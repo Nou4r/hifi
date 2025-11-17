@@ -460,12 +460,6 @@ a:hover {
 	}
 }
 
-.glass {
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
-	background-color: rgba(19, 19, 19, 0.4);
-}
-
 button:disabled {
 	cursor: not-allowed;
 	pointer-events: all !important;

@@ -67,7 +67,9 @@
 										{/each}
 
 										<svelte:fragment slot="stickyEnd">
-											<div class="glass rounded-3xl px-4 py-2 text-white md:text-2xl">
+											<div
+												class="rounded-3xl bg-[rgba(19,19,19,0.4)] px-4 py-2 text-white backdrop-blur-xl md:text-2xl"
+											>
 												Recent Albums
 											</div>
 										</svelte:fragment>
