@@ -21,9 +21,7 @@ const config = {
 			$lib: './src/lib'
 		},
 		csrf: {
-			trustedOrigins: process.env.CSRF_ORIGINS
-				? process.env.CSRF_ORIGINS.split(',').map((s) => s.trim())
-				: []
+			trustedOrigins: ['https://hifi.401658.xyz']
 		}
 	}
 };
