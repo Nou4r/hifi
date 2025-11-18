@@ -19,12 +19,6 @@ HiFi running on - [Feishin](https://feishin.vercel.app) Web UI
 
 <br><br>
 
-> [!WARNING]
-> API will be temporarily unavailable due to important maintenance.
-
-> [!IMPORTANT]
-> This project will be ported to be compatible with Subsonic. Once that’s done, you’ll be able to use any client that supports the Subsonic API. I can’t provide an ETA at the moment, but all current issues will be resolved in the next update. The previous API will be deprecated; however, all its endpoints will remain compatible with the Subsonic API. [API Docs](https://opensubsonic.netlify.app/docs).
-
 # 💕 Community
 
 > 🍻 Join the community: <a href="https://discord.gg/EbfftZ5Dd4">Discord</a> [![](https://cdn.statically.io/gh/sachinsenal0x64/picx-images-hosting@master/discord.72y8nlaw5mdc.webp)](https://discord.gg/EbfftZ5Dd4)
@@ -72,7 +66,7 @@ HiFi running on - [Feishin](https://feishin.vercel.app) Web UI
 
 ## Quickstart
 
-Soon...
+- [hifi.401658.xyz](https://hifi.401658.xyz)
 
 <br>
 
