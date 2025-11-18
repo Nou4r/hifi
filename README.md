@@ -6,7 +6,7 @@
 
 </h4>
 
-<img width="1568" height="860" alt="hifi tidal" src="https://sachinsenal0x64.github.io/picx-images-hosting/foamshot-2025-11-19-02-12-00.4clbcfolh2.webp" />
+<img width="1568" height="860" alt="hifi tidal" src="https://sachinsenal0x64.github.io/picx-images-hosting/foamshot-2025-11-19-02-12-00-(Edit).96a68km6pw.webp" />
 
 <img width="1568" height="860" alt="hifi tidal" src="https://sachinsenal0x64.github.io/picx-images-hosting/20251103_212145.92qjp59pqg.webp" />
 
