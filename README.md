@@ -87,7 +87,7 @@ First, check which [routes](https://github.com/sachinsenal0x64/hifi/tree/main/ro
 
 ## Installation (Self-host Hifi)
 
-Soon...
+Pending...
 
 <br>
 
