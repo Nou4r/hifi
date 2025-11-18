@@ -1,4 +1,5 @@
 import adapter from '@jesterkit/exe-sveltekit';
+import { env } from './src/env/server';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 // import path from 'node:path';
@@ -21,7 +22,7 @@ const config = {
 			$lib: './src/lib'
 		},
 		csrf: {
-			trustedOrigins: ['https://hifi.401658.xyz']
+			trustedOrigins: [`${env.ORIGIN}`]
 		}
 	}
 };
