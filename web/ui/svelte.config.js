@@ -21,7 +21,7 @@ const config = {
 			$lib: './src/lib'
 		},
 		csrf: {
-			trustedOrigins: ['*']
+			trustedOrigins: ['https://hifi.401658.xyz']
 		}
 	}
 };
