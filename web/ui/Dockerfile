@@ -2,21 +2,19 @@ FROM oven/bun:latest AS builder
 
 WORKDIR /app
 
-RUN corepack enable pnpm
-
 COPY . .
 
-RUN pnpm install
+RUN bun install --frozen-lockfile
 
-RUN pnpm run build
+RUN bun run build
 
 
-FROM oven/bun:latest AS runner
+# FROM oven/bun:latest AS runner
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY dist/ ./hifi-webui
+# COPY dist/hifi-webui ./hifi-webui
 
-EXPOSE 3000
+# EXPOSE 3000
 
-CMD ["./hifi-webui"]
+# CMD ["./hifi-webui"]
