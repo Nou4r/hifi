@@ -21,7 +21,7 @@ const config = {
 			$lib: './src/lib'
 		},
 		csrf: {
-			trustedOrigins: [`${process.env.ORIGIN}`]
+			trustedOrigins: [process.env.ORIGIN]
 		}
 	}
 };
