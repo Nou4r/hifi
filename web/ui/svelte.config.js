@@ -20,7 +20,9 @@ const config = {
 			$helpers: './src/lib/helpers',
 			$lib: './src/lib'
 		},
-		trustedOrigins: ['*']
+		csrf: {
+			trustedOrigins: ['*']
+		}
 	}
 };
 
