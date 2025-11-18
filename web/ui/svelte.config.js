@@ -6,7 +6,7 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 // const dirname = path.resolve(fileURLToPath(import.meta.url), '../');
 
-const adapterOptions = { precompress: true, binaryName: 'hifi-webui' };
+const adapterOptions = { precompress: true, target: 'linux-x64', binaryName: 'hifi-webui' };
 
 const config = {
 	extensions: ['.svelte', '.svx', '.md'],
