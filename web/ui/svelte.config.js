@@ -19,7 +19,8 @@ const config = {
 			$data: './src/lib/data',
 			$helpers: './src/lib/helpers',
 			$lib: './src/lib'
-		}
+		},
+		trustedOrigins: ['*']
 	}
 };
 
