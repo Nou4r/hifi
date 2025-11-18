@@ -20,7 +20,7 @@ const config = {
 			$helpers: './src/lib/helpers',
 			$lib: './src/lib'
 		},
-		trustedOrigins: ['https://hifi.401658.xyz']
+		trustedOrigins: ['*']
 	}
 };
 
