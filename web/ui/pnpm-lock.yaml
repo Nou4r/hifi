@@ -26,6 +26,9 @@ importers:
       lucide-svelte:
         specifier: ^0.545.0
         version: 0.545.0(svelte@5.39.11)
+      minidenticons:
+        specifier: ^4.2.1
+        version: 4.2.1
       svelte-sonner:
         specifier: ^1.0.5
         version: 1.0.5(svelte@5.39.11)
@@ -1630,6 +1633,10 @@ packages:
   mini-svg-data-uri@1.4.4:
     resolution: {integrity: sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==}
     hasBin: true
+
+  minidenticons@4.2.1:
+    resolution: {integrity: sha512-oWfFivA0lOx/V/bO/YIJbthB26lV8JXYvhnv9zM2hNd3fzsHTXQ6c6bWZPcvhD3nnOB+lQk/D9lF43BXixrN8g==}
+    engines: {node: '>=15.14.0'}
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
@@ -3542,6 +3549,8 @@ snapshots:
   memoize-weak@1.0.2: {}
 
   mini-svg-data-uri@1.4.4: {}
+
+  minidenticons@4.2.1: {}
 
   minimatch@3.1.2:
     dependencies:
