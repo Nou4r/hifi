@@ -1,5 +1,6 @@
 import adapter from '@jesterkit/exe-sveltekit';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import 'dotenv/config';
 
 // import path from 'node:path';
 // import { fileURLToPath } from 'node:url';
@@ -21,7 +22,7 @@ const config = {
 			$lib: './src/lib'
 		},
 		csrf: {
-			trustedOrigins: ['https://hifi.401658.xyz']
+			trustedOrigins: process.env.CSRF_ORIGINS?.split(',') ?? []
 		}
 	}
 };
