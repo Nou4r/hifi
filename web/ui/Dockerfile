@@ -1,20 +1,9 @@
-FROM oven/bun:latest AS builder
+FROM oven/bun:latest AS runner
 
 WORKDIR /app
 
-COPY . .
+COPY dist/hifi-webui ./hifi-webui
 
-RUN bun install --frozen-lockfile
+EXPOSE 3000
 
-RUN bun run build
-
-
-# FROM oven/bun:latest AS runner
-
-# WORKDIR /app
-
-# COPY dist/hifi-webui ./hifi-webui
-
-# EXPOSE 3000
-
-# CMD ["./hifi-webui"]
+CMD ["./hifi-webui"]
