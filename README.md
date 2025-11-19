@@ -29,6 +29,34 @@ HiFi running on - [Feishin](https://feishin.vercel.app) Web UI
 
 <br>
 
+## Jellyfin Music Clients Support (WIP)
+
+ETA — It is developed in my free time, and the next major update is Jellyfin support nothing else, so there is no actual ETA for it.
+
+> [!NOTE]
+
+HiFi Subsonic compatibility will only work with Feishin, SubStreamer, and Ultrasonic. All future updates will be exclusive to those apps. If HiFi does not work with the Subsonic client, it will not be implemented.
+
+I’m going to support https://www.plex.tv/plexamp. It’s not a new thing I just forgot to add it. I forgot about Plex itself when I moved to Jellyfin, so I won’t support any other third-party Plex apps. It will be exclusive to the official Plexamp app.
+
+The following jellyfin music clients will continue to be compatible with HiFi from the day one release and will remain fully functional unless the app itself is broken.
+
+All other clients should work as well, since they all use Jellyfin’s API. If they don’t, I will eventually make them work. If you want to request support for a specific jellyfin music app, open an [issue][https://github.com/sachinsenal0x64/hifi/issues]. Before doing so, please check the HiFi proposal guide below. Anything else that comes without a hifi proposal check will be rejected.
+
+- https://www.fintunes.app/
+- https://github.com/jmshrv/finamp
+- https://streamyfin.app/
+- https://github.com/jeffvli/feishin
+- https://symfonium.app/
+- https://github.com/LLukas22/Jellyswarrm
+- https://github.com/Devioxic/Foxy-Desktop
+- https://github.com/Stannnnn/jelly-app
+- https://github.com/Taiko2k/Tauon
+- https://github.com/pathetic/bloodin
+- https://github.com/saltpi/iPlay
+- https://github.com/dweymouth/supersonic
+- https://github.com/Jellify-Music/App
+
 > [!IMPORTANT]
 >
 > # Project Terms
@@ -100,34 +128,6 @@ First, check which [routes](https://github.com/sachinsenal0x64/hifi/tree/main/ro
 ## Installation (Self-host Hifi)
 
 Pending...
-
-<br>
-
-## Apps
-
-> [!NOTE]  
-> I will only add open-source clients here, which also work with HiFi. There are many other apps compatible with subsonic, so please do your own research.
-> The clients listed below work with HiFi. I have tested them myself. Any other clients that do not work will not be implemented in HiFi.
-
-### Web
-
-- [Feishin](https://github.com/jeffvli/feishin)
-
-### Desktop (Linux)
-
-- [Feishin](https://github.com/jeffvli/feishin)
-
-### Desktop (macOS)
-
-- [Feishin](https://github.com/jeffvli/feishin)
-
-### Desktop (Windows)
-
-- [Feishin](https://github.com/jeffvli/feishin)
-
-### Android
-
-- [Ultrasonic](https://gitlab.com/ultrasonic/ultrasonic)
 
 <br>
 
