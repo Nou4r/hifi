@@ -39,7 +39,7 @@ I’m going to support https://www.plex.tv/plexamp. It’s not a new thing I jus
 
 The following jellyfin music clients will continue to be compatible with HiFi from the day one release and will remain fully functional unless the app itself is broken.
 
-All other clients should work as well, since they all use Jellyfin’s API. If they don’t, I will eventually make them work. If you want to request support for a specific jellyfin music app, open an [issue][https://github.com/sachinsenal0x64/hifi/issues]. Before doing so, please check the HiFi proposal guide below. Anything else that comes without a hifi proposal check will be rejected.
+All other clients should work as well, since they all use Jellyfin’s API. If they don’t, I will eventually make them work. If you want to request support for a specific jellyfin music app, open an [issue](https://github.com/sachinsenal0x64/hifi/issues). Before doing so, please check the HiFi proposal guide below. Anything else that comes without a hifi proposal check will be rejected.
 
 - https://www.fintunes.app/
 - https://github.com/jmshrv/finamp
