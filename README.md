@@ -55,6 +55,8 @@ All other clients should work as well, since they all use Jellyfin’s API. If t
 - https://github.com/dweymouth/supersonic
 - https://github.com/Jellify-Music/App
 
+<br>
+
 > [!IMPORTANT]
 >
 > # Project Terms
