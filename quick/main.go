@@ -28,8 +28,8 @@ func dashHandler(w http.ResponseWriter, r *http.Request) {
 		quality = "HI_RES_LOSSLESS"
 	}
 
-	// --- refresh token or use your own function ---
-	tidalToken := "" // replace with refresh logic
+	// --- Access Token ---
+	tidalToken := "" 
 
 	// --- build Tidal API URL ---
 	apiURL := fmt.Sprintf(
