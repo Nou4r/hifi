@@ -35,7 +35,6 @@ ETA — It is developed in my free time, and the next major update is Jellyfin s
 
 > [!NOTE]
 
->
 
 HiFi Subsonic compatibility will only work with Feishin, SubStreamer, and Ultrasonic. All future updates will be exclusive to those apps. If HiFi does not work with the Subsonic client, it will not be implemented.
 
