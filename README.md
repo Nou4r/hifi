@@ -72,7 +72,7 @@ HiFi running on - [Feishin](https://feishin.vercel.app) Web UI
 >
 > ## HiFi proposal check
 
-<img width="1568" height="860" alt="hifi tidal" src="https://sachinsenal0x64.github.io/picx-images-hosting/HiFi-proposal-check.9rjtvzpu72.webp" />
+<img width="1568" height="860" alt="hifi tidal" src="https://sachinsenal0x64.github.io/picx-images-hosting/HiFi-proposal-check.26lwrtfomq.png" />
 
 <br>
 
