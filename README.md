@@ -131,6 +131,8 @@ First, check which [routes](https://github.com/sachinsenal0x64/hifi/tree/main/ro
 
 Pending...
 
+Reason: The current installation is a little bit complex, so I will make this as simple as possible.
+
 <br>
 
 ## Contributing
