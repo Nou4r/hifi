@@ -33,9 +33,6 @@ HiFi running on - [Feishin](https://feishin.vercel.app) Web UI
 
 ETA — It is developed in my free time, and the next major update is Jellyfin support nothing else, so there is no actual ETA for it.
 
-> [!NOTE]
-
-
 HiFi Subsonic compatibility will only work with Feishin, SubStreamer, and Ultrasonic. All future updates will be exclusive to those apps. If HiFi does not work with the Subsonic client, it will not be implemented.
 
 I’m going to support https://www.plex.tv/plexamp. It’s not a new thing I just forgot to add it. I forgot about Plex itself when I moved to Jellyfin, so I won’t support any other third-party Plex apps. It will be exclusive to the official Plexamp app.
