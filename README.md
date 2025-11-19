@@ -32,8 +32,8 @@ HiFi running on - [Feishin](https://feishin.vercel.app) Web UI
 ## Jellyfin Music Clients Support (WIP)
 
 > [!IMPORTANT]
-
-ETA — It is developed in my free time, and the next major update is Jellyfin support nothing else, so there is no actual ETA for it.
+>
+> ## ETA — It is developed in my free time, and the next major update is Jellyfin support nothing else, so there is no actual ETA for it.
 
 HiFi Subsonic compatibility will only work with Feishin, SubStreamer, and Ultrasonic. All future updates will be exclusive to those apps. If HiFi does not work with the Subsonic client, it will not be implemented.
 
