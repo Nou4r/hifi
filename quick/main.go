@@ -7,12 +7,13 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 )
 
 // structure for Tidal JSON response
 type TidalPlaybackInfo struct {
 	ManifestMimeType string `json:"manifestMimeType"`
-	Manifest          string `json:"manifest"`
+	Manifest         string `json:"manifest"`
 }
 
 func dashHandler(w http.ResponseWriter, r *http.Request) {
@@ -29,7 +30,7 @@ func dashHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// --- Access Token ---
-	tidalToken := "" 
+	tidalToken := os.Getenv("ACCESS_TOKEN")
 
 	// --- build Tidal API URL ---
 	apiURL := fmt.Sprintf(
