@@ -18,6 +18,9 @@ type TidalPlaybackInfo struct {
 
 func dashHandler(w http.ResponseWriter, r *http.Request) {
 	// --- query params ---
+
+	tidalHost := os.Getenv("TIDAL_HOST")
+
 	id := r.URL.Query().Get("id")
 	if id == "" {
 		http.Error(w, "missing ?id parameter", http.StatusBadRequest)
@@ -34,8 +37,8 @@ func dashHandler(w http.ResponseWriter, r *http.Request) {
 
 	// --- build Tidal API URL ---
 	apiURL := fmt.Sprintf(
-		"https://api.tidal.com/v1/tracks/%s/playbackinfo?audioquality=%s&playbackmode=STREAM&assetpresentation=FULL",
-		id, quality,
+		"https://%s/v1/tracks/%s/playbackinfo?audioquality=%s&playbackmode=STREAM&assetpresentation=FULL",
+		tidalHost, id, quality,
 	)
 
 	req, err := http.NewRequest("GET", apiURL, nil)
