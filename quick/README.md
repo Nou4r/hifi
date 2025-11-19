@@ -1,5 +1,7 @@
 Usage:
 
+Requires a Tidal access token.
+
 Song ID = 14234195
 
 ```sh
