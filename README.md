@@ -106,7 +106,7 @@ All other clients should work as well, since they all use Jellyfin’s API. If t
 
 <br>
 
-## Quickstart
+# Quickstart
 
 <img width="1568" height="860" alt="hifi tidal" src="https://sachinsenal0x64.github.io/picx-images-hosting/hifi-web.6m4bv0p2ut.webp" />
 
