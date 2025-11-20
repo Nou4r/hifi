@@ -53,11 +53,11 @@ The following jellyfin music clients will continue to be compatible with HiFi fr
 
 All other clients should work as well, since they all use Jellyfin’s API. If they don’t, I will eventually make them work. If you want to request support for a specific jellyfin music app, open an [issue](https://github.com/sachinsenal0x64/hifi/issues). Before doing so, please check the HiFi proposal guide below. Anything else that comes without a hifi proposal check will be rejected.
 
-- https://www.fintunes.app/
+- https://www.fintunes.app
 - https://github.com/jmshrv/finamp
-- https://streamyfin.app/
+- https://streamyfin.app
 - https://github.com/jeffvli/feishin
-- https://symfonium.app/
+- https://symfonium.app
 - https://github.com/LLukas22/Jellyswarrm
 - https://github.com/Devioxic/Foxy-Desktop
 - https://github.com/Stannnnn/jelly-app
