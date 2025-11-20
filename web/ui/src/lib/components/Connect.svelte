@@ -304,7 +304,7 @@
 			<img
 				src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/substreamer.webp"
 				alt="Substreamer Logo"
-				class="h-32 w-32"
+				class="h-8 w-8"
 			/>
 		</a>
 	</div>
