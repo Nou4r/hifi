@@ -293,5 +293,19 @@
 				/></svg
 			>
 		</a>
+
+		<a
+			aria-label="Open Substreamer on Website"
+			href="https://substreamerapp.com"
+			class="text-sm text-zinc-400 hover:opacity-80"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			<img
+				src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/substreamer.webp"
+				alt="Substreamer Logo"
+				class="h-32 w-32"
+			/>
+		</a>
 	</div>
 </div>
