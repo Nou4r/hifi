@@ -31,7 +31,7 @@ HiFi running on - [Feishin](https://feishin.vercel.app) Web UI
 
 # Quickstart
 
-<img width="1568" height="860" alt="hifi tidal" src="https://sachinsenal0x64.github.io/picx-images-hosting/hifi.5c1es2ypo3.webp" />
+<img width="1568" height="860" alt="hifi tidal" src="https://sachinsenal0x64.github.io/picx-images-hosting/hifi.b9c0j0foq.webp" />
 
 Create your HiFi account here, and then use the account with supported Subsonic client.
 
