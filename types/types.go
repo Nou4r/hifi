@@ -1,5 +1,10 @@
 package types
 
+import (
+	"context"
+	"github.com/valkey-io/valkey-go"
+)
+
 func MetaBanner() SubsonicWrapper {
 	var w SubsonicWrapper
 	w.Subsonic.Status = "ok"
@@ -11,6 +16,19 @@ func MetaBanner() SubsonicWrapper {
 }
 
 // -------------------- TRANSFORM --------------------
+
+type Router struct {
+	Valkey valkey.Client
+	Mem    map[string]string
+}
+
+func (r *Router) Get(ctx context.Context, s string) (any, any) {
+	panic("unimplemented")
+}
+
+func (r *Router) Set(ctx context.Context, s string, param3 string) {
+	panic("unimplemented")
+}
 
 type ExploreItem struct {
 	ID    int    `json:"id"`

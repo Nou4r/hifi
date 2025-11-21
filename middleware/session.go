@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"hifi/config"
 	"hifi/routes/rest"
 	"log/slog"
@@ -96,7 +97,24 @@ func Session(userName, passWord, targetHost string, ValidPaths []string) func(ht
 
 			/* Forward the request to the
 			subsonic server -> (gonic) */
-			proxy.ServeHTTP(w, r)
+
+			ctx, store, err := Con()
+			if err != nil {
+				slog.Error("failed to connect to router", "error", err)
+				return
+			}
+
+			defer store.Valkey.Close()
+
+			store.Set(ctx, "cloud", "abc123")
+			v1, _ := store.Get(ctx, "cloud")
+			fmt.Println("cloud =", v1)
+
+			store.Set(ctx, "user:1", "hello")
+			v2, _ := store.Get(ctx, "user:1")
+			fmt.Println("user:1 =", v2)
+
+			// proxy.ServeHTTP(w, r)
 		})
 	}
 }
