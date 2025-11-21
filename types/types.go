@@ -1,6 +1,8 @@
 package types
 
 import (
+	"sync"
+
 	"github.com/valkey-io/valkey-go"
 )
 
@@ -19,6 +21,7 @@ func MetaBanner() SubsonicWrapper {
 type Router struct {
 	Valkey valkey.Client
 	Mem    map[string]string
+	MemMu  sync.Mutex
 }
 
 type ExploreItem struct {

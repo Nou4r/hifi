@@ -33,7 +33,10 @@ func SendToCloud(action, key, value string) {
 
 func Get(r *types.Router, ctx context.Context, key string) (string, error) {
 	if os.Getenv("CLOUD_HOST") != "" {
+		r.MemMu.Lock()
 		v, ok := r.Mem[key]
+		r.MemMu.Unlock()
+
 		if !ok {
 			return "", fmt.Errorf("cloud key missing")
 		}
@@ -49,7 +52,11 @@ func Get(r *types.Router, ctx context.Context, key string) (string, error) {
 
 func Set(r *types.Router, ctx context.Context, key, val string) error {
 	if os.Getenv("CLOUD_HOST") != "" {
+
+		r.MemMu.Lock()
 		r.Mem[key] = val
+		r.MemMu.Unlock()
+
 		go SendToCloud("set", key, val)
 		return nil
 	}
@@ -62,7 +69,10 @@ func Set(r *types.Router, ctx context.Context, key, val string) error {
 
 func Del(r *types.Router, ctx context.Context, key string) error {
 	if os.Getenv("CLOUD_HOST") != "" {
+		r.MemMu.Lock()
 		delete(r.Mem, key)
+		r.MemMu.Unlock()
+
 		go SendToCloud("del", key, "")
 		return nil
 	}
