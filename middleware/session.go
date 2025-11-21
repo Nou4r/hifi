@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"context"
 	"fmt"
 	"hifi/config"
 	"hifi/routes/rest"
@@ -100,32 +101,30 @@ func Session(userName, passWord, targetHost string, ValidPaths []string) func(ht
 
 			ctx, store, err := Con()
 			if err != nil {
-				slog.Error("failed to connect to router", "error", err)
-				return
+				slog.Log(context.Background(), slog.LevelError, "Failed to connect to Valkey", "error", err)
 			}
 			defer store.Valkey.Close()
 
-			// SET cloud
-			ok1, err := store.Set(ctx, "cloud", "abc123")
+			// SET
+			ok, err := store.Set(ctx, "cloud", "abc123")
 			if err != nil {
-				fmt.Println("set error:", err)
+				fmt.Println("SET error:", err)
 			}
-			fmt.Println("set cloud ok:", ok1)
+			fmt.Println("SET ok:", ok)
 
-			// GET cloud
-			v1, err := store.Get(ctx, "cloud")
+			// GET
+			v, err := store.Get(ctx, "cloud")
 			if err != nil {
-				fmt.Println("get error:", err)
+				fmt.Println("GET error:", err)
 			}
-			fmt.Println("cloud:", v1)
+			fmt.Println("GET cloud:", v)
 
-			// DELETE key "cloud"
+			// DEL
 			deleted, err := store.Del(ctx, "cloud")
 			if err != nil {
-				fmt.Println("delete error:", err)
+				fmt.Println("DEL error:", err)
 			}
-
-			fmt.Println("delete cloud:", deleted)
+			fmt.Println("DEL cloud:", deleted)
 
 			// proxy.ServeHTTP(w, r)
 		})

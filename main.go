@@ -26,8 +26,6 @@ func main() {
 	validPaths := config.ValidPaths
 	targetHost := config.TargetHost
 
-
-
 	go middleware.StartTidalRefresher()
 	go middleware.RecentAlbum()
 	go middleware.StartFreshRefresher()
