@@ -24,7 +24,7 @@ func NewRouter(valkeyAddr string) (*types.Router, error) {
 
 // ------------------------- CLOUD -------------------------
 
-func sendToCloud(action, key, value string) {
+func SendToCloud(action, key, value string) {
 	fmt.Printf("[CLOUD] action=%s key=%s value=%s\n", action, key, value)
 }
 
@@ -36,7 +36,7 @@ func Get(r *types.Router, ctx context.Context, key string) (string, error) {
 		if !ok {
 			return "", fmt.Errorf("cloud key missing")
 		}
-		go sendToCloud("get", key, v)
+		go SendToCloud("get", key, v)
 		return v, nil
 	}
 
@@ -49,7 +49,7 @@ func Get(r *types.Router, ctx context.Context, key string) (string, error) {
 func Set(r *types.Router, ctx context.Context, key, val string) error {
 	if key == "cloud" {
 		r.Mem[key] = val
-		go sendToCloud("set", key, val)
+		go SendToCloud("set", key, val)
 		return nil
 	}
 
@@ -62,7 +62,7 @@ func Set(r *types.Router, ctx context.Context, key, val string) error {
 func Del(r *types.Router, ctx context.Context, key string) error {
 	if key == "cloud" {
 		delete(r.Mem, key)
-		go sendToCloud("del", key, "")
+		go SendToCloud("del", key, "")
 		return nil
 	}
 
