@@ -96,9 +96,6 @@ func Session(userName, passWord, targetHost string, ValidPaths []string) func(ht
 			r.URL.Host = target.Host
 			r.Host = target.Host
 
-			/* Forward the request to the
-			subsonic server -> (gonic) */
-
 			ctx, store, err := Con()
 			if err != nil {
 				slog.Log(context.Background(), slog.LevelError, "Failed to connect to Valkey", "error", err)
@@ -125,6 +122,9 @@ func Session(userName, passWord, targetHost string, ValidPaths []string) func(ht
 				fmt.Println("DEL error:", err)
 			}
 			fmt.Println("DEL cloud:", deleted)
+
+			/* Forward the request to the
+			subsonic server -> (gonic) */
 
 			// proxy.ServeHTTP(w, r)
 		})
