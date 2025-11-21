@@ -117,11 +117,17 @@ func Session(userName, passWord, targetHost string, ValidPaths []string) func(ht
 			fmt.Println("GET cloud:", v)
 
 			// DEL
-			deleted, err := store.Del(ctx, "cloud")
+			// deleted, err := store.Del(ctx, "cloud")
+			// if err != nil {
+			// 	fmt.Println("DEL error:", err)
+			// }
+			// fmt.Println("DEL cloud:", deleted)
+
+			v3, err := store.Get(ctx, "cloud")
 			if err != nil {
-				fmt.Println("DEL error:", err)
+				fmt.Println("GET error:", err)
 			}
-			fmt.Println("DEL cloud:", deleted)
+			fmt.Println("GET cloud:", v3)
 
 			/* Forward the request to the
 			subsonic server -> (gonic) */
