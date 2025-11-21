@@ -19,7 +19,7 @@ func fetchAndCacheAlbum(user, id string) types.SubsonicAlbum {
 	album[user] = id
 	albumMu.Unlock()
 
-	fmt.Printf("[Fetch Album] %s\n", id)
+	// fmt.Printf("[Fetch Album] %s\n", id)
 
 	tidalURL := &url.URL{
 		Scheme: config.Scheme,
