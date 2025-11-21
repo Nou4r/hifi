@@ -13,15 +13,13 @@ var (
 	// CORS
 	CORSAllowOrigin = "*"
 
-	// Hifi Scheme
-	HifiScheme = "http"
-
 	// Hifi Web Server
 	Host = "0.0.0.0"
 	Port = []string{"5002", "5006"}
 
-	// Subsonic Scheme
-	SubsonicScheme = "http"
+	// Hifi Scheme
+	HifiScheme = "http"
+	HTTPS      = "https"
 
 	// ENV
 	JwtSecret = []byte(os.Getenv("JWT_SECRET"))

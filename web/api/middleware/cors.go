@@ -13,7 +13,7 @@ func CORS(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if slices.Contains(config.ValidPaths, r.URL.Path) {
 			w.Header().Set(config.HeaderAllowOrigin, config.CORSAllowOrigin)
-			w.Header().Set(config.HeaderContentSecurityPolicy, fmt.Sprintf("script-src %s", config.ProxyHost))
+			w.Header().Set(config.HeaderContentSecurityPolicy, fmt.Sprintf("script-src %s", config.HTTPS+"://"+config.ProxyHost))
 		}
 
 		next.ServeHTTP(w, r)
