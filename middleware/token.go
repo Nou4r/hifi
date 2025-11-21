@@ -187,7 +187,7 @@ func refreshToken() (string, error) {
 
 	TokenExpiryUnix = time.Now().Add(time.Duration(token.ExpiresIn) * time.Second).Unix()
 
-	// slog.Info("🪣 Cached new token", "expiresAt", time.Unix(TokenExpiryUnix, 0).Local().Format("15:04:05"))
+	slog.Info("🪣 Cached new token", "expiresAt", time.Unix(TokenExpiryUnix, 0).Local().Format("15:04:05"))
 
 	return cachedToken, nil
 }
