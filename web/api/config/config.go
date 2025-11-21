@@ -24,6 +24,7 @@ var (
 	// ENV
 	JwtSecret = []byte(os.Getenv("JWT_SECRET"))
 	ProxyHost = os.Getenv("PROXY_HOST")
+	ProxyUser = os.Getenv("PROXY_USER")
 	ProxyKey  = os.Getenv("PROXY_KEY")
 )
 
