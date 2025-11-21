@@ -17,7 +17,7 @@ func Con() (context.Context, *types.Router, error) {
 	}
 
 	if store == nil {
-		return ctx, nil, fmt.Errorf("router is nil")
+		return ctx, nil, fmt.Errorf("router is nil after initialization")
 	}
 
 	return ctx, store, nil
