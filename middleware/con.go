@@ -3,10 +3,9 @@ package middleware
 import (
 	"context"
 	"fmt"
-	"hifi/types"
 )
 
-func Con() (context.Context, *types.Router, error) {
+func Con() (context.Context, *Router, error) {
 
 	ctx := context.Background()
 

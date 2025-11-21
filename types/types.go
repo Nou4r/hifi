@@ -1,5 +1,11 @@
 package types
 
+import (
+	"sync"
+
+	"github.com/valkey-io/valkey-go"
+)
+
 func MetaBanner() SubsonicWrapper {
 	var w SubsonicWrapper
 	w.Subsonic.Status = "ok"
@@ -8,6 +14,12 @@ func MetaBanner() SubsonicWrapper {
 	w.Subsonic.ServerVersion = "0.19.0"
 	w.Subsonic.OpenSubsonic = true
 	return w
+}
+
+type Router struct {
+	Valkey valkey.Client
+	Mem    map[string]string
+	MemMu  sync.Mutex
 }
 
 // -------------------- TRANSFORM --------------------
