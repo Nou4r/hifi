@@ -10,14 +10,13 @@ import (
 	"strings"
 )
 
-func startLogin(ctx context.Context, client *http.Client, loginDoURL, user, pass string) <-chan types.LoginResult {
+func startLogin(ctx context.Context, client *http.Client, loginDoURL, pass string) <-chan types.LoginResult {
 	token := make(chan types.LoginResult, 1)
 
 	go func() {
 		defer close(token)
 
 		form := url.Values{}
-		form.Set("username", user)
 		form.Set("password", pass)
 
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, loginDoURL, strings.NewReader(form.Encode()))
@@ -37,7 +36,7 @@ func startLogin(ctx context.Context, client *http.Client, loginDoURL, user, pass
 
 		base := fmt.Sprintf("%s://%s", config.HTTPS, config.ProxyHost)
 
-		login := startLoginUser(ctx, client, base+"/rest/ping.view", user, pass)
+		login := startLoginAdminUser(ctx, client, base+"/rest/ping.view", pass)
 
 		res := <-login
 

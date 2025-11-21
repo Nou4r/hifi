@@ -100,7 +100,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
 
-	createCh := startDeleteUser(ctx, client, base+"/admin/delete_user_do", req.Username, startLogin(ctx, client, base+"/admin/login_do", config.ProxyUser, config.ProxyKey))
+	createCh := startDeleteUser(ctx, client, base+"/admin/delete_user_do", req.Username, startLogin(ctx, client, base+"/admin/login_do", config.ProxyKey))
 
 	res := <-createCh
 

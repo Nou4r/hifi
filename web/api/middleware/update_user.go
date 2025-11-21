@@ -107,7 +107,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 			base+"/admin/change_username_do",
 			olduSername,
 			req.Username,
-			startLogin(ctx, client, base+"/admin/login_do", config.ProxyUser, config.ProxyKey),
+			startLogin(ctx, client, base+"/admin/login_do", config.ProxyKey),
 		)
 
 		resUsername := <-updateUsername
@@ -122,7 +122,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 			base+"/admin/change_password_do",
 			olduSername,
 			req.Password,
-			startLogin(ctx, client, base+"/admin/login_do", config.ProxyUser, config.ProxyKey),
+			startLogin(ctx, client, base+"/admin/login_do", config.ProxyKey),
 		)
 
 		resPassword := <-updatePassword
@@ -151,7 +151,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	if req.Username != "" {
 
-		updateUsername := startUpdateUser(ctx, client, base+"/admin/change_username_do", olduSername, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.ProxyUser, config.ProxyKey))
+		updateUsername := startUpdateUser(ctx, client, base+"/admin/change_username_do", olduSername, req.Username, startLogin(ctx, client, base+"/admin/login_do", config.ProxyKey))
 		res := <-updateUsername
 
 		if res.Err != nil {
@@ -171,7 +171,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 	if req.Password != "" {
 
-		updatePassword := startUpdateUserPassword(ctx, client, base+"/admin/change_password_do", olduSername, req.Password, startLogin(ctx, client, base+"/admin/login_do", config.ProxyUser, config.ProxyKey))
+		updatePassword := startUpdateUserPassword(ctx, client, base+"/admin/change_password_do", olduSername, req.Password, startLogin(ctx, client, base+"/admin/login_do", config.ProxyKey))
 		res := <-updatePassword
 
 		if res.Err != nil {
