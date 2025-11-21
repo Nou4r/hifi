@@ -8,7 +8,6 @@ import (
 func Con() (context.Context, *Router, error) {
 
 	ctx := context.Background()
-
 	store, err := NewRouter("127.0.0.1:6379")
 
 	if err != nil {
