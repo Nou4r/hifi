@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"hifi/types"
+	"os"
 
 	"github.com/valkey-io/valkey-go"
 )
@@ -31,7 +32,7 @@ func SendToCloud(action, key, value string) {
 // ------------------------- GET -------------------------
 
 func Get(r *types.Router, ctx context.Context, key string) (string, error) {
-	if key == "cloud" {
+	if os.Getenv("CLOUD_HOST") != "" {
 		v, ok := r.Mem[key]
 		if !ok {
 			return "", fmt.Errorf("cloud key missing")
@@ -47,7 +48,7 @@ func Get(r *types.Router, ctx context.Context, key string) (string, error) {
 // ----------------------- SET -----------------------
 
 func Set(r *types.Router, ctx context.Context, key, val string) error {
-	if key == "cloud" {
+	if os.Getenv("CLOUD_HOST") != "" {
 		r.Mem[key] = val
 		go SendToCloud("set", key, val)
 		return nil
@@ -60,7 +61,7 @@ func Set(r *types.Router, ctx context.Context, key, val string) error {
 // ----------------------- DEL -----------------------
 
 func Del(r *types.Router, ctx context.Context, key string) error {
-	if key == "cloud" {
+	if os.Getenv("CLOUD_HOST") != "" {
 		delete(r.Mem, key)
 		go SendToCloud("del", key, "")
 		return nil
