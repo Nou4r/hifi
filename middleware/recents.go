@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"hifi/types"
 	"log/slog"
 	"strconv"
@@ -30,7 +29,7 @@ func RecentAlbum() {
 
 	for range ids {
 		album := <-results
-		fmt.Printf("[Album cached] %s — %s\n", album.ID, album.Title)
+		// fmt.Printf("[Album cached] %s — %s\n", album.ID, album.Title)
 		allAlbums = append(allAlbums, album)
 	}
 	close(results)

@@ -106,7 +106,7 @@ func setupTokenJobs() {
 
 // --- Refresh Token and Reschedule ---
 func refreshAndReschedule(reason string) {
-	slog.Info("🔁 Refreshing Tidal token...", "reason", reason)
+	// slog.Info("🔁 Refreshing Tidal token...", "reason", reason)
 
 	token, err := refreshToken()
 	if err != nil {
@@ -134,13 +134,13 @@ func refreshToken() (string, error) {
 
 	now := time.Now().Unix()
 	if cachedToken != "" && now < TokenExpiryUnix {
-		slog.Info("💾 Token cache hit",
-			"expiresAt", time.Unix(TokenExpiryUnix, 0).Local().Format("15:04:05"),
-			"secondsLeft", TokenExpiryUnix-now)
+		// slog.Info("💾 Token cache hit",
+		// 	"expiresAt", time.Unix(TokenExpiryUnix, 0).Local().Format("15:04:05"),
+		// 	"secondsLeft", TokenExpiryUnix-now)
 		return cachedToken, nil
 	}
 
-	slog.Warn("🆕 Token cache miss — requesting new token from Tidal API")
+	// slog.Warn("🆕 Token cache miss — requesting new token from Tidal API")
 
 	if config.ClientID == "" || config.ClientSecret == "" || config.RefreshToken == "" {
 		return "", errors.New("missing Tidal credentials")
@@ -187,7 +187,7 @@ func refreshToken() (string, error) {
 
 	TokenExpiryUnix = time.Now().Add(time.Duration(token.ExpiresIn) * time.Second).Unix()
 
-	slog.Info("🪣 Cached new token", "expiresAt", time.Unix(TokenExpiryUnix, 0).Local().Format("15:04:05"))
+	// slog.Info("🪣 Cached new token", "expiresAt", time.Unix(TokenExpiryUnix, 0).Local().Format("15:04:05"))
 
 	return cachedToken, nil
 }
