@@ -103,16 +103,23 @@ func Session(userName, passWord, targetHost string, ValidPaths []string) func(ht
 				slog.Error("failed to connect to router", "error", err)
 				return
 			}
-
 			defer store.Valkey.Close()
 
-			store.Set(ctx, "cloud", "abc123")
-			v1, _ := store.Get(ctx, "cloud")
-			fmt.Println("cloud =", v1)
+			err = Set(store, ctx, "cloud", "abc123")
+			if err != nil {
+				fmt.Println(err)
+			}
 
-			store.Set(ctx, "user:1", "hello")
-			v2, _ := store.Get(ctx, "user:1")
-			fmt.Println("user:1 =", v2)
+			v1, _ := Get(store, ctx, "cloud")
+			fmt.Println("cloud", v1)
+
+			err = Set(store, ctx, "user", "hello")
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			v2, _ := Get(store, ctx, "user")
+			fmt.Println("user", v2)
 
 			// proxy.ServeHTTP(w, r)
 		})
