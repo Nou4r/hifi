@@ -126,7 +126,7 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resp := map[string]string{
-		"host":     config.HostUrl,
+		"host":     config.HTTPS + "://" + config.ProxyHost,
 		"username": user.Username,
 		"password": user.Password,
 	}

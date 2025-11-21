@@ -92,7 +92,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	delete(tokenHashes, claims.RegisteredClaims.ID)
 	mu.Unlock()
 
-	base := fmt.Sprintf("%s://%s", config.SubsonicScheme, config.SubsonicHost)
+	base := fmt.Sprintf("%s://%s", config.HifiScheme, config.ProxyHost)
 
 	jar, _ := cookiejar.New(nil)
 	client := &http.Client{Jar: jar}
@@ -100,7 +100,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
 
-	createCh := startDeleteUser(ctx, client, base+"/admin/delete_user_do", req.Username, startLogin(ctx, client, base+"/admin/login_do", config.SubsonicAdmin, config.SubsonicAdminPassword))
+	createCh := startDeleteUser(ctx, client, base+"/admin/delete_user_do", req.Username, startLogin(ctx, client, base+"/admin/login_do", config.ProxyKey))
 
 	res := <-createCh
 

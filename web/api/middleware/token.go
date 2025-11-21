@@ -35,7 +35,7 @@ func startLogin(ctx context.Context, client *http.Client, loginDoURL, user, pass
 		}
 		defer resp.Body.Close()
 
-		base := fmt.Sprintf("%s://%s", config.SubsonicScheme, config.SubsonicHost)
+		base := fmt.Sprintf("%s://%s", config.HTTPS, config.ProxyHost)
 
 		login := startLoginUser(ctx, client, base+"/rest/ping.view", user, pass)
 

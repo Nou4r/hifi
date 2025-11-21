@@ -23,8 +23,6 @@ var (
 
 	// ENV
 	JwtSecret = []byte(os.Getenv("JWT_SECRET"))
-
-	// Hifi Proxy Server
 	ProxyHost = os.Getenv("PROXY_HOST")
 	ProxyKey  = os.Getenv("PROXY_KEY")
 )
