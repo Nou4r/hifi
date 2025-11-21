@@ -104,60 +104,6 @@ func SigninUser(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func startLoginAdminUser(ctx context.Context, client *http.Client, createURL, newPass string) <-chan types.CreateResult {
-	out := make(chan types.CreateResult, 1)
-
-	go func() {
-		defer close(out)
-
-		u, _ := url.Parse(createURL)
-		q := u.Query()
-		q.Set("p", newPass)
-		q.Set("f", "json")
-		u.RawQuery = q.Encode()
-
-		req, err := http.NewRequestWithContext(ctx, http.MethodPost, u.String(), nil)
-		if err != nil {
-			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
-			return
-		}
-		req.Header.Set(config.HeaderContentType, config.ContentTypeForm)
-
-		resp, err := client.Do(req)
-		if err != nil {
-			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
-			return
-		}
-		defer resp.Body.Close()
-
-		body, _ := io.ReadAll(resp.Body)
-
-		var ping types.Ping
-		if err := json.Unmarshal(body, &ping); err != nil {
-			out <- types.CreateResult{Status: resp.StatusCode, Body: nil, Err: fmt.Errorf("failed to unmarshal JSON: %w", err)}
-			return
-		}
-
-		if ping.SubsonicResponse.Status != "ok" {
-			errMsg := fmt.Sprintf("failed to sign in user: %s", string(body))
-			out <- types.CreateResult{
-				Status: resp.StatusCode,
-				Body:   []byte(ping.SubsonicResponse.Status),
-				Err:    errors.New(errMsg),
-			}
-			return
-		}
-
-		out <- types.CreateResult{
-			Status: resp.StatusCode,
-			Body:   []byte(ping.SubsonicResponse.Status),
-			Err:    nil,
-		}
-
-	}()
-	return out
-}
-
 func startLoginUser(ctx context.Context, client *http.Client, createURL, newUser, newPass string) <-chan types.CreateResult {
 	out := make(chan types.CreateResult, 1)
 
