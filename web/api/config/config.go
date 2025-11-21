@@ -25,12 +25,10 @@ var (
 
 	// ENV
 	JwtSecret = []byte(os.Getenv("JWT_SECRET"))
-	HostUrl   = os.Getenv("HOST_URL")
 
-	// Subsonic Server
-	SubsonicHost          = os.Getenv("SUBSONIC_HOST")
-	SubsonicAdmin         = os.Getenv("SUBSONIC_ADMIN")
-	SubsonicAdminPassword = os.Getenv("SUBSONIC_ADMIN_PASSWORD")
+	// Hifi Proxy Server
+	ProxyHost = os.Getenv("PROXY_HOST")
+	ProxyKey  = os.Getenv("PROXY_KEY")
 )
 
 const (

@@ -140,7 +140,7 @@ func refreshToken() (string, error) {
 		return cachedToken, nil
 	}
 
-	// slog.Warn("🆕 Token cache miss — requesting new token from Tidal API")
+	slog.Warn("🆕 Token cache miss — requesting new token from Tidal API")
 
 	if config.ClientID == "" || config.ClientSecret == "" || config.RefreshToken == "" {
 		return "", errors.New("missing Tidal credentials")
