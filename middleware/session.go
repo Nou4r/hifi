@@ -105,21 +105,27 @@ func Session(userName, passWord, targetHost string, ValidPaths []string) func(ht
 			}
 			defer store.Valkey.Close()
 
-			err = Set(store, ctx, "cloud", "abc123")
+			// SET cloud
+			ok1, err := store.Set(ctx, "cloud", "abc123")
 			if err != nil {
-				fmt.Println(err)
+				fmt.Println("set error:", err)
+			}
+			fmt.Println("set cloud ok:", ok1)
+
+			// GET cloud
+			v1, err := store.Get(ctx, "cloud")
+			if err != nil {
+				fmt.Println("get error:", err)
+			}
+			fmt.Println("cloud:", v1)
+
+			// DELETE key "cloud"
+			deleted, err := store.Del(ctx, "cloud")
+			if err != nil {
+				fmt.Println("delete error:", err)
 			}
 
-			v1, _ := Get(store, ctx, "cloud")
-			fmt.Println("cloud", v1)
-
-			err = Set(store, ctx, "user", "hello")
-			if err != nil {
-				fmt.Println(err)
-			}
-
-			v2, _ := Get(store, ctx, "user")
-			fmt.Println("user", v2)
+			fmt.Println("delete cloud:", deleted)
 
 			// proxy.ServeHTTP(w, r)
 		})

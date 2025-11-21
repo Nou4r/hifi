@@ -3,13 +3,19 @@ package middleware
 import (
 	"context"
 	"fmt"
-	"hifi/types"
 	"os"
+	"sync"
 
 	"github.com/valkey-io/valkey-go"
 )
 
-func NewRouter(valkeyAddr string) (*types.Router, error) {
+type Router struct {
+	Valkey valkey.Client
+	Mem    map[string]string
+	MemMu  sync.Mutex
+}
+
+func NewRouter(valkeyAddr string) (*Router, error) {
 	client, err := valkey.NewClient(valkey.ClientOption{
 		InitAddress: []string{valkeyAddr},
 	})
@@ -17,13 +23,13 @@ func NewRouter(valkeyAddr string) (*types.Router, error) {
 		return nil, err
 	}
 
-	return &types.Router{
+	return &Router{
 		Valkey: client,
 		Mem:    make(map[string]string),
 	}, nil
 }
 
-// ------------------------- CLOUD -------------------------
+// ------------------------- CLOUD HANDLER -------------------------
 
 func SendToCloud(action, key, value string) {
 	fmt.Printf("[CLOUD] action=%s key=%s value=%s\n", action, key, value)
@@ -31,7 +37,7 @@ func SendToCloud(action, key, value string) {
 
 // ------------------------- GET -------------------------
 
-func Get(r *types.Router, ctx context.Context, key string) (string, error) {
+func (r *Router) Get(ctx context.Context, key string) (string, error) {
 	if os.Getenv("CLOUD_HOST") != "" {
 		r.MemMu.Lock()
 		v, ok := r.Mem[key]
@@ -40,6 +46,7 @@ func Get(r *types.Router, ctx context.Context, key string) (string, error) {
 		if !ok {
 			return "", fmt.Errorf("cloud key missing")
 		}
+
 		go SendToCloud("get", key, v)
 		return v, nil
 	}
@@ -50,7 +57,7 @@ func Get(r *types.Router, ctx context.Context, key string) (string, error) {
 
 // ----------------------- SET -----------------------
 
-func Set(r *types.Router, ctx context.Context, key, val string) error {
+func (r *Router) Set(ctx context.Context, key, val string) (bool, error) {
 	if os.Getenv("CLOUD_HOST") != "" {
 
 		r.MemMu.Lock()
@@ -58,25 +65,39 @@ func Set(r *types.Router, ctx context.Context, key, val string) error {
 		r.MemMu.Unlock()
 
 		go SendToCloud("set", key, val)
-		return nil
+		return true, nil
 	}
 
 	cmd := r.Valkey.B().Set().Key(key).Value(val).Build()
-	return r.Valkey.Do(ctx, cmd).Error()
+	err := r.Valkey.Do(ctx, cmd).Error()
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
 }
 
 // ----------------------- DEL -----------------------
 
-func Del(r *types.Router, ctx context.Context, key string) error {
+func (r *Router) Del(ctx context.Context, key string) (bool, error) {
 	if os.Getenv("CLOUD_HOST") != "" {
 		r.MemMu.Lock()
-		delete(r.Mem, key)
+		_, existed := r.Mem[key]
+		if existed {
+			delete(r.Mem, key)
+		}
 		r.MemMu.Unlock()
 
 		go SendToCloud("del", key, "")
-		return nil
+		return !existed, nil
+
 	}
 
 	cmd := r.Valkey.B().Del().Key(key).Build()
-	return r.Valkey.Do(ctx, cmd).Error()
+	n, err := r.Valkey.Do(ctx, cmd).AsInt64()
+	if err != nil {
+		return false, err
+	}
+
+	return n == 0, nil
 }
