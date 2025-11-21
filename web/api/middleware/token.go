@@ -91,7 +91,7 @@ func startLogin(ctx context.Context, client *http.Client, loginDoURL, pass strin
 		}
 		defer resp.Body.Close()
 
-		base := fmt.Sprintf("%s://%s", config.HTTPS, config.ProxyHost)
+		base := fmt.Sprintf("%s://%s", config.Scheme, config.ProxyHost)
 
 		login := startLoginAdminUser(ctx, client, base+"/rest/ping.view", pass)
 

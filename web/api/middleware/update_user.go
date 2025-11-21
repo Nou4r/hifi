@@ -87,7 +87,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	base := fmt.Sprintf("%s://%s", config.HTTPS, config.ProxyHost)
+	base := fmt.Sprintf("%s://%s", config.Scheme, config.ProxyHost)
 
 	jar, _ := cookiejar.New(nil)
 	client := &http.Client{Jar: jar}
