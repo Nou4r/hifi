@@ -56,8 +56,11 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 	}
 
 	for _, item := range tidalAlbum.Items {
+
+		songID := fmt.Sprint(item.Item.ID)
+
 		song := types.SubsonicSong{
-			ID:          fmt.Sprint(item.Item.ID),
+			ID:          songID,
 			Duration:    item.Item.Duration,
 			Title:       item.Item.Title,
 			Album:       item.Item.Album.Title,
@@ -73,6 +76,10 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 			ArtistID:    fmt.Sprint(item.Item.Artist.ID),
 			AlbumID:     fmt.Sprint(item.Item.Album.ID),
 		}
+
+		songMu.Lock()
+		songMap[songID] = song
+		songMu.Unlock()
 
 		// Build Subsonic album
 		albumID := fmt.Sprint(item.Item.Album.ID)
@@ -109,6 +116,7 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 	useralbumMu.Unlock()
 
 	sub := types.MetaBanner()
+
 	sub.Subsonic.Album = &albumResp
 	json.NewEncoder(w).Encode(sub)
 

@@ -144,15 +144,6 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 		songID := fmt.Sprint(item.ID)
 
-		songMu.RLock()
-		cached, found := songMap[songID]
-		songMu.RUnlock()
-
-		if found {
-			sub.Subsonic.SearchResult3.Song = append(sub.Subsonic.SearchResult3.Song, cached)
-			continue
-		}
-
 		song := types.SubsonicSong{
 			ID:          songID,
 			Title:       item.Title,
