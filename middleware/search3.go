@@ -6,6 +6,7 @@ import (
 	"hifi/config"
 	"hifi/types"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 )
@@ -144,6 +145,16 @@ func search3(search string, user string, w http.ResponseWriter) {
 
 		songID := fmt.Sprint(item.ID)
 
+		songMu.RLock()
+		userSongs := songMap[songID]
+		songMu.RUnlock()
+
+		if userSongs.ID != "" {
+			slog.Info("Cached Hit", "id", songID)
+			sub.Subsonic.SearchResult3.Song = append(sub.Subsonic.SearchResult3.Song, userSongs)
+			continue
+		}
+
 		song := types.SubsonicSong{
 			ID:          songID,
 			Title:       item.Title,
@@ -164,6 +175,8 @@ func search3(search string, user string, w http.ResponseWriter) {
 		songMu.Lock()
 		songMap[songID] = song
 		songMu.Unlock()
+
+		slog.Info("Cached Miss", "id", songID)
 	}
 
 	// Write response
