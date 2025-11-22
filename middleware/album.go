@@ -6,6 +6,7 @@ import (
 	"hifi/config"
 	"hifi/types"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 )
@@ -59,6 +60,16 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 
 		songID := fmt.Sprint(item.Item.ID)
 
+		songMu.RLock()
+		userSongs := songMap[songID]
+		songMu.RUnlock()
+
+		if userSongs.ID != "" {
+			slog.Info("Cached Hit", "id", songID)
+			albumResp.Song = append(albumResp.Song, userSongs)
+			continue
+		}
+
 		song := types.SubsonicSong{
 			ID:          songID,
 			Duration:    item.Item.Duration,
@@ -80,6 +91,7 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 		songMu.Lock()
 		songMap[songID] = song
 		songMu.Unlock()
+		slog.Info("Cached Miss", "id", songID)
 
 		// Build Subsonic album
 		albumID := fmt.Sprint(item.Item.Album.ID)
