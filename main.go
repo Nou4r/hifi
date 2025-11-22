@@ -6,6 +6,7 @@ import (
 	"hifi/config"
 	"hifi/middleware"
 	"hifi/routes/rest"
+	"hifi/types"
 	"log/slog"
 	"net/http"
 	"os"
@@ -17,7 +18,7 @@ import (
 func main() {
 
 	// Define subsonic user credentials
-	person := config.Person{
+	person := types.Person{
 		UserName: "",
 		PassWord: "",
 	}

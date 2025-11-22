@@ -5,12 +5,6 @@ import (
 	"os"
 )
 
-// Subsonic User
-type Person struct {
-	UserName string
-	PassWord string
-}
-
 var (
 
 	// Whitelist

@@ -24,6 +24,12 @@ type Router struct {
 
 // -------------------- TRANSFORM --------------------
 
+// Subsonic User
+type Person struct {
+	UserName string
+	PassWord string
+}
+
 type ExploreItem struct {
 	ID    int    `json:"id"`
 	Title string `json:"title"`
