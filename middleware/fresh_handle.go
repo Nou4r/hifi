@@ -19,8 +19,8 @@ var (
 )
 
 const (
-	freshTTL          = 2 * time.Minute
-	freshRefreshEvery = 1 * time.Minute
+	freshTTL          = 24 * time.Hour
+	freshRefreshEvery = 23 * time.Minute
 )
 
 func refreshFreshCache() {
@@ -58,7 +58,7 @@ func StartFreshRefresher() {
 		gocron.NewTask(func() {
 
 			slog.Info("Scheduled refresh triggered",
-				"refreshEveryMinutes", int(freshRefreshEvery.Minutes()),
+				"refreshEveryDays", int(freshRefreshEvery.Minutes()),
 				"nextRefreshAt", time.Now().Add(freshRefreshEvery).Format(time.RFC3339),
 			)
 
