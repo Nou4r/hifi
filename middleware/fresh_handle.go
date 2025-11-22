@@ -20,7 +20,7 @@ var (
 
 const (
 	freshTTL          = 24 * time.Hour
-	freshRefreshEvery = 23 * time.Minute
+	freshRefreshEvery = 23 * time.Hour
 )
 
 func refreshFreshCache() {
