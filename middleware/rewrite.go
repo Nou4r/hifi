@@ -3,7 +3,6 @@ package middleware
 import (
 	"hifi/routes/rest"
 	"hifi/types"
-	"log/slog"
 	"net/http"
 	"sync"
 )
@@ -42,7 +41,6 @@ func RewriteRequest(w http.ResponseWriter, r *http.Request) {
 
 	// -------------------- getSong --------------------
 	case rest.GetSong():
-		slog.Info("getSong", "id", id, "user", user)
 		song(id, w)
 
 	// -------------------- getAlbumList2 --------------------
