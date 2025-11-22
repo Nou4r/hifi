@@ -35,7 +35,7 @@ func refreshFreshCache() {
 	freshCacheMu.Unlock()
 
 	slog.Info("New TTL window started",
-		"ttlMinutes", int(freshTTL.Minutes()),
+		"ttlMinutes", int(freshTTL),
 		"expiresAt", exp.Format(time.RFC3339),
 	)
 
@@ -58,7 +58,7 @@ func StartFreshRefresher() {
 		gocron.NewTask(func() {
 
 			slog.Info("Scheduled refresh triggered",
-				"refreshEveryDays", int(freshRefreshEvery.Minutes()),
+				"refreshEveryDays", int(freshRefreshEvery),
 				"nextRefreshAt", time.Now().Add(freshRefreshEvery).Format(time.RFC3339),
 			)
 
