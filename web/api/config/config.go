@@ -19,9 +19,9 @@ var (
 
 	// Hifi Scheme
 	HifiScheme = "http"
-	Scheme     = os.Getenv("SCHEME")
 
 	// ENV
+	Scheme    = os.Getenv("SCHEME")
 	JwtSecret = []byte(os.Getenv("JWT_SECRET"))
 	ProxyHost = os.Getenv("PROXY_HOST")
 	ProxyKey  = os.Getenv("PROXY_KEY")
