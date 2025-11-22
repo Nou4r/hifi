@@ -101,7 +101,6 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 		albumResp.CoverArt = item.Item.Album.Cover
 		albumResp.SongCount = tidalAlbum.TotalNumberOfItems
 		albumResp.Duration += item.Item.Duration
-		albumResp.Song = append(albumResp.Song, song)
 
 		songMu.RLock()
 		userSongs := songMap[songID]
@@ -117,6 +116,7 @@ func getAlbum(id string, user string, w http.ResponseWriter) {
 		songMap[songID] = song
 		songMu.Unlock()
 		slog.Info("Cached Miss", "id", songID)
+		albumResp.Song = append(albumResp.Song, song)
 
 	}
 
