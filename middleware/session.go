@@ -129,6 +129,23 @@ func Session(userName, passWord, targetHost string, ValidPaths []string) func(ht
 			}
 			fmt.Println("GET cloud:", v3)
 
+			// Mock Subsonic response for /ping endpoint
+
+			subsonic := `{
+  "subsonic-response": {
+    "status": "ok",
+    "version": "1.16.1",
+    "type": "AwesomeServerName",
+    "serverVersion": "0.1.3 (tag)",
+    "openSubsonic": true
+  }
+}`
+
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+
+			_, _ = w.Write([]byte(subsonic))
+
 			/* Forward the request to the
 			subsonic server -> (gonic) */
 
