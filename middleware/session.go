@@ -7,7 +7,6 @@ import (
 	"hifi/routes/rest"
 	"log/slog"
 	"net/http"
-	"net/http/httputil"
 	"net/url"
 	"slices"
 )
@@ -20,14 +19,13 @@ func setQueryParams(q url.Values, params map[string]string) {
 	}
 }
 
-func Session(userName, passWord, targetHost string, ValidPaths []string) func(http.Handler) http.Handler {
-	target, _ := url.Parse(targetHost)
-	proxy := httputil.NewSingleHostReverseProxy(target)
+func Session(userName string, passWord string, ValidPaths []string) func(http.Handler) http.Handler {
+	// proxy := httputil.NewSingleHostReverseProxy(target)
 
-	proxy.ModifyResponse = func(resp *http.Response) error {
-		resp.Header.Del("Access-Control-Allow-Origin")
-		return nil
-	}
+	// proxy.ModifyResponse = func(resp *http.Response) error {
+	// 	resp.Header.Del("Access-Control-Allow-Origin")
+	// 	return nil
+	// }
 
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -92,9 +90,9 @@ func Session(userName, passWord, targetHost string, ValidPaths []string) func(ht
 				"raw", r.URL.RawQuery,
 			)
 
-			r.URL.Scheme = target.Scheme
-			r.URL.Host = target.Host
-			r.Host = target.Host
+			// r.URL.Scheme = target.Scheme
+			// r.URL.Host = target.Host
+			// r.Host = target.Host
 
 			ctx, store, err := Con()
 			if err != nil {

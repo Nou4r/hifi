@@ -24,7 +24,6 @@ func main() {
 
 	// Hifi proxy
 	validPaths := config.ValidPaths
-	targetHost := config.TargetHost
 
 	go middleware.StartTidalRefresher()
 	go middleware.RecentAlbum()
@@ -36,7 +35,7 @@ func main() {
 	mux.HandleFunc(rest.Fresh(), middleware.FreshHandler)
 
 	// Middleware setup
-	session := middleware.Session(person.UserName, person.PassWord, targetHost, validPaths)(mux)
+	session := middleware.Session(person.UserName, person.PassWord, validPaths)(mux)
 
 	cors := middleware.CORS(session)
 

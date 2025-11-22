@@ -39,14 +39,11 @@ var (
 	TidalHost    = os.Getenv("TIDAL_HOST")
 	RefreshToken = os.Getenv("TIDAL_REFRESH")
 
-	// Subsonic Server
-	TargetHost = os.Getenv("TARGET_HOST")
-
 	// CORS
 	CORSAllowOrigin = "*"
 
 	// Server port and fallback port
-	Port = []string{"8080","5000", "5005"}
+	Port = []string{"8080", "5000", "5005"}
 
 	// Hifi Server
 	Host = "0.0.0.0"
