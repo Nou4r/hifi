@@ -2,9 +2,11 @@ package middleware
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"hifi/config"
 	"hifi/routes/rest"
+	"hifi/types"
 	"log/slog"
 	"net/http"
 	"net/url"
@@ -129,20 +131,22 @@ func Session(userName string, passWord string, ValidPaths []string) func(http.Ha
 
 			// Mock Subsonic response for /ping endpoint
 
-			subsonic := `{
-  "subsonic-response": {
-    "status": "ok",
-    "version": "1.16.1",
-    "type": "AwesomeServerName",
-    "serverVersion": "0.1.3 (tag)",
-    "openSubsonic": true
-  }
-}`
+			var resp types.SubsonicWrapper
+			resp.Subsonic.Status = "ok"
+			resp.Subsonic.Version = "1.15.0"
+			resp.Subsonic.Type = "hifi"
+			resp.Subsonic.ServerVersion = "0.19.0"
+			resp.Subsonic.OpenSubsonic = true
 
-			w.Header().Set("Content-Type", "application/json")
+			w.Header().Set(config.HeaderContentType, config.ContentTypeJSON)
 			w.WriteHeader(http.StatusOK)
 
-			_, _ = w.Write([]byte(subsonic))
+			b, err := json.Marshal(resp)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			_, _ = w.Write(b)
 
 			/* Forward the request to the
 			subsonic server -> (gonic) */
