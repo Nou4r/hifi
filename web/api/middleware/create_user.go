@@ -43,7 +43,7 @@ func SignupUser(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
 
-	createCh := startCreateUser(ctx, client, base+"/admin/create_user_do", req.Username, req.Password, startLogin(ctx, client, base+"/admin/login_do",  config.ProxyKey))
+	createCh := startCreateUser(ctx, client, base+"/apps/secrets", req.Username, req.Password, startLogin(ctx, client, base+"/admin/login_do", config.ProxyKey))
 
 	res := <-createCh
 

@@ -51,8 +51,9 @@ func (r *Router) Get(ctx context.Context, key string) (string, error) {
 		return v, nil
 	}
 
-	cmd := r.Valkey.B().Get().Key(key).Build()
-	return r.Valkey.Do(ctx, cmd).ToString()
+	// cmd := r.Valkey.B().Get().Key(key).Build()
+	// r.Valkey.Do(ctx, cmd).ToString()
+	return "", nil
 }
 
 // ----------------------- SET -----------------------
@@ -68,13 +69,13 @@ func (r *Router) Set(ctx context.Context, key, val string) (bool, error) {
 		return true, nil
 	}
 
-	cmd := r.Valkey.B().Set().Key(key).Value(val).Build()
-	err := r.Valkey.Do(ctx, cmd).Error()
-	if err != nil {
-		return false, err
-	}
+	// cmd := r.Valkey.B().Set().Key(key).Value(val).Build()
+	// err := r.Valkey.Do(ctx, cmd).Error()
+	// if err != nil {
+	// 	return false, err
+	// }
 
-	return true, nil
+	return false, nil
 }
 
 // ----------------------- DEL -----------------------
@@ -93,11 +94,13 @@ func (r *Router) Del(ctx context.Context, key string) (bool, error) {
 
 	}
 
-	cmd := r.Valkey.B().Del().Key(key).Build()
-	n, err := r.Valkey.Do(ctx, cmd).AsInt64()
-	if err != nil {
-		return false, err
-	}
+	// cmd := r.Valkey.B().Del().Key(key).Build()
+	// n, err := r.Valkey.Do(ctx, cmd).AsInt64()
+	// if err != nil {
+	// 	return false, err
+	// }
 
-	return n == 0, nil
+	// n == 0
+
+	return false, nil
 }
