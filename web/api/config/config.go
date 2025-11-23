@@ -23,8 +23,8 @@ var (
 	// ENV
 	Scheme    = os.Getenv("SCHEME")
 	JwtSecret = []byte(os.Getenv("JWT_SECRET"))
-	ProxyHost = os.Getenv("PROXY_HOST")
-	ProxyKey  = os.Getenv("PROXY_KEY")
+	ProxyHost = os.Getenv("SYNC_HOST")
+	ProxyKey  = os.Getenv("SYNC_KEY")
 )
 
 const (
