@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
@@ -35,7 +36,7 @@ func SignupUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	base := fmt.Sprintf("%s://%s", config.HifiScheme, config.ProxyHost)
+	base := fmt.Sprintf("%s://%s", config.Scheme, config.ProxyHost)
 
 	jar, _ := cookiejar.New(nil)
 	client := &http.Client{Jar: jar}
@@ -43,7 +44,9 @@ func SignupUser(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
 
-	createCh := startCreateUser(ctx, client, base+"/v1/apps/secrets", req.Username, req.Password, startLogin(ctx, client, base+"/admin/login_do", config.ProxyKey))
+	// startLogin(ctx, client, base+"/admin/login_do", config.ProxyKey)
+
+	createCh := startCreateUser(ctx, client, base+"/v1/apps/secrets", req.Username, req.Password)
 
 	res := <-createCh
 
@@ -62,27 +65,29 @@ func SignupUser(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewEncoder(w).Encode(map[string]string{"message": "User created successfully"})
 }
 
-func startCreateUser(ctx context.Context, client *http.Client, createURL, newUser, newPass string, loginCh <-chan types.LoginResult) <-chan types.CreateResult {
+func startCreateUser(ctx context.Context, client *http.Client, createURL, newUser, newPass string) <-chan types.CreateResult {
 	out := make(chan types.CreateResult, 1)
 	go func() {
 		defer close(out)
 
-		select {
-		case lr := <-loginCh:
-			if lr.Err != nil || !lr.OK {
-				out <- types.CreateResult{Err: fmt.Errorf("login failed")}
-				return
-			}
+		// loginCh <- chan types.LoginResult
 
-		case <-ctx.Done():
-			out <- types.CreateResult{Status: 0, Body: nil, Err: ctx.Err()}
-			return
-		}
+		// select {
+		// case lr := <-loginCh:
+		// 	if lr.Err != nil || !lr.OK {
+		// 		out <- types.CreateResult{Err: fmt.Errorf("login failed")}
+		// 		return
+		// 	}
+
+		// case <-ctx.Done():
+		// 	out <- types.CreateResult{Status: 0, Body: nil, Err: ctx.Err()}
+		// 	return
+		// }
 
 		form := url.Values{}
-		form.Set("username", newUser)
-		form.Set("password_one", newPass)
-		form.Set("password_two", newPass)
+		form.Set("name", newUser)
+		form.Set("payload", newPass)
+		form.Set("scope[type]", "account")
 
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, createURL, strings.NewReader(form.Encode()))
 
@@ -90,7 +95,8 @@ func startCreateUser(ctx context.Context, client *http.Client, createURL, newUse
 			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
 			return
 		}
-		req.Header.Set(config.HeaderContentType, config.ContentTypeForm)
+
+		req.SetBasicAuth(config.ProxyKey, "")
 
 		resp, err := client.Do(req)
 		if err != nil {
@@ -100,6 +106,8 @@ func startCreateUser(ctx context.Context, client *http.Client, createURL, newUse
 		defer resp.Body.Close()
 
 		body, _ := io.ReadAll(resp.Body)
+
+		slog.Info(string(body))
 
 		out <- types.CreateResult{Status: resp.StatusCode, Body: body, Err: nil}
 	}()

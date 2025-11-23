@@ -19,7 +19,6 @@ var (
 
 	// Hifi Scheme
 	HifiScheme = "http"
-
 	// ENV
 	Scheme    = os.Getenv("SCHEME")
 	JwtSecret = []byte(os.Getenv("JWT_SECRET"))
