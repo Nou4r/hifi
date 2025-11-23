@@ -4,6 +4,14 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+type AppSecret struct {
+	Name string `json:"name"`
+}
+
+type AppFind struct {
+	Name string `json:"name"`
+}
+
 type DeleteRequest struct {
 	Username string `json:"username"`
 }

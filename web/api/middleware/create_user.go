@@ -67,22 +67,68 @@ func SignupUser(w http.ResponseWriter, r *http.Request) {
 
 func startCreateUser(ctx context.Context, client *http.Client, createURL, newUser, newPass string) <-chan types.CreateResult {
 	out := make(chan types.CreateResult, 1)
+
+	// loginCh <- chan types.LoginResult
+
+	// select {
+	// case lr := <-loginCh:
+	// 	if lr.Err != nil || !lr.OK {
+	// 		out <- types.CreateResult{Err: fmt.Errorf("login failed")}
+	// 		return
+	// 	}
+
+	// case <-ctx.Done():
+	// 	out <- types.CreateResult{Status: 0, Body: nil, Err: ctx.Err()}
+	// 	return
+	// }
+
 	go func() {
 		defer close(out)
 
-		// loginCh <- chan types.LoginResult
+		base := fmt.Sprintf("%s://%s", config.Scheme, config.ProxyHost)
 
-		// select {
-		// case lr := <-loginCh:
-		// 	if lr.Err != nil || !lr.OK {
-		// 		out <- types.CreateResult{Err: fmt.Errorf("login failed")}
-		// 		return
-		// 	}
+		form1 := url.Values{}
+		form1.Set("name", newUser)
+		form1.Set("scope[type]", "account")
 
-		// case <-ctx.Done():
-		// 	out <- types.CreateResult{Status: 0, Body: nil, Err: ctx.Err()}
-		// 	return
-		// }
+		check, err := http.NewRequestWithContext(
+			ctx, http.MethodGet,
+			base+"/v1/apps/secrets/find",
+			strings.NewReader(form1.Encode()),
+		)
+
+		if err != nil {
+			out <- types.CreateResult{Body: nil}
+			return
+		}
+
+		check.SetBasicAuth(config.ProxyKey, "")
+		check.Header.Set("Stripe-Version", "2025-11-17.preview")
+
+		checkResp, err := client.Do(check)
+
+		if err != nil {
+			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
+			return
+		}
+
+		defer checkResp.Body.Close()
+
+		checkBody, _ := io.ReadAll(checkResp.Body)
+
+		var f types.AppFind
+
+		if err := json.Unmarshal(checkBody, &f); err != nil {
+			out <- types.CreateResult{Status: checkResp.StatusCode, Body: checkBody, Err: err}
+			return
+		}
+
+		slog.Info(f.Name)
+
+		if f.Name == newUser {
+			out <- types.CreateResult{Status: checkResp.StatusCode, Body: checkBody, Err: fmt.Errorf("user already exists")}
+			return
+		}
 
 		form := url.Values{}
 		form.Set("name", newUser)
@@ -92,7 +138,7 @@ func startCreateUser(ctx context.Context, client *http.Client, createURL, newUse
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, createURL, strings.NewReader(form.Encode()))
 
 		if err != nil {
-			out <- types.CreateResult{Status: 0, Body: nil, Err: err}
+			out <- types.CreateResult{Body: nil}
 			return
 		}
 
@@ -107,7 +153,14 @@ func startCreateUser(ctx context.Context, client *http.Client, createURL, newUse
 
 		body, _ := io.ReadAll(resp.Body)
 
-		slog.Info(string(body))
+		var s types.AppSecret
+
+		if err := json.Unmarshal(body, &s); err != nil {
+			out <- types.CreateResult{Status: resp.StatusCode, Body: body, Err: err}
+			return
+		}
+
+		fmt.Println("name:", s.Name)
 
 		out <- types.CreateResult{Status: resp.StatusCode, Body: body, Err: nil}
 	}()

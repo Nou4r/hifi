@@ -16,6 +16,11 @@ func MetaBanner() SubsonicWrapper {
 	return w
 }
 
+type Scope struct {
+	Type string `json:"type"`
+	User string `json:"user,omitempty"`
+}
+
 type Router struct {
 	Valkey valkey.Client
 	Mem    map[string]string
